@@ -1,0 +1,121 @@
+.LayerName {
+    margin: 0;
+    height: 100%;
+}
+
+.LayerName main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.LayerName section {
+    margin-top: 5%;
+    width: 50%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 10px;
+}
+
+.LayerName section label {
+    margin: 50px 0;
+}
+
+.LayerName .horizontal-form {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: lightgrey;
+}
+
+.LayerName .form-section, .form-section div div {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 30vh;
+    margin-bottom: 2%;
+}
+
+.LayerName section input,select {
+    padding: 10px;
+    border: 1px solid black;
+    -webkit-appearance: none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 190px;
+}
+
+.LayerName section h3 {
+    font-size:20px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.LayerName h1{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.LayerName section button {
+    width: auto;
+    padding: 10px 20px;
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 200px;
+}
+
+.LayerName section button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.LayerName section button:disabled{
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+}
+
+.LayerName section td, th{
+    text-align: center;
+}
+
+.LayerName .error {
+    margin: 3%;
+    height: 15px;
+    width: 300px;
+    padding: 5px 2px;
+    color: #c80000;
+}
+
+.LayerName .row{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 30vh;
+    flex-flow: row;
+}
+
+.LayerName .prevs{
+    margin-right: 25%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+    flex-direction: column;
+}
+
+.LayerName .required:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+    font-weight: bold;
+}

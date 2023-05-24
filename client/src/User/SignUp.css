@@ -1,0 +1,102 @@
+.SignUp {
+    margin: 0;
+    text-align: left;
+    height: 100%;
+}
+
+.SignUp main {
+    min-height: 90vh;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.SignUp h1 {
+    margin: 8px 0;
+}
+
+.SignUp h3 {
+    margin: 35px 0 0;
+}
+
+.SignUp .form-break {
+    width: 20px;
+}
+
+.SignUp .space-between {
+    width: 5%;
+}
+
+.SignUp .horizontal-form {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: stretch;
+    margin-bottom: 8px;
+}
+.SignUp .form-section, .form-section div div {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 30vh;
+}
+
+.SignUp section {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    background-color: lightgrey;
+    padding: 20px;
+    border-radius: 2px;
+}
+
+.SignUp section label {
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.SignUp section input,select, option {
+    padding: 10px;
+    border: 1px solid black;
+    -webkit-appearance: none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 250px;
+}
+
+.SignUp section button {
+    background-color: white;
+    color: black;
+    border: 0;
+    padding: 12px;
+    text-align: center;
+}
+
+.SignUp section button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.SignUp button:disabled{
+    background-color: black;
+    color: white;
+}
+
+.SignUp .error {
+    margin: 0;
+    height: 15px;
+    padding: 5px 2px;
+    color: #c80000;
+}
+
+.SignUp .required:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+    font-weight: bold;
+}

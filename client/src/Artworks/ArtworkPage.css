@@ -1,0 +1,83 @@
+.ArtworkPage {
+    margin: 0;
+    height: 100%;
+}
+
+.ArtworkPage main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.ArtworkPage section {
+    margin-top: 5%;
+    width: 100%;
+    display: flex;
+    z-index: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.ArtworkPage .row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    margin: 0% 0% 0% 25%;
+}
+
+.ArtworkPage .leaf{
+    margin-top: 10%;
+}
+
+.ArtworkPage .column {
+    position: absolute;
+    left: 0;
+    margin: 0% 0% 0% 5%;
+}
+
+.boxes{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+.ArtworkPage .boxes img {
+    object-fit: scale-down;
+}
+
+.box {
+    float: left;
+    border: black ridge 1px;
+    border-radius: 10px;
+    margin: 3px;
+    width: 16rem;
+    text-align: center;
+}
+
+.box:nth-child(4n+1) {
+    clear: left;
+}
+
+.ArtworkPage section button {
+    width: auto;
+    padding: 10px 20px;
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 200px;
+}
+
+.ArtworkPage section button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.ArtworkPage section button:disabled{
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+}

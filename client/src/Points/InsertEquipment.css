@@ -1,0 +1,109 @@
+.InsertEquipment {
+    margin: 0;
+    height: 100%;
+}
+
+.InsertEquipment main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.InsertEquipment .horizontal-form {
+    display: flex;
+    margin: 5% 5% 5% 5%;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    background-color: lightgrey;
+}
+
+.InsertEquipment .required:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+    font-weight: bold;
+}
+
+.InsertEquipment .form-section, .form-section div div {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 30vh;
+    margin: 8% 5% 5% 7%;
+}
+
+.InsertEquipment section {
+    margin-top: 5%;
+    width: 50%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 10px;
+}
+
+.InsertEquipment section label {
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.InsertEquipment section input,select {
+    padding: 10px;
+    border: 1px solid black;
+    -webkit-appearance: none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 190px;
+}
+
+.InsertEquipment .form-break {
+    margin-left: -5%;
+}
+
+.InsertEquipment section h3 {
+    margin: -5% 0% 5% 0%;
+    font-size:20px;
+    display: inline;
+}
+
+.InsertEquipment .prevs{
+    margin-top: 5%;
+    display: flex;
+    flex-flow: column nowrap;
+    flex-direction: column;
+}
+
+.InsertEquipment .prevs button {
+    background-color: white;
+    color: black;
+    border: 0;
+    padding: 12px;
+    text-align: center;
+    margin: -15% 6% 5% 6%;
+}
+
+.InsertEquipment section button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.InsertEquipment button:disabled{
+    background-color: black;
+    color: white;
+}
+
+.InsertEquipment .error {
+    margin: 0;
+    height: 15px;
+    padding: 5px 2px;
+    color: #c80000;
+}
+
+.InsertEquipment .space_top{
+    margin-top: 8%;
+}

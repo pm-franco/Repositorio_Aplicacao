@@ -1,0 +1,84 @@
+.overlay__background {
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    z-index: 0;
+}
+
+.overlay__container {
+    display: flex;
+    flex-flow: column;
+    background-color: white;
+    opacity: 0.85;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    z-index: 10;
+    padding: 30px;
+    width: 70%;
+    height: 70%;
+}
+
+.overlay__controls {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    justify-content: center;
+}
+
+.overlay__close:after {
+    display: inline-block;
+    content: "\00d7";
+}
+
+.overlay__close {
+    border: none;
+    background-color: transparent;
+    font-size: 36px;
+    cursor: pointer;
+}
+
+.overlay .data button {
+    width: auto;
+    padding: 10px 20px;
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 200px;
+}
+
+.overlay .data button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.overlay .data button:disabled{
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+}
+
+.overlay .data td, th{
+    text-align: center;
+}
+
+.overlay .data_move{
+    margin: 5% 0% 0% 35%;
+}
+
+.overlay .data {
+    margin-left: 35%;
+}
+
+.overlay .error {
+    margin: 0;
+    height: 15px;
+    padding: 5px 2px;
+    color: #c80000;
+}

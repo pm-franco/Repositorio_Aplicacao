@@ -1,0 +1,77 @@
+nav {
+    height: 10vh;
+    background-color: darkslategrey;
+    color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: stretch;
+    box-shadow: 20px 20px 50px 10px dimgrey inset;
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+nav a {
+    text-decoration: none;
+    color: white;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    padding: 12px 8px;
+}
+
+nav a:hover {
+    background-color: yellow;
+    color: blue;
+    box-shadow: 0.1px 0.1px 2px yellow;
+}
+
+.Home{
+    transform: translateY(10vh);
+    margin: 0;
+    height: 100%;
+    background-image: url("../MediaFiles/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.Home h1 {
+    color: white;
+}
+
+.Home main {
+    height: 100%;
+    min-height: 90vh;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.Home button {
+    background-color: chocolate;
+    color: black;
+    padding: 16px 48px;
+    border: 0;
+    font-size: x-large;
+
+}
+
+.Home main button:hover {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.greeting {
+    margin: 0;
+    padding: 2px 6px;
+}
+
+.greetingRot{
+    transform: rotateX(180deg) translateY(20px);
+    -webkit-mask-image: linear-gradient(transparent 30%, #fff);
+    opacity: 0.3;
+}

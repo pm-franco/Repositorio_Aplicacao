@@ -1,0 +1,32 @@
+.leaflet-container {
+    display: flex;
+    width: 400px;
+    height: 400px;
+}
+
+.Teste {
+    margin: 0;
+    height: 100%;
+}
+
+.Teste main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.Teste section {
+    margin-top: 10%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 10px;
+}
+
+.Coordenadas {
+    margin-top: 2%;
+    width: 270px;
+}

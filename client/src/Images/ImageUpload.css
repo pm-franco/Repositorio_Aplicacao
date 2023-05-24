@@ -1,0 +1,37 @@
+.imagem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.imagem input{
+    width: 300px;
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.imagem .preview{
+    margin-top: 5%;
+    display: flex;
+    flex-flow: column nowrap;
+    flex-direction: column;
+}
+
+.imagem button{
+    cursor: pointer;
+    background: red;
+    color: white;
+    border: none;
+    text-align: center;
+    padding: 15px;
+}
+
+.imagem img {
+    display: flex;
+    align-items: center;
+    max-height: 450px;
+    max-width: 450px;
+    object-fit: scale-down;
+}

@@ -1,0 +1,125 @@
+.InsertArtwork {
+    margin: 0;
+    height: 100%;
+}
+
+.InsertArtwork main {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.InsertArtwork .horizontal-form {
+    display: flex;
+    margin: 0 5% 8px;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: stretch;
+    background-color: lightgrey;
+}
+
+.InsertArtwork .img-selection{
+    display: flex;
+    margin: 0 10% 0 10%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px;
+    background-color: lightgrey;
+}
+
+.InsertArtwork .form-section, .form-section div div {
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 30vh;
+    margin: 5% 5% 10% 5%;
+}
+
+.InsertArtwork .column {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex-flow: column;
+}
+
+.InsertArtwork section {
+    margin-top: 10%;
+    width: 50%;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    padding: 10px;
+}
+
+.InsertArtwork section label {
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+.InsertArtwork section input,select {
+    padding: 10px;
+    border: 1px solid black;
+    -webkit-appearance: none;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 190px;
+}
+
+.InsertArtwork .required:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+    font-weight: bold;
+}
+
+.InsertArtwork .form-break {
+    width: 10px;
+}
+
+.InsertArtwork section h3 {
+    margin: -10% 0% 5%;
+    font-size:25px;
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.InsertArtwork .prevs{
+    margin-top: 5%;
+    display: flex;
+    flex-flow: column nowrap;
+    flex-direction: column;
+}
+
+.InsertArtwork .prevs button {
+    background-color: white;
+    color: black;
+    border: 0;
+    padding: 12px;
+    text-align: center;
+    margin: -11% 6% 5% 6%;
+}
+
+.InsertArtwork section button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.InsertArtwork button:disabled{
+    background-color: black;
+    color: white;
+}
+
+.InsertArtwork .error {
+    margin: 0;
+    height: 15px;
+    padding: 5px 2px;
+    color: #c80000;
+}
