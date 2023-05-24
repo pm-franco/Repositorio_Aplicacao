@@ -8,7 +8,6 @@ function EditImageLayer() {
 
     const navigate = useNavigate();
     let emailLogged = localStorage.getItem("email");
-    const [aux, setAux] = useState(0);
 
     const {id} = useParams();
     const [layer, setLayer] = useState()
@@ -20,39 +19,41 @@ function EditImageLayer() {
 
     const [error, setError] = useState("");
 
-    const setData = () => {
-        if (layer && aux === 0) {
-            setName(layer["layerName"])
-            setDepth(layer["depth"])
-            setSelectImage(layer["image"])
-            setArtId(layer["artworkId"])
-            setAux(1);
+    useEffect(() => {
+        const setData = () => {
+            if (layer) {
+                setName(layer["layerName"])
+                setDepth(layer["depth"])
+                setSelectImage(layer["image"])
+                setArtId(layer["artworkId"])
+            }
         }
-    }
+        setData();
+    }, [layer])
 
     useEffect(() => {
-        if (aux === 0) {
-            if (emailLogged === null || emailLogged === "")
-                navigate("/")
-            fetch('http://localhost:8080/image_layer/id/' + id, {
-                method: 'GET',
-                mode: "cors"
-            })
-                .then(response => {
-                    if (response.status === 200) {
-                        return response.json()
-                    } else {
-                        return response.text()
-                    }
-                })
-                .then(data => {
-                    setLayer(data);
-                    setData();
-                })
-                .catch(r => r)
-        }
-    }, [id, setData])
+        if (emailLogged === null || emailLogged === "")
+            navigate("/")
+    }, [emailLogged, navigate])
 
+    useEffect(() => {
+
+        fetch('http://localhost:8080/image_layer/id/' + id, {
+            method: 'GET',
+            mode: "cors"
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json()
+                } else {
+                    return response.text()
+                }
+            })
+            .then(data => {
+                setLayer(data);
+            })
+            .catch(r => r)
+    }, [id])
 
     const EditImageLayer = useCallback(() => {
         const formData = new FormData();
@@ -60,11 +61,11 @@ function EditImageLayer() {
             formData.append("file", selectedImageFile);
             formData.append("json", JSON.stringify({
                 "layerName": name,
-                "depth":depth,
+                "depth": depth,
                 "artworkId": artId,
                 "user": emailLogged
             }))
-            fetch('http://localhost:8080/image_layer/file/'+id, {
+            fetch('http://localhost:8080/image_layer/file/' + id, {
                 method: 'PUT',
                 mode: "cors",
                 body: formData
@@ -77,7 +78,7 @@ function EditImageLayer() {
                     }
                 }).then(r => r && setError(r))
                 .catch(r => console.log(r))
-        }else{
+        } else {
             fetch('http://localhost:8080/image_layer/' + id, {
                 method: 'PUT',
                 mode: "cors",
@@ -86,7 +87,7 @@ function EditImageLayer() {
                 }),
                 body: JSON.stringify({
                     "layerName": name,
-                    "depth":depth,
+                    "depth": depth,
                     "artworkId": artId,
                     "user": emailLogged
                 })
@@ -100,9 +101,9 @@ function EditImageLayer() {
                 }).then(r => r && setError(r))
                 .catch(r => console.log(r))
         }
-    }, [id, selectedImageFile, name, depth, emailLogged, navigate])
+    }, [id, selectedImageFile, name, depth, emailLogged, navigate, artId])
 
-    const handleSize = (w:number, h:number, img:File) => {
+    const handleSize = (w: number, h: number, img: File) => {
         setSelectedImageFile(img);
     };
 
@@ -133,14 +134,14 @@ function EditImageLayer() {
                             <p>
                                 <label className={"required"}>Depth</label>
                                 <input type="number" placeholder="Insert in mm" value={depth}
-                                       onChange={e => handleFloats(setDepth,e.target.value)}/>
+                                       onChange={e => handleFloats(setDepth, e.target.value)}/>
                             </p>
                         </div>
                     </form>
                     <div className={"prevs"}>
                         <button disabled={checkParameters()} onClick={() => {
                             EditImageLayer()
-                        }}>Insert Image Layer
+                        }}>Update Image Layer
                         </button>
                         <p className="error">
                             {error.length > 0 && setTimeout(

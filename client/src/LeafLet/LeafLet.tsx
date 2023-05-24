@@ -9,7 +9,6 @@ import 'leaflet/dist/leaflet.css';
 import "./LeafLet.css"
 import React, {useEffect, useRef, useState} from "react";
 import L, {CRS, LatLngBounds} from 'leaflet';
-import {Link} from "react-router-dom";
 
 function LeafLet(props: any) {
 

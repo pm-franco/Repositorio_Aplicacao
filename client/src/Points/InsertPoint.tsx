@@ -113,7 +113,7 @@ function InsertPoint(props: any) {
                 }
             }).then(r => r && setError(r))
             .catch(r => console.log(r))
-    }, [id, pointId ,emailLogged, selectedImage, position, fileSize, metricWidth, metricHeight, pointName, layerName, researcher, technique, date, copyrights, materials, navigate])
+    }, [id, pointId , size, emailLogged, selectedImage, position, fileSize, metricWidth, metricHeight, pointName, layerName, researcher, technique, date, copyrights, materials, navigate])
 
 
     function checkParameters() {

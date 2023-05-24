@@ -12,7 +12,6 @@ import InsertPoint from "./Points/InsertPoint";
 import ArtworkPage from "./Artworks/ArtworkPage";
 import InsertEquipment from "./Points/InsertEquipment";
 import InsertExtraInfo from "./Artworks/InsertExtraInfo";
-import LeafLet from "./LeafLet/LeafLet";
 import PointPage from "./Points/PointPage";
 import EditProfile from "./User/EditProfile";
 import EditArtwork from "./Artworks/EditArtwork";

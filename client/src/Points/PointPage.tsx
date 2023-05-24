@@ -14,7 +14,6 @@ function PointPage() {
     const pixelWidth = location.state.x;
     const pixelHeight = location.state.y;
     const imgArtwork = location.state.img;
-    const [error, setError] = useState("");
     const [emailLogged, setEmailLogged] = useState(localStorage.getItem("email"))
     const [roleLogged, setRoleLogged] = useState(localStorage.getItem("role"))
 
@@ -71,7 +70,7 @@ function PointPage() {
                 } else {
                     return response.text()
                 }
-            }).then(r => r && setError(r))
+            }).then(r => r && console.log(r))
             .catch(r => console.log(r))
     }, [emailLogged, idEquip])
 
@@ -95,7 +94,7 @@ function PointPage() {
                 }
             }).then(r => r && console.log(r))
             .catch(r => console.log(r))
-    }, [emailLogged, id])
+    }, [emailLogged, id, navigate])
 
     const toggleOverlayPoint = () => {
         setIsOpenPoint(!isOpenPoint);
@@ -154,8 +153,7 @@ function PointPage() {
                                     <tr key={value["id"]}>
                                         <td>{value["name"]}</td>
                                         <td>
-                                            <Link  to={"/edit_equipment/" + value["id"]}
-                                                   state={{id: value["id"]}}><button>Edit</button></Link>
+                                            <Link  to={"/edit_equipment/" + value["id"]}><button>Edit</button></Link>
                                         </td>
                                         <td>
                                             <button onClick={() => handleDelete(value["id"])}>Delete</button>

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertArtwork.css";
 import {ArtTypes, ImageSize} from "../Extra/Helper";
 import ImageUpload from "../Images/ImageUpload";
@@ -8,8 +8,6 @@ function EditArtwork(props: any) {
 
     const navigate = useNavigate();
     let emailLogged = localStorage.getItem("email");
-
-    const [aux, setAux] = useState(0);
 
     const {id} = useParams();
     const [artwork, setArtwork] = useState()
@@ -30,53 +28,55 @@ function EditArtwork(props: any) {
 
     const [error, setError] = useState("");
 
-    const setData = () => {
-        if (artwork && aux === 0) {
-            setArtName(artwork["name"]);
-            setAuthor(artwork["author"]);
-            setArtType(artwork["artType"]);
-            let d = artwork["date"];
-            if (d === null) {
-                setDate("");
-            } else {
-                setDate(d);
+    useEffect(() => {
+        const setData = () => {
+            if (artwork) {
+                setArtName(artwork["name"]);
+                setAuthor(artwork["author"]);
+                setArtType(artwork["artType"]);
+                let d = artwork["date"];
+                if (d === null) {
+                    setDate("");
+                } else {
+                    setDate(d);
+                }
+                setSource(artwork["source"]);
+                setWidthMetric(artwork["width"]);
+                setHeightMetric(artwork["height"]);
+                setInvNumber(artwork["invNumber"]);
+                setCategory(artwork["category"]);
+                setSuperCategory(artwork["superCategory"]);
+                setMatter(artwork["matter"]);
+                setSelectImage(artwork["image"]);
+                setSize({width: artwork["pixelWidth"], height: artwork["pixelHeight"]});
             }
-            setSource(artwork["source"]);
-            setWidthMetric(artwork["width"]);
-            setHeightMetric(artwork["height"]);
-            setInvNumber(artwork["invNumber"]);
-            setCategory(artwork["category"]);
-            setSuperCategory(artwork["superCategory"]);
-            setMatter(artwork["matter"]);
-            setSelectImage(artwork["image"]);
-            setSize({width: artwork["pixelWidth"], height: artwork["pixelHeight"]});
-            setAux(1);
         }
-    }
-
+        setData();
+    }, [artwork])
 
     useEffect(() => {
-        if (aux === 0) {
-            if (emailLogged === null || emailLogged === "")
-                navigate("/")
-            fetch('http://localhost:8080/artwork/id/' + id, {
-                method: 'GET',
-                mode: "cors"
+        if (emailLogged === null || emailLogged === "")
+            navigate("/")
+    }, [emailLogged, navigate])
+
+    useEffect(() => {
+
+        fetch('http://localhost:8080/artwork/id/' + id, {
+            method: 'GET',
+            mode: "cors"
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json()
+                } else {
+                    //navigate("/artworks")
+                }
             })
-                .then(response => {
-                    if (response.status === 200) {
-                        return response.json()
-                    } else {
-                        //navigate("/artworks")
-                    }
-                })
-                .then(data => {
-                    setArtwork(data);
-                    setData();
-                })
-                .catch(r => r)
-        }
-    }, [id, setData])
+            .then(data => {
+                setArtwork(data);
+            })
+            .catch(r => r)
+    }, [id])
 
     const EditArtwork = useCallback(() => {
         const formData = new FormData();
@@ -98,7 +98,7 @@ function EditArtwork(props: any) {
                 "pixelHeight": size?.height,
                 "insertedBy": emailLogged
             }))
-            fetch('http://localhost:8080/artwork/file/'+id, {
+            fetch('http://localhost:8080/artwork/file/' + id, {
                 method: 'PUT',
                 mode: "cors",
                 body: formData
@@ -146,7 +146,7 @@ function EditArtwork(props: any) {
                 }).then(r => r && setError(r))
                 .catch(r => console.log(r))
         }
-    }, [id, selectedImageFile, artName, size ,author, artType, source, invNumber, superCategory, category, matter, date, emailLogged, heightMetric, widthMetric, navigate])
+    }, [id, selectedImageFile, artName, size, author, artType, source, invNumber, superCategory, category, matter, date, emailLogged, heightMetric, widthMetric, navigate])
 
     const handleSize = (w: number, h: number, imgFile: File) => {
         setSelectedImageFile(imgFile);
@@ -162,8 +162,8 @@ function EditArtwork(props: any) {
         return false
     }
 
-    const handleFloats = (setFunc:any, target:any) =>{
-        if(target === "")
+    const handleFloats = (setFunc: any, target: any) => {
+        if (target === "")
             setFunc("");
         else
             setFunc(parseFloat(target));
@@ -194,7 +194,7 @@ function EditArtwork(props: any) {
                             </p>
                             <p>
                                 <label className={"required"}>Artwork Type</label>
-                                <select style={{width:190}} value={artType} onChange={e => setArtType(e.target.value)}>
+                                <select style={{width: 190}} value={artType} onChange={e => setArtType(e.target.value)}>
                                     {ArtTypes.map((k) => <option key={k} value={k}>{k}</option>)}
                                 </select>
                             </p>
@@ -243,12 +243,12 @@ function EditArtwork(props: any) {
                             <p>
                                 <label className={"required"}>Width</label>
                                 <input type="number" placeholder="Insert in mm" value={widthMetric}
-                                       onChange={e => handleFloats(setWidthMetric,e.target.value)}/>
+                                       onChange={e => handleFloats(setWidthMetric, e.target.value)}/>
                             </p>
                             <p>
                                 <label className={"required"}>Height {heightMetric}</label>
                                 <input type="number" placeholder="Insert in mm" value={heightMetric}
-                                       onChange={e => handleFloats(setHeightMetric,e.target.value)}/>
+                                       onChange={e => handleFloats(setHeightMetric, e.target.value)}/>
                             </p>
                         </div>
                     </form>

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
+import {Link, useLocation, useParams} from 'react-router-dom';
 import "./InsertExtraInfo.css";
 import Overlay from "../Extra/Overlay";
 import {checkText} from "../Extra/Helper";
@@ -8,15 +8,14 @@ function InsertExtraInfo(props: any) {
 
     const location = useLocation();
 
-    const [id, setId] = useState(location.state.id)
+    const {id} = useParams();
     const img = location.state.img;
-    const [aux, setAux] = useState(0);
     const [uploadedFile, setUploadedFile] = useState(null)
     const [links, setLinks] = useState<string[]>([]);
     const [infos, setInfos] = useState<string[]>([]);
     const [pdfName, setPdfName] = useState<String>("")
     const [pdfLink, setPdfLink] = useState<String | null>(null)
-
+    const [aux, setAux] = useState(0)
     const [errorExtra, setErrorExtra] = useState("");
     const [errorPdf, setErrorPdf] = useState("")
 
@@ -31,25 +30,20 @@ function InsertExtraInfo(props: any) {
         setEmailLogged(localStorage.getItem("email"))
     }, [emailLogged])
 
-    const setData = () => {
-        if (extraInfo && aux === 0) {
-            let linksArray = extraInfo["links"];
-            if (linksArray !== null)
-                setLinks(linksArray);
-            let infosArray = extraInfo["info"];
-            if (infosArray !== null)
-                setInfos(infosArray);
-            setAux(1);
+    useEffect( () => {
+        const setData = () => {
+            if (extraInfo && aux ===0) {
+                let linksArray = extraInfo["links"];
+                if (linksArray !== null)
+                    setLinks(linksArray);
+                let infosArray = extraInfo["info"];
+                if (infosArray !== null)
+                    setInfos(infosArray);
+                setAux(1);
+            }
         }
-    }
-
-    useEffect(() => {
-        if (aux === 0) {
-            if (location.state != null)
-                setId(location.state.id)
-            setData();
-        }
-    }, [id, location.state, setData])
+        setData();
+    }, [extraInfo, aux])
 
     useEffect(() => {
         fetch('http://localhost:8080/extra_info/artwork_id/' + id, {
@@ -123,7 +117,7 @@ function InsertExtraInfo(props: any) {
                 }).then(r => r && setErrorExtra(r))
                 .catch(r => console.log(r))
         }
-    }, [id, links, infos, emailLogged])
+    }, [id, links, infos, emailLogged, extraInfo])
 
 
     const InsertPdf = useCallback(() => {

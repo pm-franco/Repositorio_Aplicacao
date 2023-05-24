@@ -79,7 +79,7 @@ function ImageLayerGallery() {
                         {imageLayers.length>0?calculatedRows.map((item: any) => (
                             <div key={item.id} className="box">
                                 <p>{emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <><Link
-                                    to={"/edit_layer/" + item.id}>{"Edit Image Layer" + item.id}</Link></>}</p>
+                                    to={"/edit_layer/" + item.id}>Edit Image Layer</Link></>}</p>
                                 <img style={{maxWidth: 200, maxHeight: 200, objectFit: "scale-down"}} alt={""}
                                      src={'data:image/png;base64,' + item.image}></img>
                                 <p>{item.layerName}</p>

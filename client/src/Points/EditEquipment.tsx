@@ -1,17 +1,15 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertEquipment.css";
 import Overlay from "../Extra/Overlay";
 import {checkText} from "../Extra/Helper";
 
 function EditEquipment(props: any) {
 
-    const location = useLocation();
     const navigate = useNavigate();
 
-    const [id, setId] = useState()
+    const {id} = useParams();
     const [equipment, setEquipment] = useState()
-    const [aux, setAux] = useState(0);
     const [equipName, setEquipName] = useState<string>("");
     const [idPoint, setIdPoint] = useState()
     const [characteristics, setCharacteristics] = useState<String[]>([]);
@@ -26,51 +24,47 @@ function EditEquipment(props: any) {
 
     useEffect(() => {
         setEmailLogged(localStorage.getItem("email"))
-    },[emailLogged])
+    }, [emailLogged])
 
     useEffect(() => {
-        if (location.state != null)
-            setId(location.state.id)
-    }, [id, location.state])
-
-    const setData = () => {
-        if (equipment && aux === 0) {
-            setEquipName(equipment["name"])
-            setIdPoint(equipment["zoomPointId"])
-            let characteristicsArray = equipment["characteristics"];
-            if(characteristicsArray !== null)
-                setCharacteristics(characteristicsArray);
-            let licensesArray = equipment["licenses"];
-            if(licensesArray !== null)
-                setLicenses(licensesArray);
-            setAux(1);
-        }
-    }
-
-    useEffect(() => {
-        if (aux === 0) {
-            if (location.state != null) {
-                setId(location.state.id)
+        const setData = () => {
+            if (equipment) {
+                setEquipName(equipment["name"])
+                setIdPoint(equipment["zoomPointId"])
+                let characteristicsArray = equipment["characteristics"];
+                if (characteristicsArray !== null)
+                    setCharacteristics(characteristicsArray);
+                let licensesArray = equipment["licenses"];
+                if (licensesArray !== null)
+                    setLicenses(licensesArray);
             }
-            if (emailLogged === null || emailLogged === "")
-                navigate("/")
-            fetch('http://localhost:8080/equipment/id/' + location.state.id, {
-                method: 'GET',
-                mode: "cors"
-            })
-                .then(response => {
-                    if (response.status === 200) {
-                        return response.json()
-                    }
-                    return response.text()
-                })
-                .then(data => {
-                    setEquipment(data);
-                    setData();
-                })
-                .catch(r => r)
         }
-    }, [id, setData])
+        setData();
+    }, [equipment])
+
+    useEffect(() => {
+        if (emailLogged === null || emailLogged === "")
+            navigate("/")
+    }, [emailLogged, navigate])
+
+    useEffect(() => {
+        fetch('http://localhost:8080/equipment/id/' + id, {
+            method: 'GET',
+            mode: "cors"
+        })
+            .then(response => {
+                if (response.status === 200) {
+                    return response.json()
+                }
+                return response.text()
+            })
+            .then(data => {
+                setEquipment(data);
+
+            })
+            .catch(r => r)
+    }, [id])
+
 
     const toggleOverlayCharacteristics = () => {
         setIsOpenCharacteristics(!isOpenCharacteristics);
@@ -81,7 +75,7 @@ function EditEquipment(props: any) {
     };
 
     const UpdateEquipment = useCallback(() => {
-        fetch('http://localhost:8080/equipment/'+id, {
+        fetch('http://localhost:8080/equipment/' + id, {
             method: 'put',
             mode: "cors",
             headers: new Headers({

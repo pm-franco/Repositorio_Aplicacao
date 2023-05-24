@@ -58,7 +58,7 @@ function Profile(prop:any){
                                 <p><Link to={"/artwork/" + item.id}
                                          state={{img: 'data:image/png;base64,' + item.image, id: item.id}}>
                                     <img height={setHeight(item.pixelHeight, item.pixelWidth)}
-                                         width={setWidth(item.pixelHeight, item.pixelWidth)}
+                                         width={setWidth(item.pixelHeight, item.pixelWidth)} alt={""}
                                          src={'data:image/png;base64,' + item.image}></img>
                                 </Link></p>
                                 <p>{item.name}</p>

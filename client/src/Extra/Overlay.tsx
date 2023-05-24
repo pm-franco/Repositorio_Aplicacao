@@ -30,7 +30,7 @@ function Overlay({ isOpen, onClose, setList, name, array, deleteFromArray}:any) 
                     <>
                         </>
                         <div className={"data"}>
-                            <h3><>Insert {name}</></h3>
+                            <h3>Insert {name}</h3>
                             <p>
                                 <input type={"text"} placeholder={"write value"} value={data} onChange={ e=> setData(e.target.value)}/>
                                 <button color={"red"} disabled={data===""} onClick={handleClick}>Add it</button>

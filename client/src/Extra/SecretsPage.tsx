@@ -24,7 +24,7 @@ function SecretsPage() {
     useEffect(() => {
         if (roleLogged !== ADMIN)
             navigate("/")
-    }, [])
+    }, [navigate, roleLogged])
 
     useEffect(() => {
         fetch('http://localhost:8080/secrets/all/', {
@@ -38,7 +38,7 @@ function SecretsPage() {
                 if (type === "")
                     setType(data[0]["type"])})
             .catch(r => console.log(r))
-    }, [secrets])
+    }, [secrets, type])
 
     const updateSecret = useCallback(() => {
         fetch('http://localhost:8080/secrets/', {

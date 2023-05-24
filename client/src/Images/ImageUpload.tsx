@@ -10,7 +10,7 @@ function ImageUpload(props:any){
     useEffect(() =>{
         if(imgProp)
             setSelectedImage(imgProp);
-    },[])
+    },[imgProp])
 
     const removeSelectedImage = () => {
         // @ts-ignore

@@ -1,10 +1,8 @@
 import React, {Fragment, useCallback, useState} from "react";
 import "./Overlay.css";
-import {Pagination} from "./Pagination";
 
 function Overlay({ isOpen, onClose, deleteFunction, email}:any) {
 
-    const [data, setData] = useState("")
     const [password, setPassword] = useState<string>("")
     const [error, setError] = useState("")
 
@@ -31,7 +29,7 @@ function Overlay({ isOpen, onClose, deleteFunction, email}:any) {
                 }
             }).then(r => r && setError(r))
             .catch(r => console.log(r))
-    }, [password, email])
+    }, [password, email, deleteFunction, onClose])
 
     return (
         <Fragment>
@@ -42,7 +40,7 @@ function Overlay({ isOpen, onClose, deleteFunction, email}:any) {
                     <>
                         </>
                         <div className={"data"}>
-                            <h3><>Delete Confirmation</></h3>
+                            <h3>Delete Confirmation</h3>
                             <p>
                                 <input type={"password"} placeholder={"Password to delete"} value={password} onChange={ e=> setPassword(e.target.value)}/>
                                 <button color={"red"} disabled={password===""} onClick={handleDelete}>Confirm Delete</button>

@@ -16,13 +16,11 @@ function UpdateUserRole() {
 
     useEffect(() => {
         setEmailLogged(localStorage.getItem("email"))
-        setRoleLogged(localStorage.getItem("role"))
-    }, [emailLogged, roleLogged])
-
-    useEffect(() => {
-        if (roleLogged !== "admin")
+        let role = localStorage.getItem("role")
+        if (role !== "admin")
             navigate("/")
-    }, [])
+        setRoleLogged(role)
+    }, [emailLogged, roleLogged, navigate])
 
     const updateUserRole = useCallback(() => {
         fetch('http://localhost:8080/user/edit/' + email, {
@@ -46,7 +44,7 @@ function UpdateUserRole() {
                 }
             }).then(r => r && setError(r))
             .catch(r => console.log(r))
-    }, [email, emailLogged, pwRole, newRole])
+    }, [email, emailLogged, pwRole, newRole, navigate])
 
     return (
         <div className="LayerName">

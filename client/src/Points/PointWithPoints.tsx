@@ -45,7 +45,7 @@ function PointWithPoints(){
                 if(filter === "")
                     setFilter(data[0]["layerName"])})
             .catch(r => console.log(r))
-    },[point, id])
+    },[point, id, filter])
 
     useEffect(() => {
         fetch('http://localhost:8080/zoom_point/zoom_point_id/'+id, {

@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertPoint.css";
 import AddPointLeafLet from "../LeafLet/AddPointLeafLet";
 import ImageUpload from "../Images/ImageUpload";
@@ -13,7 +13,6 @@ function EditPoint(props: any) {
     const {id} = useParams();
     const [point, setPoint] = useState()
     const [artwork, setArtwork] = useState()
-    const [aux, setAux] = useState(0);
 
     const [position, setPosition] = useState({latitude: 0, longitude: 0});
 
@@ -43,35 +42,36 @@ function EditPoint(props: any) {
         setEmailLogged(localStorage.getItem("email"))
     },[emailLogged])
 
-    const setData = () => {
-        if (point && aux === 0) {
-            setPointName(point["name"])
-            setPosition({latitude: point["positionY"], longitude: point["positionX"]})
-            setLayerName(point["layerName"]);
-            setMetricWidth(point["metricWidth"]);
-            setMetricHeight(point["metricHeight"])
-            let d = point["date"];
-            if (d === null) {
-                setDate("");
-            } else {
-                setDate(d);
+    useEffect( () => {
+        const setData = () => {
+            if (point) {
+                setPointName(point["name"])
+                setPosition({latitude: point["positionY"], longitude: point["positionX"]})
+                setLayerName(point["layerName"]);
+                setMetricWidth(point["metricWidth"]);
+                setMetricHeight(point["metricHeight"])
+                let d = point["date"];
+                if (d === null) {
+                    setDate("");
+                } else {
+                    setDate(d);
+                }
+                setResearcher(point["author"]);
+                setTechnique(point["technique"]);
+                setFileSize(point["fileSize"])
+                setSelectImage(point["image"]);
+                let copyrightsArray = point["copyrights"];
+                if(copyrightsArray !== null)
+                    setCopyrights(copyrightsArray);
+                let materialsArray = point["materials"];
+                if(materialsArray !== null)
+                    setMaterials(materialsArray);
             }
-            setResearcher(point["author"]);
-            setTechnique(point["technique"]);
-            setFileSize(point["fileSize"])
-            setSelectImage(point["image"]);
-            let copyrightsArray = point["copyrights"];
-            if(copyrightsArray !== null)
-                setCopyrights(copyrightsArray);
-            let materialsArray = point["materials"];
-            if(materialsArray !== null)
-                setMaterials(materialsArray);
-            setAux(1);
         }
-    }
+        setData();
+    }, [point])
 
     useEffect(() => {
-        if (aux === 0) {
             if (emailLogged === null || emailLogged === "")
                 navigate("/")
             fetch('http://localhost:8080/zoom_point/id/' + id, {
@@ -88,7 +88,6 @@ function EditPoint(props: any) {
                 .then(data => {
                     setPoint(data);
                     setIdArtwork(data["artworkId"]);
-                    setData();
                 })
                 .catch(r => r)
             if (idArtwork > 0) {
@@ -105,15 +104,12 @@ function EditPoint(props: any) {
                     })
                     .then(data => {
                         setArtwork(data);
-                        setData();
                     })
                     .catch(r => r)
             }
-        }
-    }, [id, setData, idArtwork])
+    }, [id, idArtwork, emailLogged, navigate])
 
     useEffect(() => {
-        setData();
         fetch('http://localhost:8080/layer/all/', {
             method: 'GET',
             mode: "cors",
@@ -123,7 +119,7 @@ function EditPoint(props: any) {
             })
             .then(data => setLayerNames(data))
             .catch(r => console.log(r))
-    }, [idArtwork, setData])
+    }, [idArtwork])
 
     const toggleOverlayCopyrights = () => {
         setIsOpenCopyrights(!isOpenCopyrights);
@@ -165,7 +161,6 @@ function EditPoint(props: any) {
                 "pixelWidth": size?.width,
                 "pixelHeight": size?.height,
             }))
-        // @ts-ignore
         fetch('http://localhost:8080/zoom_point/file/'+id, {
             method: 'PUT',
             mode: "cors",
@@ -182,8 +177,7 @@ function EditPoint(props: any) {
             .catch(r => console.log(r))
         }
         else {
-            // @ts-ignore
-            fetch('http://localhost:8080/zoom_point/'+point["id"], {
+            fetch('http://localhost:8080/zoom_point/'+id, {
                 method: 'PUT',
                 mode: "cors",
                 headers: new Headers({
@@ -217,7 +211,7 @@ function EditPoint(props: any) {
                 }).then(r => r && setError(r))
                 .catch(r => console.log(r))
         }
-    }, [idArtwork, emailLogged, point,selectedImageFile, position, fileSize, metricWidth, metricHeight, pointName, layerName, researcher, technique, date, copyrights, materials, navigate])
+    }, [id, idArtwork, emailLogged, selectedImageFile, position, fileSize, metricWidth, metricHeight, size, pointName, layerName, researcher, technique, date, copyrights, materials, navigate])
 
 
     function checkParameters() {
@@ -294,11 +288,11 @@ function EditPoint(props: any) {
                             </p>
                             <p>
                                 <label>Technique Name </label>
-                                <input type="text" placeholder={"technique"} value={technique} onChange={e => setTechnique(e.target.value)}/>
+                                <input type="text" placeholder={"technique"} defaultValue={technique} onChange={e => setTechnique(e.target.value)}/>
                             </p>
                             <p>
                                 <label>Date</label>
-                                <input type="text" placeholder={"Date if known"} value={date.split("T")[0]} onChange={e => setDate(e.target.value)}
+                                <input type="text" placeholder={"Date if known"} defaultValue={date.split("T")[0]} onChange={e => setDate(e.target.value)}
                                        onFocus={e => (e.target.type = "date")}
                                        onBlur={e => (e.target.type = "text")}/>
                             </p>

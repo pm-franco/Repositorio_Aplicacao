@@ -54,7 +54,7 @@ function ArtworkPage() {
                     setFilter({layerName: data[0]["layerName"], multiplePoints: data[0]["multiplePoints"]})
             })
             .catch(r => console.log(r))
-    }, [artwork, id])
+    }, [artwork, id, filter.layerName])
 
     useEffect(() => {
         fetch('http://localhost:8080/zoom_point/artwork_id/' + id, {
@@ -84,7 +84,7 @@ function ArtworkPage() {
             })
             .then(data => setPdfs(data))
             .catch(r => r)
-    },[pdfs])
+    },[pdfs, id])
 
     const filteredRows = filterRows(points, filter)
 
@@ -191,7 +191,7 @@ function ArtworkPage() {
                 }
             }).then(r => r && console.log(r))
             .catch(r => console.log(r))
-    }, [emailLogged, id])
+    }, [emailLogged, id, navigate])
 
 
 

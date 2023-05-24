@@ -26,7 +26,7 @@ function LayerName() {
     useEffect(() => {
         if (roleLogged !== ADMIN)
             navigate("/")
-    }, [])
+    }, [roleLogged, navigate])
 
     useEffect(() => {
         fetch('http://localhost:8080/layer/all/', {
