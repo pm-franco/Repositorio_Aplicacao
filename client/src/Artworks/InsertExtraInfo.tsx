@@ -263,18 +263,20 @@ function InsertExtraInfo(props: any) {
                     <form className={"horizontal-form"}>
                         <div className={"form-section"}>
                             <h3>Pdf Information</h3>
-                            <p>
-                                <label>File</label>
-                                <input id='fileUpload' type='file'
-                                       accept='application/pdf, image/png, image/jpeg'
-                                       onChange={handleFileEvent}/>
-                            </p>
+                            {/*
+                                <p>
+                                    <label>File</label>
+                                    <input id='fileUpload' type='file'
+                                           accept='application/pdf, image/png, image/jpeg'
+                                           onChange={handleFileEvent}/>
+                                </p>
+                            */}
                             <p>
                                 <label className={"required"}>Name</label>
                                 <input type="text" placeholder={"Pdf Name"} onChange={e => setPdfName(e.target.value)}/>
                             </p>
                             <p>
-                                <label>Url Link</label>
+                                <label className={"required"}>Url Link</label>
                                 <input type="text" placeholder={"If file is null."}
                                        onChange={e => setPdfLink(e.target.value)}/>
                             </p>

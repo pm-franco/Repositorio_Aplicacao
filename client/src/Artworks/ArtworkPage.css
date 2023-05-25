@@ -81,3 +81,22 @@
     color: white;
     border: 2px solid black;
 }
+
+.ArtworkGallery .boxes button {
+    width: auto;
+    padding: 10px 20px;
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 200px;
+}
+
+.ArtworkGallery .boxes button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.ArtworkGallery .boxes button:disabled{
+    background-color: black;
+    color: white;
+    border: 2px solid black;
+}

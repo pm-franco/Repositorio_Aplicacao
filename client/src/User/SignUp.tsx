@@ -52,7 +52,7 @@ function SignUp() {
     const onInputChange = (e:any) => {
         const { value } = e.target;
 
-        const re = /^[A-Za-z]+$/;
+        const re = /[a-z, ]/i;
         if (value === "" || re.test(value)) {
             setName(value);
         }

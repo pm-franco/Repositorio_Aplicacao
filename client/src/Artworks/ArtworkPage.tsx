@@ -209,7 +209,7 @@ function ArtworkPage() {
                             <div className={"leaf"}>
                                 {emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <>
                                 <Link  to={"/insert_image_layer/" + id}>Insert Image Layer</Link>
-                                <p><Link  to={"/images_layer/" + id}>Check all layers</Link></p></>}
+                                <p><Link  to={"/images_layer/" + id}>Check All layers</Link></p></>}
                                 {artwork &&
                                     <LeafLet markers={filteredRows} img={'data:image/png;base64,'+img} x={artwork["pixelWidth"]}
                                              y={artwork["pixelHeight"]} id={id}/>}
@@ -250,7 +250,7 @@ function ArtworkPage() {
                         <tr>
                             <th>Name</th>
                             <th>Url</th>
-                            <th>Remove</th>
+                            <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<th>Remove</th>:null}</>
                         </tr>
                         </thead>
                         <tbody>
@@ -259,9 +259,9 @@ function ArtworkPage() {
                                 <tr key={value["id"]}>
                                     <td>{value["name"]}</td>
                                     <td>{value["link"]}</td>
-                                    <td>
+                                    <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<td>
                                         <button onClick={() => handleDelete(value["id"])}>Delete</button>
-                                    </td>
+                                    </td>:null}</>
                                 </tr>
                             )
                         })}

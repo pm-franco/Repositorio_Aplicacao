@@ -19,7 +19,7 @@ function ImageUpload(props:any){
 
     return (
         <div className={"imagem"}>
-            <label>Choose the image file.</label>
+            <label className={"required"}>Choose the image file.</label>
             <input type="file" accept="image/png, image/jpeg" onChange={(e) => {
                 const ev = e.currentTarget.files;
                 if (ev) {

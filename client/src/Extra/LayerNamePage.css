@@ -103,16 +103,6 @@
     flex-flow: row;
 }
 
-.LayerName .prevs{
-    margin-right: 25%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    flex-flow: column nowrap;
-    flex-direction: column;
-}
-
 .LayerName .required:after {
     color: #e32;
     content: ' *';

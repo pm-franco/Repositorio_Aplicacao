@@ -105,7 +105,7 @@ function LayerName() {
                 <section>
                     <div className={"horizontal-form"}>
                         <div className={"form-section"}>
-                            <h3>Insert New Layer Name</h3>
+                            <h3>Insert Layer Name</h3>
                             <p>
                                 <label className={"required"}>Layer Name</label>
                             </p>

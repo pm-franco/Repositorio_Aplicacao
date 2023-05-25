@@ -143,8 +143,8 @@ function PointPage() {
                             <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>Edit</th>
-                                <th>Remove</th>
+                                <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<th>Edit</th>:null}</>
+                                <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<th>Remove</th>:null}</>
                             </tr>
                             </thead>
                             <tbody>
@@ -152,12 +152,12 @@ function PointPage() {
                                 return (
                                     <tr key={value["id"]}>
                                         <td>{value["name"]}</td>
-                                        <td>
+                                        <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<td>
                                             <Link  to={"/edit_equipment/" + value["id"]}><button>Edit</button></Link>
-                                        </td>
-                                        <td>
+                                        </td>:null}</>
+                                        <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<td>
                                             <button onClick={() => handleDelete(value["id"])}>Delete</button>
-                                        </td>
+                                        </td>:null}</>
                                     </tr>
                                 )
                             })}
