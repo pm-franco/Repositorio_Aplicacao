@@ -1,15 +1,13 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, useLocation, useParams} from 'react-router-dom';
+import {Link, useLocation, useNavigate, useParams} from 'react-router-dom';
 import "./InsertExtraInfo.css";
 import Overlay from "../Extra/Overlay";
 import {checkText} from "../Extra/Helper";
 
 function InsertExtraInfo(props: any) {
 
-    const location = useLocation();
-
     const {id} = useParams();
-    const img = location.state.img;
+    const navigate = useNavigate();
     const [uploadedFile, setUploadedFile] = useState(null)
     const [links, setLinks] = useState<string[]>([]);
     const [infos, setInfos] = useState<string[]>([]);
@@ -30,9 +28,9 @@ function InsertExtraInfo(props: any) {
         setEmailLogged(localStorage.getItem("email"))
     }, [emailLogged])
 
-    useEffect( () => {
+    useEffect(() => {
         const setData = () => {
-            if (extraInfo && aux ===0) {
+            if (extraInfo && aux === 0) {
                 let linksArray = extraInfo["links"];
                 if (linksArray !== null)
                     setLinks(linksArray);
@@ -71,7 +69,7 @@ function InsertExtraInfo(props: any) {
 
     const InsertExtraInfo = useCallback(() => {
         if (extraInfo) {
-            fetch('http://localhost:8080/extra_info/'+extraInfo["id"], {
+            fetch('http://localhost:8080/extra_info/' + extraInfo["id"], {
                 method: 'put',
                 mode: "cors",
                 headers: new Headers({
@@ -222,8 +220,6 @@ function InsertExtraInfo(props: any) {
         <div className={"InsertExtraInfo"}>
             <main>
                 <section>
-                    <Link to={"/artwork/" + id}
-                          state={{img: img, id: id}}>Go Back</Link>
                     <div className={"horizontal-form"}>
                         <div className={"form-section"}>
                             <h3>Extra Information</h3>
@@ -250,7 +246,7 @@ function InsertExtraInfo(props: any) {
                     <div className={"prevs"}>
                         <button disabled={checkExtraInfo()} onClick={() => {
                             InsertExtraInfo()
-                        }}>Insert Extra Information
+                        }}>Update Extra Information
                         </button>
                         <p className="error">
                             {errorExtra.length > 0 && setTimeout(
@@ -259,6 +255,9 @@ function InsertExtraInfo(props: any) {
                             ) && errorExtra}</p>
                     </div>
                 </section>
+                <div className={"move-top"}>
+                    <button onClick={() => navigate(-1)}>Done</button>
+                </div>
                 <section>
                     <form className={"horizontal-form"}>
                         <div className={"form-section"}>

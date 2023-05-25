@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import "../Artworks/ArtworkPage.css";
+import "../Artworks/ArtworkPagePoints.css";
 import LeafLet from "../LeafLet/LeafLet";
 import {ADMIN, RESEARCHER} from "../Extra/Helper";
 
@@ -73,7 +73,7 @@ function PointWithPoints(){
     }
 
     return(
-        <div className={"ArtworkPage"}>
+        <div className={"ArtworkPagePoints"}>
             <main>
                 <section>
                     <div className={"row"}>

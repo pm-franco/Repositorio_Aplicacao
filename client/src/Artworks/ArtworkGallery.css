@@ -19,16 +19,17 @@
     align-items: center;
 }
 
-.boxes{
+.ArtworkGallery .boxes{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, 1fr);
     grid-gap: 2px;
 }
 
-.box {
+.ArtworkGallery .box {
+
     border: black ridge 1px;
-    border-radius: 3px;
+    border-radius: 10px;
     margin: 3px;
     width: 18rem;
     text-align: center;
@@ -36,7 +37,7 @@
     justify-content: center;
 }
 
-.box:nth-child(4n+1) {
+.ArtworkGallery .box:nth-child(4n+1) {
     clear: left;
 }
 

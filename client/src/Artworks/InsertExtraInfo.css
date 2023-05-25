@@ -107,3 +107,20 @@
 .InsertExtraInfo .space_top{
     margin-top: 8%;
 }
+
+.InsertExtraInfo .move-top{
+    margin-top: 35%;
+}
+
+.InsertExtraInfo .move-top button {
+    width: auto;
+    padding: 10px 20px;
+    margin: 10px;
+    border: 2px solid black;
+    border-radius: 200px;
+}
+
+.InsertExtraInfo .move-top button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
