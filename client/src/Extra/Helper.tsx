@@ -14,6 +14,12 @@ export interface ImageSize {
 }
 
 
+export const setDate = (date: any) => {
+    if (date)
+        return date.split("T")[0]
+    return "Unknown"
+}
+
 export const handleFloats = (setFunc:any, target:any) =>{
     if(target === "")
         return setFunc("");

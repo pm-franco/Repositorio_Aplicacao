@@ -36,7 +36,7 @@ function Overlay({ isOpen, onClose, deleteFunction, email}:any) {
             {isOpen && (
                 <div className="overlay">
                     <div className="overlay__background" onClick={onClose} />
-                    <div className="overlay__container">
+                    <div className="overlay__container_password">
                     <>
                         </>
                         <div className={"data"}>

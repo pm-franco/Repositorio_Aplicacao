@@ -1,9 +1,9 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import "./ArtworkPage.css";
-import LeafLet from "../LeafLet/LeafLet";
-import {ADMIN, RESEARCHER} from "../Extra/Helper";
+import {ADMIN, RESEARCHER, setDate} from "../Extra/Helper";
 import OverlayPassword from "../Extra/OverlayPassword";
+import Buttons from "../Extra/Buttons";
 
 function ArtworkPage() {
 
@@ -58,19 +58,9 @@ function ArtworkPage() {
             .catch(r => console.log(r))
     }, [emailLogged, id, navigate])
 
-    const setDate = (date: any) => {
-        if (date)
-            return date.split("T")[0]
-        return "Unknown"
-    }
-
     return (
         <div className={"ArtworkPage"}>
-            <div className={"buttons"}>
-                <Link to={"/artwork/" + id}><button>Artwork Information</button></Link>
-                <Link to={"/artwork_points/" + id}><button>Artwork Points</button></Link>
-                <Link to={"/artwork_extra/" + id}><button>Artwork Extra Information</button></Link>
-            </div>
+            <Buttons id={id} btn1={'yellow-color'} btn2={'grey-color'} btn3={'grey-color'} type={"artwork"}/>
             <main>
                 <section>
                     <h3>General Information</h3>
@@ -101,7 +91,8 @@ function ArtworkPage() {
                         </table>}
                 </section>
                 <div className={"column"}>
-                    <h1>Page for {artwork && artwork["name"]} artwork</h1>
+                    {//<h1>Page for {artwork && artwork["name"]} artwork</h1>
+                    }
                     {artwork && <img style={{maxWidth: 450, maxHeight: 450, objectFit: "scale-down"}}
                                      src={'data:image/png;base64,' + artwork["image"]} alt={""}></img>}
                     {emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <>

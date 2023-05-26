@@ -1,25 +1,19 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, useLocation, useNavigate, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import "./PointPage.css";
-import {ADMIN, RESEARCHER} from "../Extra/Helper";
+import {ADMIN, RESEARCHER, setDate} from "../Extra/Helper";
 import OverlayPassword from "../Extra/OverlayPassword";
+import Buttons from "../Extra/Buttons";
 
 function PointPage() {
 
     const [point, setPoint] = useState()
-    const [equipment, setEquipment] = useState([])
-    const location = useLocation();
     const navigate = useNavigate();
     const {id} = useParams();
-    const pixelWidth = location.state.x;
-    const pixelHeight = location.state.y;
-    const imgArtwork = location.state.img;
     const [emailLogged, setEmailLogged] = useState(localStorage.getItem("email"))
     const [roleLogged, setRoleLogged] = useState(localStorage.getItem("role"))
 
-    const [idEquip, setIdEquip] = useState()
     const [isOpenPoint, setIsOpenPoint] = useState(false);
-    const [isOpenEquip, setIsOpenEquip] = useState(false);
 
     useEffect(() => {
         setEmailLogged(localStorage.getItem("email"))
@@ -27,7 +21,6 @@ function PointPage() {
     }, [emailLogged, roleLogged])
 
     useEffect(() => {
-
         fetch('http://localhost:8080/zoom_point/id/' + id, {
             method: 'GET',
             mode: "cors"
@@ -37,42 +30,7 @@ function PointPage() {
             })
             .then(data => setPoint(data))
             .catch(r => console.log(r))
-
-        fetch('http://localhost:8080/equipment/point_id/' + id, {
-            method: 'GET',
-            mode: "cors"
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    return response.json()
-                }
-                return response.text();
-            })
-            .then(data => setEquipment(data))
-            .catch(r => console.log(r))
     }, [point, id])
-
-    const deleteEquipment = useCallback(() => {
-        fetch('http://localhost:8080/equipment/', {
-            method: "delete",
-            mode: "cors",
-            headers: new Headers({
-                'Content-Type': 'application/json'
-            }),
-            body: JSON.stringify({
-                "id": idEquip,
-                "user": emailLogged
-            })
-        })
-            .then(response => {
-                if (response.status === 200) {
-                    console.log("removed")
-                } else {
-                    return response.text()
-                }
-            }).then(r => r && console.log(r))
-            .catch(r => console.log(r))
-    }, [emailLogged, idEquip])
 
     const deletePoint = useCallback(() => {
         fetch('http://localhost:8080/zoom_point/', {
@@ -100,74 +58,133 @@ function PointPage() {
         setIsOpenPoint(!isOpenPoint);
     };
 
-    const toggleOverlayEquip = () => {
-        setIsOpenEquip(!isOpenEquip);
-    };
+    function printCopyrights() {
+        // @ts-ignore
+        if (point["copyrights"].length === 0) {
+            return (
+                <>
+                    <tr>
+                        <th>Copyrights</th>
+                        <td>No copyrights added yet.</td>
+                    </tr>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <tr>
+                        { // @ts-ignore
+                            <th rowSpan={point["copyrights"].length + 1}>Copyrights</th>}
+                    </tr>
+                    {  // @ts-ignore
+                        point["copyrights"].map((value: any) => {
+                            return (
+                                <tr key={value}>
+                                    <td>{value}</td>
+                                </tr>
+                            )
+                        })}
+                </>
 
-    const handleDelete = (idEquip:any) => {
-        toggleOverlayEquip();
-        setIdEquip(idEquip);
-    };
+            )
+        }
+    }
+
+    function printMaterials() {
+        // @ts-ignore
+        if (point["materials"].length === 0) {
+            return (
+                <>
+                    <tr>
+                        <th>Materials</th>
+                        <td>No materials added yet.</td>
+                    </tr>
+                </>
+            )
+        } else {
+            return (
+                <>
+                    <tr>
+                        { // @ts-ignore
+                            <th rowSpan={point["materials"].length + 1}>Materials</th>}
+                    </tr>
+                    {  // @ts-ignore
+                        point["materials"].map((value: any) => {
+                            return (
+                                <tr key={value}>
+                                    <td>{value}</td>
+                                </tr>
+                            )
+                        })}
+                </>
+            )
+        }
+    }
 
     return (
         <div className={"PointPage"}>
+            <Buttons id={id} btn1={'yellow-color'} btn2={'grey-color'} type={"point"}/>
             <main>
-                    <section>
-                        <h1>Point Information</h1>
-                        {point && <>
-                            <p>{emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <><Link
-                                to={"/insert_equipment/" + id}
-                                state={{id: id}}>Insert Equipment</Link></>}</p>
-                            <p><img style={{maxWidth: 450, maxHeight: 450, objectFit: "scale-down"}}
-                                    src={'data:image/png;base64,' + point["image"]} alt={""}></img></p>
-                            <p>{point["name"]}</p>
-                            <p>{point["author"] ? point["author"] : "Unknown Author"}</p>
-                            {id}
-                            <p/>
-                            {emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <><p><Link
-                                to={"/edit_point/" + id} state={{
-                                img: imgArtwork,
-                                x: pixelWidth,
-                                y: pixelHeight,
-                                point: point
-                            }}>Edit Point Data</Link></p>
-                                <p>
-                                    <button onClick={toggleOverlayPoint}>Delete Point</button>
-                                </p>
-                            </>}
-                        </>}
-                    </section>
-                    <section>
-                        <h1>Equipments Information</h1>
-                        {equipment.length>0?<table border={2} cellPadding={20}>
-                            <thead>
+                <section>
+                    <h3>Point Information</h3>
+                    {point &&
+                        <table border={2} cellPadding={20}>
+                            <tbody>
                             <tr>
                                 <th>Name</th>
-                                <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<th>Edit</th>:null}</>
-                                <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<th>Remove</th>:null}</>
+                                <td>{point["name"]}</td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            {equipment.map((value: any) => {
-                                return (
-                                    <tr key={value["id"]}>
-                                        <td>{value["name"]}</td>
-                                        <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<td>
-                                            <Link  to={"/edit_equipment/" + value["id"]}><button>Edit</button></Link>
-                                        </td>:null}</>
-                                        <>{(emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN)) ?<td>
-                                            <button onClick={() => handleDelete(value["id"])}>Delete</button>
-                                        </td>:null}</>
-                                    </tr>
-                                )
-                            })}
+                            <tr>
+                                <th>Layer Name</th>
+                                <td>{point["layerName"] || "Unknown"}</td>
+                            </tr>
+                            <tr>
+                                <th>Width (mm)</th>
+                                <td>{point["metricWidth"]}</td>
+                            </tr>
+                            <tr>
+                                <th>Height (mm)</th>
+                                <td>{point["metricHeight"]}</td>
+                            </tr>
+                            <tr>
+                                <th>Researcher Name</th>
+                                <td>{point["author"]}</td>
+                            </tr>
                             </tbody>
-                        </table>:"No equipment added yet."}
-                    </section>
+                        </table>}
+                </section>
+                <div className={"column"}>
+                    {point && <p><img style={{maxWidth: 400, maxHeight: 400, objectFit: "scale-down"}}
+                                      src={'data:image/png;base64,' + point["image"]} alt={""}></img></p>}
+                    {emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <><p><Link
+                        to={"/edit_point/" + id}>Edit Point Data</Link></p>
+                        <p>
+                            <button onClick={toggleOverlayPoint}>Delete Point</button>
+                        </p>
+                    </>}
+                </div>
+
+                <section>
+                    <h3>Additional Information</h3>
+                    {point &&
+                        <table border={2} cellPadding={20}>
+                            <tbody>
+                            <tr>
+                                <th>Technique Name</th>
+                                <td>{point["technique"]|| "Unknown"}</td>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <td>{setDate(point["date"])}</td>
+                            </tr>
+                            {printCopyrights()}
+                            {printMaterials()}
+                            </tbody>
+                        </table>}
+                </section>
             </main>
-            <OverlayPassword isOpen={isOpenPoint} onClose={toggleOverlayPoint} deleteFunction={deletePoint} email={emailLogged}></OverlayPassword>
-            <OverlayPassword isOpen={isOpenEquip} onClose={toggleOverlayEquip} deleteFunction={deleteEquipment} email={emailLogged}></OverlayPassword>
-        </div>
+            <OverlayPassword isOpen={isOpenPoint} onClose={toggleOverlayPoint} deleteFunction={deletePoint}
+                             email={emailLogged}></OverlayPassword></div>
     );
 }
 

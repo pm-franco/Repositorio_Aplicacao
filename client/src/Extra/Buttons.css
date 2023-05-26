@@ -1,0 +1,46 @@
+.buttons {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    margin: 6.5% 0% 0% 25%;
+}
+
+.buttons button {
+    width: 300px;
+    padding: 10px 20px;
+    margin: 0px;
+    border: 2px solid black;
+}
+
+.buttons button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.buttons2 {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    margin: 6.5% 0% 0% 35%;
+}
+
+.buttons2 button {
+    width: 300px;
+    padding: 10px 20px;
+    margin: 0px;
+    border: 2px solid black;
+}
+
+.buttons2 button:hover:enabled {
+    transform: translateY(-5px);
+    transform: scale(0.97);
+}
+
+.grey-color {
+    background: lightgrey;
+}
+
+/* Define styles for the yellow color */
+.yellow-color {
+    background: yellowgreen;
+}

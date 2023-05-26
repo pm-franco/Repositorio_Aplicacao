@@ -1,14 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import "./ArtworkPagePoints.css";
 import LeafLet from "../LeafLet/LeafLet";
 import {ADMIN, RESEARCHER} from "../Extra/Helper";
+import Buttons from "../Extra/Buttons";
 
 function ArtworkPagePoints() {
 
     const [artwork, setArtwork] = useState()
     const [points, setPoints] = useState([])
-    const navigate = useNavigate();
     const {id} = useParams();
     const [img, setImg] = useState();
     const [layerNames, setLayerNames] = useState([])
@@ -118,16 +118,12 @@ function ArtworkPagePoints() {
 
     return (
         <div className={"ArtworkPagePoints"}>
-            <div className={"buttons"}>
-                <Link to={"/artwork/" + id}><button>Artwork Information</button></Link>
-                <Link to={"/artwork_points/" + id}><button>Artwork Points</button></Link>
-                <Link to={"/artwork_extra/" + id}><button>Artwork Extra Information</button></Link>
-            </div>
+            <Buttons id={id} btn1={'grey-color'} btn2={'yellow-color'}  btn3={'grey-color'} type={"artwork"}/>
             <main>
                 <section>
                     <div className={"row"}>
                         <div className={"column"}>
-                            <h3>Available points for artwork {artwork && artwork["name"]}</h3>
+                            <h3>Points in {artwork && artwork["name"]}</h3>
                             <select onChange={e => handleSearch(e.target.value)}>
                                 {layerNames && layerNames.map((k) =>
                                     <option key={k["layerName"]} value={JSON.stringify(k)}>{k["layerName"]}</option>)}
@@ -142,19 +138,15 @@ function ArtworkPagePoints() {
                             </div>
                         </div>
                         <div className={"boxes"}>
-                            {filteredRows.map((item: any) => (
+                            {filteredRows.length>0? filteredRows.map((item: any) => (
                                 <div key={item.id.valueOf()} className="box">
-                                    <p><Link to={"/point_zoom/" + item.id} state={artwork && {
-                                        img: 'data:image/png;base64,' + artwork["image"],
-                                        x: artwork["pixelWidth"],
-                                        y: artwork["pixelHeight"]
-                                    }}><img style={{maxWidth: 150, maxHeight: 150, objectFit: "scale-down"}} alt={""}
+                                    <p><Link to={"/point_zoom/" + item.id}><img style={{maxWidth: 150, maxHeight: 150, objectFit: "scale-down"}} alt={""}
                                             src={'data:image/png;base64,' + item.image}></img></Link></p>
                                     <p>{item.name}</p>
                                     <p>{item.author ? item.author : "Unknown Author"}</p>
                                     {printInformation(item)}
                                 </div>
-                            ))
+                            )):<h3>No points added in this layer.</h3>
                             }
                         </div>
                     </div>

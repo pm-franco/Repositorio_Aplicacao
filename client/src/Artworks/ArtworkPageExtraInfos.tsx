@@ -1,14 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import "./ArtworkPage.css";
 import {ADMIN, RESEARCHER} from "../Extra/Helper";
 import OverlayPassword from "../Extra/OverlayPassword";
+import Buttons from "../Extra/Buttons";
 
 function ArtworkPageExtraInfos() {
 
     const [pdfs, setPdfs] = useState([])
     const [extraInfo, setExtraInfo] = useState()
-    const navigate = useNavigate();
     const {id} = useParams();
 
     const [emailLogged, setEmailLogged] = useState(localStorage.getItem("email"))
@@ -85,14 +85,10 @@ function ArtworkPageExtraInfos() {
 
     return (
         <div className={"ArtworkPage"}>
-            <div className={"buttons"}>
-                <Link to={"/artwork/" + id}><button>Artwork Information</button></Link>
-                <Link to={"/artwork_points/" + id}><button>Artwork Points</button></Link>
-                <Link to={"/artwork_extra/" + id}><button>Artwork Extra Information</button></Link>
-            </div>
+            <Buttons id={id} btn1={'grey-color'} btn2={'grey-color'} btn3={'yellow-color'} type={"artwork"}/>
             <main><section>
                 <h1>Extra Information </h1>
-                {extraInfo &&
+                {extraInfo?
                     <table border={2} cellPadding={20}>
                         <tbody>
                         <tr>
@@ -102,7 +98,7 @@ function ArtworkPageExtraInfos() {
                         {   // @ts-ignore
                             extraInfo["links"].map((value: any) => {
                                 return (
-                                    <tr key={Math.random()}>
+                                    <tr key={value}>
                                         <td><a href={value} target="_blank" rel="noopener noreferrer">{value}</a></td>
                                     </tr>
                                 )
@@ -120,11 +116,13 @@ function ArtworkPageExtraInfos() {
                                 )
                             })}
                         </tbody>
-                    </table>}
+                    </table>: "No extra information added."}
             </section>
-                <p>
-                    <Link  to={"/insert_extra_info/" + id}>Insert Extra Information</Link>
-                </p>
+                <div className={"column"}>
+                    <p>
+                        <Link  to={"/insert_extra_info/" + id}>Insert Extra Information</Link>
+                    </p>
+                </div>
                 <section>
                     <h1>Pdfs Information </h1>
                     {pdfs?<table border={2} cellPadding={20}>

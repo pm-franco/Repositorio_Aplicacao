@@ -26,6 +26,23 @@
     height: 70%;
 }
 
+.overlay__container_password {
+    display: flex;
+    flex-flow: column;
+    background-color: white;
+    opacity: 0.85;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    z-index: 10;
+    padding: 30px;
+    width: 50%;
+    height: 50%;
+}
+
 .overlay__controls {
     display: flex;
     justify-content: flex-end;

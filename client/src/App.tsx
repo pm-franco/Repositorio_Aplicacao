@@ -27,6 +27,7 @@ import ImageLayerGallery from "./Artworks/ImageLayerGallery";
 import EditImageLayer from "./Artworks/EditImageLayer";
 import ArtworkPagePoints from "./Artworks/ArtworkPagePoints";
 import ArtworkPageExtraInfos from "./Artworks/ArtworkPageExtraInfos";
+import PointEquipmentPage from "./Points/PointEquipmentPage";
 
 function App() {
 
@@ -59,6 +60,7 @@ function App() {
               <Route path='/insert_equipment/:id' element={<InsertEquipment/>}/>
               <Route path='/insert_extra_info/:id' element={<InsertExtraInfo/>}/>
               <Route path='/point_zoom/:id' element={<PointPage/>}/>
+              <Route path='/point_equipment/:id' element={<PointEquipmentPage/>}/>
               <Route path='/insert_artwork' element={<InsertArtwork/>}/>
               <Route path='/edit_artwork/:id' element={<EditArtwork/>}/>
               <Route path='/edit_point/:id' element={<EditPoint/>}/>

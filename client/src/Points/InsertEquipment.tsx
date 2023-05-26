@@ -1,15 +1,14 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useLocation, useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertEquipment.css";
 import Overlay from "../Extra/Overlay";
 import {checkText} from "../Extra/Helper";
 
 function InsertEquipment(props: any) {
 
-    const location = useLocation();
     const navigate = useNavigate();
 
-    const [id, setId] = useState()
+    const {id} = useParams();
     const [equipName, setEquipName] = useState<String>("");
     const [characteristics, setCharacteristics] = useState<String[]>([]);
     const [licenses, setLicenses] = useState<String[]>([]);
@@ -25,11 +24,6 @@ function InsertEquipment(props: any) {
     useEffect(() => {
         setEmailLogged(localStorage.getItem("email"))
     },[emailLogged])
-
-    useEffect(() => {
-        if (location.state != null)
-            setId(location.state.id)
-    }, [id, location.state])
 
     const toggleOverlayCharacteristics = () => {
         setIsOpenCharacteristics(!isOpenCharacteristics);
