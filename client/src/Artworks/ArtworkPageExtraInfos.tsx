@@ -105,7 +105,7 @@ function ArtworkPageExtraInfos() {
                             })}
                         <tr>
                             { // @ts-ignore
-                                <th rowSpan={extraInfo["links"].length+1}>Useful Information</th>}
+                                <th rowSpan={extraInfo["info"].length+1}>Useful Information</th>}
                         </tr>
                         {   // @ts-ignore
                             extraInfo["info"].map((value: any) => {

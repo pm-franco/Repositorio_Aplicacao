@@ -16,7 +16,7 @@ function Overlay({ isOpen, onClose, setList, name, array, deleteFromArray}:any) 
     }
 
     const [activePage, setActivePage] = useState(1)
-    const rowsPerPage = 4
+    const rowsPerPage = 6
     const count = array.length
     const totalPages = Math.ceil(count / rowsPerPage)
     const calculatedRows = array.slice((activePage - 1) * rowsPerPage, activePage * rowsPerPage)
@@ -33,12 +33,12 @@ function Overlay({ isOpen, onClose, setList, name, array, deleteFromArray}:any) 
                             <h3>Insert {name}</h3>
                             <p>
                                 <input type={"text"} placeholder={"write value"} value={data} onChange={ e=> setData(e.target.value)}/>
-                                <button color={"red"} disabled={data===""} onClick={handleClick}>Add it</button>
+                                <button disabled={data===""} onClick={handleClick}>Add it</button>
                             </p>
                         </div>
                         <div className={"data_move"}>
                             {array.length===0?"No data inserted yet.":<>
-                                <table border={2} cellPadding={20}>
+                            {/*<table border={2} cellPadding={20}>
                                 <thead>
                                 <tr>
                                     <th>Value</th>
@@ -56,6 +56,14 @@ function Overlay({ isOpen, onClose, setList, name, array, deleteFromArray}:any) 
                                 })}
                                 </tbody>
                             </table>
+                                */}
+                                {calculatedRows.map((value:any, index:number) => {
+                                    return (
+                                        <ul key={index}>
+                                            <li> {value} <button onClick={() => handleDelete(index)}>Delete</button></li>
+                                        </ul>
+                                    )
+                                })}
                             <Pagination
                                 activePage={activePage}
                                 count={count}

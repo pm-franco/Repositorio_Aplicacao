@@ -41,7 +41,7 @@
 
 .ArtworkPagePoints .boxes{
     position: absolute;
-    left: 40%;
+    left: 35%;
     top: 23%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
