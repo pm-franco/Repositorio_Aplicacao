@@ -123,7 +123,7 @@ function PointPage() {
 
     return (
         <div className={"PointPage"}>
-            <Buttons id={id} btn1={'yellow-color'} btn2={'grey-color'} type={"point"}/>
+            <Buttons id={id} btn1={'yellow-color'} btn2={'grey-color'} type={"point"} artId={point && point["artworkId"]} pointId={point && point["zoomPointId"]}/>
             <main>
                 <section>
                     <h3>Point Information</h3>

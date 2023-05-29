@@ -24,6 +24,13 @@
     margin: 6.5% 0% 0% 35%;
 }
 
+.back-button {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    margin: 6.5% 0% 0% 5%;
+}
+
 .buttons2 button {
     width: 300px;
     padding: 10px 20px;

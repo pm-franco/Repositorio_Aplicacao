@@ -96,21 +96,9 @@ function ArtworkPagePoints() {
                         y: item.pixelHeight,
                         pointId: item.id
                     }}>Insert New Point</Link>
-                </p><p><Link to={"/point/" + item.id}
-                             state={artwork && {
-                                 img: 'data:image/png;base64,' + item.image,
-                                 id: item.id,
-                                 artId: id,
-                                 artImg: img
-                             }}>See Points</Link></p></>
+                </p><p><Link to={"/point/" + item.id}>See Points</Link></p></>
             }else {
-                return <p><Link to={"/point/" + item.id}
-                                state={artwork && {
-                                    img: 'data:image/png;base64,' + item.image,
-                                    id: item.id,
-                                    artId: id,
-                                    artImg: img
-                                }}>See Points</Link></p>
+                return <p><Link to={"/point/" + item.id}>See Points</Link></p>
             }
         }
         return <></>

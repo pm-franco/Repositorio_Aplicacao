@@ -120,7 +120,7 @@ function ArtworkPageExtraInfos() {
             </section>
                 <div className={"column"}>
                     <p>
-                        <Link  to={"/insert_extra_info/" + id}>Insert Extra Information</Link>
+                        <Link  to={"/insert_extra_info/" + id}>{pdfs.length>0 || extraInfo?"Update Information":"Insert Extra Information"}</Link>
                     </p>
                 </div>
                 <section>
@@ -148,7 +148,6 @@ function ArtworkPageExtraInfos() {
                         </tbody>
                     </table>:"No pdf added yet."}
                 </section>
-
             </main>
             <OverlayPassword isOpen={isOpenPdf} onClose={toggleOverlayPdf} deleteFunction={deletePdf} email={emailLogged}></OverlayPassword>
         </div>

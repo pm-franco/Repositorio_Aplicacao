@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import "../Artworks/ArtworkPagePoints.css";
 import LeafLet from "../LeafLet/LeafLet";
 import {ADMIN, RESEARCHER} from "../Extra/Helper";
@@ -8,11 +8,7 @@ function PointWithPoints(){
 
     const [point, setPoint] = useState()
     const [points, setPoints] = useState([])
-    const location = useLocation();
-    const id = location.state.id;
-    const img = location.state.img;
-    const artId = location.state.artId;
-    const artImg = location.state.artImg;
+    const {id} = useParams();
     const [layerNames, setLayerNames] = useState([])
 
     const [filter, setFilter] = useState("")
@@ -78,15 +74,14 @@ function PointWithPoints(){
                 <section>
                     <div className={"row"}>
                         <div className={"column"}>
-                            <Link to={"/artwork/" + artId}
-                                  state={{img: artImg, id: artId}}>Go Back</Link>
+                            <Link to={"/artwork_points/" + (point && point["artworkId"])}>Go Back</Link>
                             <h3>Available points for zoom point {point && point["name"]}</h3>
                             <select onChange={e => setFilter(e.target.value)}>
                                 {layerNames && layerNames.map((k) => <option key={k["layerName"]}>{k["layerName"]}</option>)}
                             </select>
                             <div className={"leaf"}>
-                                {point && <LeafLet markers={filteredRows} layer={filter} img={img} x={point["pixelWidth"]} y={point["pixelHeight"]} id={null}/>}
-                                <p>{(roleLogged === RESEARCHER || roleLogged === ADMIN) && <><Link to={"/edit_point/"+id} state={point && {img:img, x:point["pixelWidth"], y:point["pixelHeight"], point:point}}>{"Edit Point Data"+ id}</Link></>}</p>
+                                {point && <LeafLet markers={filteredRows} layer={filter} img={'data:image/png;base64,'+ point["image"]} x={point["pixelWidth"]} y={point["pixelHeight"]} id={null}/>}
+                                <p>{(roleLogged === RESEARCHER || roleLogged === ADMIN) && <><Link to={"/edit_point/"+id} state={point && {img:'data:image/png;base64,'+ point["image"], x:point["pixelWidth"], y:point["pixelHeight"], point:point}}>{"Edit Point Data"+ id}</Link></>}</p>
                             </div>
                         </div>
                         <div className={"boxes"}>

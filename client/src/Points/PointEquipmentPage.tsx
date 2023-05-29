@@ -8,6 +8,7 @@ import Buttons from "../Extra/Buttons";
 function PointEquipmentPage() {
 
     const [equipment, setEquipment] = useState([])
+    const [point, setPoint] = useState()
     const {id} = useParams();
     const [emailLogged, setEmailLogged] = useState(localStorage.getItem("email"))
     const [roleLogged, setRoleLogged] = useState(localStorage.getItem("role"))
@@ -34,6 +35,18 @@ function PointEquipmentPage() {
             .then(data => setEquipment(data))
             .catch(r => console.log(r))
     },[id, equipment])
+
+    useEffect(() => {
+        fetch('http://localhost:8080/zoom_point/id/' + id, {
+            method: 'GET',
+            mode: "cors"
+        })
+            .then(response => {
+                return response.json()
+            })
+            .then(data => setPoint(data))
+            .catch(r => console.log(r))
+    }, [point, id])
 
     const deleteEquipment = useCallback(() => {
         fetch('http://localhost:8080/equipment/', {
@@ -116,7 +129,7 @@ function PointEquipmentPage() {
 
     return (
         <div className={"PointPage"}>
-            <Buttons id={id} btn1={'grey-color'} btn2={'yellow-color'} type={"point"}/>
+            <Buttons id={id} btn1={'grey-color'} btn2={'yellow-color'} type={"point"} artId={point && point["artworkId"]} pointId={point && point["zoomPointId"]}/>
             <main>
                     <section>
                         <p>{emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <><Link
