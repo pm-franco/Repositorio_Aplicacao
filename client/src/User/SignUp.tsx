@@ -77,12 +77,12 @@ function SignUp() {
                             <label className={"required"}> Password Confirmation </label>
                             <input type="password" onChange={e=> setPwConf(e.target.value)}required={true}/>
                             <label className={"required"}> Institution </label>
-                            <select style={{width:250}} onChange={e=> setInst(e.target.value)}>{insts.length> 0? insts.map((s) => <option key={s}>{s}</option>) : <option key={0}>{"No Institutions Registed"}</option>}</select>
+                            <select onChange={e=> setInst(e.target.value)}>{insts.length> 0? insts.map((s) => <option key={s}>{s}</option>) : <option key={0}>{"No Institutions Registed"}</option>}</select>
                         </div>
                         <div className="form-break"></div>
                         <div className="form-section">
                             <label className={"required"}>User Type </label>
-                            <select style={{width:250}} name="select" id="selectedUser" value = {role} onChange={e=> setRole(e.target.value)} >
+                            <select name="select" id="selectedUser" value = {role} onChange={e=> setRole(e.target.value)} >
                                 <option value="student"> Student</option>
                             </select>
                         </div>

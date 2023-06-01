@@ -38,7 +38,7 @@
 .InsertPoint .image-selection{
     display: flex;
     width: 250px;
-    margin: 0 20% 0 0%;
+    margin: 0 15% 0 0%;
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -82,7 +82,7 @@
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    width: 170px;
+    width: 190px;
 }
 
 .InsertPoint .form-break {
@@ -98,7 +98,7 @@
 }
 
 .InsertPoint .prevs{
-    margin-top: 5%;
+    margin-top: 3%;
     display: flex;
     flex-flow: column nowrap;
     flex-direction: column;
