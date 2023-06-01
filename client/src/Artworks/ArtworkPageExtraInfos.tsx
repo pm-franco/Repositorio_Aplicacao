@@ -120,7 +120,7 @@ function ArtworkPageExtraInfos() {
             </section>
                 <div className={"column"}>
                     <p>
-                        <Link  to={"/insert_extra_info/" + id}>{pdfs.length>0 || extraInfo?"Update Information":"Insert Extra Information"}</Link>
+                        {emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) &&<Link  to={"/insert_extra_info/" + id}>{pdfs.length>0 || extraInfo?"Update Information":"Insert Extra Information"}</Link>}
                     </p>
                 </div>
                 <section>
