@@ -89,7 +89,7 @@ function ArtworkGallery() {
                         </select>
                     </div>
                     <div className={"boxes"}>
-                        {calculatedRows.map((item: any) => (
+                        {calculatedRows.length>0 ?calculatedRows.map((item: any) => (
                             <div key={item.id.valueOf()} className="box">
                                 <p>{emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <><Link
                                     to={"/insert_point/" + item.id} state={{
@@ -109,7 +109,7 @@ function ArtworkGallery() {
                                 <p>{item.artType}</p>
                                 {item.author ? item.author : "Unknown Author"}
                             </div>
-                        ))
+                        )):"No artworks added yet."
                         }
                     </div>
                     <Pagination
