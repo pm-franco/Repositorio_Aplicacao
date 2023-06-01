@@ -78,6 +78,7 @@
     padding: 12px;
     text-align: center;
     margin: -15% 6% 5% 6%;
+    border-radius: 8px;
 }
 
 .InsertExtraInfo button:hover:enabled {
