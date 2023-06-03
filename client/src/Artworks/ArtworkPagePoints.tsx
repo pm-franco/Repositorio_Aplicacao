@@ -117,8 +117,16 @@ function ArtworkPagePoints() {
                                     <option key={k["layerName"]} value={JSON.stringify(k)}>{k["layerName"]}</option>)}
                             </select>
                             <div className={"leaf"}>
-                                {emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <>
-                                    <Link  to={"/insert_image_layer/" + id}>Insert Image Layer</Link>
+                                {artwork && emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <>
+                                    <Link
+                                        to={"/insert_point/" + id} state={{
+                                        img: 'data:image/png;base64,' + img,
+                                        artId: id,
+                                        x: artwork["pixelWidth"],
+                                        y: artwork["pixelHeight"],
+                                        pointId: null
+                                    }}>Insert New Point</Link>
+                                    <p><Link  to={"/insert_image_layer/" + id}>Insert Image Layer</Link></p>
                                     <p><Link  to={"/images_layer/" + id}>Check All layers</Link></p></>}
                                 {artwork &&
                                     <LeafLet markers={filteredRows} img={'data:image/png;base64,'+img} x={artwork["pixelWidth"]}

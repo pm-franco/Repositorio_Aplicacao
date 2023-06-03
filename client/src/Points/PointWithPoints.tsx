@@ -12,12 +12,13 @@ function PointWithPoints(){
     const [layerNames, setLayerNames] = useState([])
 
     const [filter, setFilter] = useState("")
-
+    const [emailLogged, setEmailLogged] = useState(localStorage.getItem("email"))
     const [roleLogged, setRoleLogged] = useState(localStorage.getItem("role"))
 
     useEffect(() => {
         setRoleLogged(localStorage.getItem("role"))
-    },[roleLogged])
+        setEmailLogged(localStorage.getItem("email"))
+    },[roleLogged, emailLogged])
 
     useEffect(() => {
         fetch('http://localhost:8080/zoom_point/id/'+id, {
@@ -80,8 +81,16 @@ function PointWithPoints(){
                                 {layerNames && layerNames.map((k) => <option key={k["layerName"]}>{k["layerName"]}</option>)}
                             </select>
                             <div className={"leaf"}>
+                                {point && emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <><p>
+                                    <Link
+                                        to={"/insert_point/" + id} state={{
+                                        img: 'data:image/png;base64,' + point["image"],
+                                        artId: null,
+                                        x: point["pixelWidth"],
+                                        y: point["pixelHeight"],
+                                        pointId: id
+                                    }}>Insert New Point</Link></p></>}
                                 {point && <LeafLet markers={filteredRows} layer={filter} img={'data:image/png;base64,'+ point["image"]} x={point["pixelWidth"]} y={point["pixelHeight"]} id={null}/>}
-                                <p>{(roleLogged === RESEARCHER || roleLogged === ADMIN) && <><Link to={"/edit_point/"+id} state={point && {img:'data:image/png;base64,'+ point["image"], x:point["pixelWidth"], y:point["pixelHeight"], point:point}}>{"Edit Point Data"+ id}</Link></>}</p>
                             </div>
                         </div>
                         <div className={"boxes"}>
