@@ -131,7 +131,6 @@ function ArtworkPagePoints() {
                                     <p><Link to={"/point_zoom/" + item.id}><img style={{maxWidth: 150, maxHeight: 150, objectFit: "scale-down"}} alt={""}
                                             src={'data:image/png;base64,' + item.image}></img></Link></p>
                                     <p>{item.name}</p>
-                                    <p>{item.author ? item.author : "Unknown Author"}</p>
                                     {printInformation(item)}
                                 </div>
                             )):<h3>No points added in this layer.</h3>

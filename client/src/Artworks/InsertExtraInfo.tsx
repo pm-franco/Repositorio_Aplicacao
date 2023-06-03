@@ -1,10 +1,10 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {Link, useLocation, useNavigate, useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertExtraInfo.css";
 import Overlay from "../Extra/Overlay";
 import {checkText} from "../Extra/Helper";
 
-function InsertExtraInfo(props: any) {
+function InsertExtraInfo() {
 
     const {id} = useParams();
     const navigate = useNavigate();
