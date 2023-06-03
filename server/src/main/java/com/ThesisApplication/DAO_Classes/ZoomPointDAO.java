@@ -21,8 +21,8 @@ public class ZoomPointDAO {
     @Column(name = "zoom_id")
     private int id;
 
-    @Column(name = "artwork_id", nullable = false)
-    private int artworkId;
+    @Column(name = "artwork_id")
+    private Integer artworkId;
 
     @Column(name = "position_x", nullable = false)
     private double positionX;
@@ -62,7 +62,7 @@ public class ZoomPointDAO {
     @Column(name = "materials", columnDefinition = "text[]")
     private List<String> materials;
     @Column(name = "zoom_point_id")
-    private int zoomPointId;
+    private Integer zoomPointId;
 
     @Column(name = "pixel_width", nullable = false)
     private double pixelWidth;
@@ -85,7 +85,7 @@ public class ZoomPointDAO {
         this.positionY = positionY;
     }
 
-    public ZoomPointDAO(int artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, Date date, List<String> copyrights, List<String> materials, String user, int zoomPointId, double pixelWidth, double pixelHeight) {
+    public ZoomPointDAO(Integer artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, Date date, List<String> copyrights, List<String> materials, String user, Integer zoomPointId, double pixelWidth, double pixelHeight) {
         this.artworkId = artworkId;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -105,7 +105,7 @@ public class ZoomPointDAO {
         this.pixelHeight = pixelHeight;
     }
 
-    public ZoomPointDAO(int artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, Date date, List<String> copyrights, List<String> materials, String user) {
+    public ZoomPointDAO(Integer artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, Date date, List<String> copyrights, List<String> materials, String user) {
         this.artworkId = artworkId;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -122,7 +122,7 @@ public class ZoomPointDAO {
         this.user = user;
     }
 
-    public ZoomPointDAO(int artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, Date date, List<String> copyrights, List<String> materials) {
+    public ZoomPointDAO(Integer artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, Date date, List<String> copyrights, List<String> materials) {
         this.artworkId = artworkId;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -152,7 +152,7 @@ public class ZoomPointDAO {
         this.materials = materials;
     }
 
-    public ZoomPointDAO(int artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, byte[] image, Date date, List<String> copyrights, List<String> materials) {
+    public ZoomPointDAO(Integer artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, byte[] image, Date date, List<String> copyrights, List<String> materials) {
         this.artworkId = artworkId;
         this.positionX = positionX;
         this.positionY = positionY;
@@ -169,7 +169,7 @@ public class ZoomPointDAO {
         this.materials = materials;
     }
 
-    public ZoomPointDAO(int id, int artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, byte[] image, Date date, List<String> copyrights, List<String> materials) {
+    public ZoomPointDAO(int id, Integer artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, byte[] image, Date date, List<String> copyrights, List<String> materials) {
         this.id = id;
         this.artworkId = artworkId;
         this.positionX = positionX;
@@ -187,7 +187,7 @@ public class ZoomPointDAO {
         this.materials = materials;
     }
 
-    public ZoomPointDAO(int id, int artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, byte[] image, Date date, List<String> copyrights, List<String> materials, int zoomPointId) {
+    public ZoomPointDAO(int id, Integer artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, byte[] image, Date date, List<String> copyrights, List<String> materials, Integer zoomPointId) {
         this.id = id;
         this.artworkId = artworkId;
         this.positionX = positionX;
@@ -206,7 +206,7 @@ public class ZoomPointDAO {
         this.zoomPointId = zoomPointId;
     }
 
-    public ZoomPointDAO(int id, int artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, byte[] image, Date date, List<String> copyrights, List<String> materials, int zoomPointId, double pixelWidth, double pixelHeight) {
+    public ZoomPointDAO(int id, Integer artworkId, double positionX, double positionY, float fileSize, float metricWidth, float metricHeight, String name, String layerName, String author, String technique, byte[] image, Date date, List<String> copyrights, List<String> materials, Integer zoomPointId, double pixelWidth, double pixelHeight) {
         this.id = id;
         this.artworkId = artworkId;
         this.positionX = positionX;
@@ -240,11 +240,11 @@ public class ZoomPointDAO {
         this.id = id;
     }
 
-    public int getArtworkId() {
+    public Integer getArtworkId() {
         return artworkId;
     }
 
-    public void setArtworkId(int artworkId) {
+    public void setArtworkId(Integer artworkId) {
         this.artworkId = artworkId;
     }
 
@@ -360,11 +360,11 @@ public class ZoomPointDAO {
         this.user = user;
     }
 
-    public int getZoomPointId() {
+    public Integer getZoomPointId() {
         return zoomPointId;
     }
 
-    public void setZoomPointId(int zoomPointId) {
+    public void setZoomPointId(Integer zoomPointId) {
         this.zoomPointId = zoomPointId;
     }
 

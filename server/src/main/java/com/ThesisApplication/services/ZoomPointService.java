@@ -33,15 +33,14 @@ public class ZoomPointService {
             return ResponseEntity.badRequest().body("File can't be null");
         if (checkInfo(zoomPoint))
             return ResponseEntity.badRequest().body("Some required information is null or empty.");
-        int zoomPointId = zoomPoint.getZoomPointId();
-        if (zoomPointId == 0) {
+        Integer zoomPointId = zoomPoint.getZoomPointId();
+        if (zoomPointId == null) {
             if(!artworkRepository.existsById(zoomPoint.getArtworkId()))
                 return ResponseEntity.badRequest().body("Artwork does not exist.");
         }else {
             if(!zoomPointRepository.existsById(zoomPointId))
                 return ResponseEntity.badRequest().body("Zoom Point does not exist.");
         }
-
         ResponseEntity response = userService.checkRole(zoomPoint.getUser());
         if (response.getStatusCodeValue() == 400)
             return response;

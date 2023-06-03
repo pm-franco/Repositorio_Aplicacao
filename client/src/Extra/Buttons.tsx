@@ -5,7 +5,7 @@ import "./Buttons.css";
 function Buttons({id, btn1, btn2, btn3, type, artId, pointId}:any) {
 
     function checkBack(){
-        if(artId === 0){
+        if(artId === null){
             return(
                 <>
                     <Link to={"/point/" + pointId}>Go Back</Link>

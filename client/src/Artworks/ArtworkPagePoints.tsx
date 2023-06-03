@@ -91,7 +91,7 @@ function ArtworkPagePoints() {
                 return <><p>
                     <Link to={"/insert_point/" + item.id} state={{
                         img: 'data:image/png;base64,' + item.image,
-                        artId: 0,
+                        artId: null,
                         x: item.pixelWidth,
                         y: item.pixelHeight,
                         pointId: item.id

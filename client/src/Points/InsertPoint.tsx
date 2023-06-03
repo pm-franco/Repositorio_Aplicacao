@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {useLocation, useNavigate, useParams} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import "./InsertPoint.css";
 import AddPointLeafLet from "../LeafLet/AddPointLeafLet";
 import ImageUpload from "../Images/ImageUpload";
@@ -11,8 +11,8 @@ function InsertPoint(props: any) {
     const location = useLocation();
     const navigate = useNavigate();
     const img = location.state.img;
-    const {id} = useParams();
-    const [pointId, setPointId] = useState()
+    const artId = location.state.artId;
+    const pointId = location.state.pointId;
 
     const [position, setPosition] = useState({latitude: 0, longitude: 0});
     const [pointName, setPointName] = useState<String>("");
@@ -42,9 +42,6 @@ function InsertPoint(props: any) {
     },[emailLogged])
 
     useEffect(() => {
-        if (location.state != null) {
-            setPointId(location.state.pointId)
-        }
         fetch('http://localhost:8080/layer/all/', {
             method: 'GET',
             mode: "cors"
@@ -54,7 +51,7 @@ function InsertPoint(props: any) {
             })
             .then(data => setLayerNames(data))
             .catch(r => console.log(r))
-    }, [id, pointId, location.state])
+    }, [])
 
     const toggleOverlayCopyrights = () => {
         setIsOpenCopyrights(!isOpenCopyrights);
@@ -80,7 +77,7 @@ function InsertPoint(props: any) {
         if (selectedImage) {
             formData.append("file", selectedImage);
             formData.append("json", JSON.stringify({
-                "artworkId": id,
+                "artworkId": artId,
                 "positionX": position.longitude,
                 "positionY": position.latitude,
                 "fileSize": fileSize,
@@ -107,17 +104,17 @@ function InsertPoint(props: any) {
             .then(response => {
                 if (response.status === 201) {
                     alert("Zoom Point Created");
-                    navigate("/artworks")
+                    navigate(-1);
                 } else {
                     return response.text()
                 }
             }).then(r => r && setError(r))
             .catch(r => console.log(r))
-    }, [id, pointId , size, emailLogged, selectedImage, position, fileSize, metricWidth, metricHeight, pointName, layerName, researcher, technique, date, copyrights, materials, navigate])
+    }, [artId, pointId , size, emailLogged, selectedImage, position, fileSize, metricWidth, metricHeight, pointName, layerName, researcher, technique, date, copyrights, materials, navigate])
 
 
     function checkParameters() {
-        if (position == null || (position.longitude === 0 && position.latitude === 0) || pointName.length === 0 || researcher.length === 0 || metricWidth === 0 || metricHeight === 0 || selectedImage === undefined || fileSize === 0)
+        if (position == null || (position.longitude === 0 && position.latitude === 0) || pointName.length === 0 || researcher.length === 0 || metricWidth === 0 || metricWidth === undefined || metricHeight === undefined || metricHeight === 0 || selectedImage === undefined || fileSize === 0)
             return true;
         return false;
     }

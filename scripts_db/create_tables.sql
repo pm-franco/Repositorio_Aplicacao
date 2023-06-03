@@ -166,40 +166,41 @@ CREATE SEQUENCE zoom_point_zoom_id_seq;
 
 -- DROP TABLE IF EXISTS public.zoom_point;
 
-CREATE TABLE IF NOT EXISTS public.zoom_point
-(
-    zoom_id bigint NOT NULL DEFAULT nextval('zoom_point_zoom_id_seq'::regclass),
-    position_x double precision NOT NULL,
-    position_y double precision NOT NULL,
-    name character varying COLLATE pg_catalog."default" NOT NULL,
-    file_size real,
-    image bytea NOT NULL,
-    metric_width real NOT NULL,
-    metric_height real NOT NULL,
-    artwork_id bigint NOT NULL,
-    layer_name character varying COLLATE pg_catalog."default" NOT NULL,
-    author character varying COLLATE pg_catalog."default" NOT NULL,
-    date date,
-    technique character varying COLLATE pg_catalog."default",
-    copyrights character varying[] COLLATE pg_catalog."default",
-    materials character varying[] COLLATE pg_catalog."default",
-    zoom_point_id integer,
-    pixel_height double precision NOT NULL,
-    pixel_width double precision NOT NULL,
-    CONSTRAINT zoom_point_pkey PRIMARY KEY (zoom_id)
-)
-
-TABLESPACE pg_default;
-
-ALTER TABLE IF EXISTS public.zoom_point
-    OWNER to postgres;
--- Index: idx_zoom_point_layer
-
--- DROP INDEX IF EXISTS public.idx_zoom_point_layer;
-
-CREATE INDEX IF NOT EXISTS idx_zoom_point_layer
-    ON public.zoom_point USING btree
-    (layer_name COLLATE pg_catalog."default" ASC NULLS LAST)
+CREATE TABLE IF NOT EXISTS public.zoom_point	
+(	
+    zoom_id bigint NOT NULL DEFAULT nextval('zoom_point_zoom_id_seq'::regclass),	
+    position_x double precision NOT NULL,	
+    position_y double precision NOT NULL,	
+    name character varying COLLATE pg_catalog."default" NOT NULL,	
+    file_size real,	
+    image bytea NOT NULL,	
+    metric_width real NOT NULL,	
+    metric_height real NOT NULL,	
+    artwork_id bigint,	
+    layer_name character varying COLLATE pg_catalog."default" NOT NULL,	
+    author character varying COLLATE pg_catalog."default" NOT NULL,	
+    date date,	
+    technique character varying COLLATE pg_catalog."default",	
+    copyrights character varying[] COLLATE pg_catalog."default",	
+    materials character varying[] COLLATE pg_catalog."default",	
+    zoom_point_id integer,	
+    pixel_height double precision NOT NULL,	
+    pixel_width double precision NOT NULL,	
+    CONSTRAINT zoom_point_pkey PRIMARY KEY (zoom_id),	
+    CONSTRAINT zoom_point_artwork_id_fkey FOREIGN KEY (artwork_id)	
+        REFERENCES public.artwork (artwork_id) MATCH SIMPLE	
+        ON UPDATE NO ACTION	
+        ON DELETE NO ACTION	
+        NOT VALID	
+)	
+TABLESPACE pg_default;	
+ALTER TABLE IF EXISTS public.zoom_point	
+    OWNER to postgres;	
+-- Index: idx_zoom_point_layer	
+-- DROP INDEX IF EXISTS public.idx_zoom_point_layer;	
+CREATE INDEX IF NOT EXISTS idx_zoom_point_layer	
+    ON public.zoom_point USING btree	
+    (layer_name COLLATE pg_catalog."default" ASC NULLS LAST)	
     TABLESPACE pg_default;
     
     

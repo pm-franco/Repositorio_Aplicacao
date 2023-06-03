@@ -92,7 +92,13 @@ function ArtworkGallery() {
                         {calculatedRows.map((item: any) => (
                             <div key={item.id.valueOf()} className="box">
                                 <p>{emailLogged !== "" && (roleLogged === RESEARCHER || roleLogged === ADMIN) && <><Link
-                                    to={"/insert_point/" + item.id}>Insert New Point</Link></>}</p>
+                                    to={"/insert_point/" + item.id} state={{
+                                    img: 'data:image/png;base64,' + item.image,
+                                    artId: item.id,
+                                    x: item.pixelWidth,
+                                    y: item.pixelHeight,
+                                    pointId: null
+                                }}>Insert New Point</Link></>}</p>
                                 <p><Link to={"/artwork/" + item.id}>
                                     <img height={setHeight(item.pixelHeight, item.pixelWidth)}
                                          width={setWidth(item.pixelHeight, item.pixelWidth)}
