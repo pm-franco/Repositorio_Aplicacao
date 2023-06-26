@@ -1,4 +1,4 @@
-package com.ThesisApplication.DAO_Classes;
+package com.ThesisApplication.DTOClasses;
 
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.Type;
@@ -10,9 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "equipment")
-@EntityListeners(AuditingEntityListener.class)
 @TypeDef(name = "list-array", typeClass = ListArrayType.class)
-public class EquipmentDAO {
+public class EquipmentDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "b")
@@ -43,9 +42,9 @@ public class EquipmentDAO {
     @Transient
     private String user;
 
-    public EquipmentDAO() {}
+    public EquipmentDTO() {}
 
-    public EquipmentDAO(int id, int zoomPointId, String name, List<String> characteristics, List<String> licenses) {
+    public EquipmentDTO(int id, int zoomPointId, String name, List<String> characteristics, List<String> licenses) {
         this.id = id;
         this.zoomPointId = zoomPointId;
         this.name = name;
@@ -53,14 +52,14 @@ public class EquipmentDAO {
         this.licenses = licenses;
     }
 
-    public EquipmentDAO(int zoomPointId, String name, List<String> characteristics, List<String> licenses) {
+    public EquipmentDTO(int zoomPointId, String name, List<String> characteristics, List<String> licenses) {
         this.zoomPointId = zoomPointId;
         this.name = name;
         this.characteristics = characteristics;
         this.licenses = licenses;
     }
 
-    public EquipmentDAO(int zoomPointId, String name, List<String> characteristics, List<String> licenses, String user) {
+    public EquipmentDTO(int zoomPointId, String name, List<String> characteristics, List<String> licenses, String user) {
         this.zoomPointId = zoomPointId;
         this.name = name;
         this.characteristics = characteristics;
@@ -68,7 +67,7 @@ public class EquipmentDAO {
         this.user = user;
     }
 
-    public EquipmentDAO(int id, String user) {
+    public EquipmentDTO(int id, String user) {
         this.id = id;
         this.user = user;
     }

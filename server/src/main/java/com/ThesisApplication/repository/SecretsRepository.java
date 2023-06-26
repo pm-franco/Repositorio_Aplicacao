@@ -1,11 +1,11 @@
 package com.ThesisApplication.repository;
 
-import com.ThesisApplication.DAO_Classes.SecretsDAO;
+import com.ThesisApplication.DTOClasses.SecretsDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SecretsRepository extends JpaRepository<SecretsDAO, String> {
+public interface SecretsRepository extends JpaRepository<SecretsDTO, String> {
 
-    List<SecretsDAO> findAllByOrderByTypeAsc();
+    List<SecretsDTO> findAllByOrderByTypeAsc();
 }

@@ -1,6 +1,6 @@
 package com.ThesisApplication.controller;
 
-import com.ThesisApplication.DAO_Classes.SecretsDAO;
+import com.ThesisApplication.DTOClasses.SecretsDTO;
 import com.ThesisApplication.services.SecretsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +15,8 @@ public class SecretsController {
     private SecretsService secretsService;
 
     @PostMapping(path = "/")
-    public ResponseEntity<String> postSecret(@RequestBody SecretsDAO secretsDAO) {
-        return secretsService.postSecret(secretsDAO);
+    public ResponseEntity<String> postSecret(@RequestBody SecretsDTO secretsDTO) {
+        return secretsService.postSecret(secretsDTO);
     }
 
     @GetMapping(path = "/{type}")
@@ -25,8 +25,8 @@ public class SecretsController {
     }
 
     @PostMapping(path = "/match")
-    public ResponseEntity matchSecret(@RequestBody SecretsDAO secretsDAO){
-        return secretsService.matchSecret(secretsDAO);
+    public ResponseEntity matchSecret(@RequestBody SecretsDTO secretsDTO){
+        return secretsService.matchSecret(secretsDTO);
     }
 
     @GetMapping("/all")
@@ -35,7 +35,7 @@ public class SecretsController {
     }
 
     @PutMapping(path = "/")
-    public ResponseEntity updateSecret(@RequestBody SecretsDAO secret) {
+    public ResponseEntity updateSecret(@RequestBody SecretsDTO secret) {
         return secretsService.updateSecret(secret);
     }
 }

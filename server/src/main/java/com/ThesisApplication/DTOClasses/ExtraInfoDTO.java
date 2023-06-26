@@ -1,4 +1,4 @@
-package com.ThesisApplication.DAO_Classes;
+package com.ThesisApplication.DTOClasses;
 
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.Type;
@@ -10,9 +10,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "extra_info")
-@EntityListeners(AuditingEntityListener.class)
 @TypeDef(name = "list-array", typeClass = ListArrayType.class)
-public class ExtraInfoDAO {
+public class ExtraInfoDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "d")
@@ -40,34 +39,34 @@ public class ExtraInfoDAO {
     @Transient
     private String user;
 
-    public ExtraInfoDAO(){}
+    public ExtraInfoDTO(){}
 
-    public ExtraInfoDAO(int id, int artworkId) {
+    public ExtraInfoDTO(int id, int artworkId) {
         this.id = id;
         this.artworkId = artworkId;
     }
 
-    public ExtraInfoDAO(int id, int artworkId, List<String> links, List<String> info) {
+    public ExtraInfoDTO(int id, int artworkId, List<String> links, List<String> info) {
         this.id = id;
         this.artworkId = artworkId;
         this.links = links;
         this.info = info;
     }
 
-    public ExtraInfoDAO(int artworkId, List<String> links, List<String> info) {
+    public ExtraInfoDTO(int artworkId, List<String> links, List<String> info) {
         this.artworkId = artworkId;
         this.links = links;
         this.info = info;
     }
 
-    public ExtraInfoDAO(int artworkId, List<String> links, List<String> info, String user) {
+    public ExtraInfoDTO(int artworkId, List<String> links, List<String> info, String user) {
         this.artworkId = artworkId;
         this.links = links;
         this.info = info;
         this.user = user;
     }
 
-    public ExtraInfoDAO(int id, String user) {
+    public ExtraInfoDTO(int id, String user) {
         this.id = id;
         this.user = user;
     }

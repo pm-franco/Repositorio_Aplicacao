@@ -1,4 +1,4 @@
-package com.ThesisApplication.DAO_Classes;
+package com.ThesisApplication.DTOClasses;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -6,8 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "layer_names")
-@EntityListeners(AuditingEntityListener.class)
-public class LayerNameDAO {
+public class LayerNameDTO {
 
     @Id
     @Column(name = "layer_name", nullable = false)
@@ -19,23 +18,23 @@ public class LayerNameDAO {
     @Transient
     private String user;
 
-    public LayerNameDAO(){}
+    public LayerNameDTO(){}
 
-    public LayerNameDAO(String layerName) {
+    public LayerNameDTO(String layerName) {
         this.layerName = layerName;
     }
 
-    public LayerNameDAO(String layerName, Boolean multiplePoints) {
+    public LayerNameDTO(String layerName, Boolean multiplePoints) {
         this.layerName = layerName;
         this.multiplePoints = multiplePoints;
     }
 
-    public LayerNameDAO(String layerName, String user) {
+    public LayerNameDTO(String layerName, String user) {
         this.layerName = layerName;
         this.user = user;
     }
 
-    public LayerNameDAO(String layerName, Boolean multiplePoints, String user) {
+    public LayerNameDTO(String layerName, Boolean multiplePoints, String user) {
         this.layerName = layerName;
         this.multiplePoints = multiplePoints;
         this.user = user;

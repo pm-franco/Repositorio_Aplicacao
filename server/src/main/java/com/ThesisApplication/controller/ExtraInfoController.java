@@ -1,7 +1,7 @@
 package com.ThesisApplication.controller;
 
 
-import com.ThesisApplication.DAO_Classes.ExtraInfoDAO;
+import com.ThesisApplication.DTOClasses.ExtraInfoDTO;
 import com.ThesisApplication.services.ExtraInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +17,7 @@ public class ExtraInfoController {
     private ExtraInfoService extraInfoService;
 
     @PostMapping(path = "/")
-    public ResponseEntity<String> postExtraInfo(@RequestBody ExtraInfoDAO extraInfo) {
+    public ResponseEntity<String> postExtraInfo(@RequestBody ExtraInfoDTO extraInfo) {
         return extraInfoService.postExtraInfo(extraInfo);
     }
 
@@ -27,7 +27,7 @@ public class ExtraInfoController {
     }
 
     @DeleteMapping(path = "/")
-    public ResponseEntity deleteExtraInfo(@RequestBody ExtraInfoDAO extraInfo){
+    public ResponseEntity deleteExtraInfo(@RequestBody ExtraInfoDTO extraInfo){
         return extraInfoService.deleteExtraInfo(extraInfo);
     }
 
@@ -37,7 +37,7 @@ public class ExtraInfoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editEquipment(@PathVariable int id, @RequestBody ExtraInfoDAO extraInfoNewData) {
+    public ResponseEntity editEquipment(@PathVariable int id, @RequestBody ExtraInfoDTO extraInfoNewData) {
         return extraInfoService.editEquipment(id, extraInfoNewData);
     }
 }

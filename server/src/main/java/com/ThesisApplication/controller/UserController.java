@@ -1,6 +1,6 @@
 package com.ThesisApplication.controller;
 
-import com.ThesisApplication.DAO_Classes.UserDAO;
+import com.ThesisApplication.DTOClasses.UserDTO;
 import com.ThesisApplication.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,27 +16,27 @@ public class UserController {
     private UserService userService;
 
     @PostMapping(path= "/")
-    public ResponseEntity<String> postUser(@RequestBody UserDAO userDAO){
-        return userService.postUser(userDAO);
+    public ResponseEntity<String> postUser(@RequestBody UserDTO userDTO){
+        return userService.postUser(userDTO);
     }
 
     @PutMapping("/")
-    public ResponseEntity updateUser(@RequestBody UserDAO userDAO){
-        return userService.updateUser(userDAO);
+    public ResponseEntity updateUser(@RequestBody UserDTO userDTO){
+        return userService.updateUser(userDTO);
     }
 
     @PutMapping("/password")
-    public ResponseEntity updatePassword(@RequestBody UserDAO userDAO){
-        return userService.updatePassword(userDAO);
+    public ResponseEntity updatePassword(@RequestBody UserDTO userDTO){
+        return userService.updatePassword(userDTO);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDAO>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
         return userService.getAllUsers();
     }
 
     @PostMapping("/login")
-    public ResponseEntity Login(@RequestBody UserDAO user) {
+    public ResponseEntity Login(@RequestBody UserDTO user) {
         return userService.Login(user);
     }
 
@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PutMapping (path = "/edit/{email}")
-    public ResponseEntity adminEditRole(@PathVariable String email, @RequestBody UserDAO user){
+    public ResponseEntity adminEditRole(@PathVariable String email, @RequestBody UserDTO user){
         return userService.adminEditRole(email, user);
     }
 }

@@ -1,19 +1,11 @@
 package com.ThesisApplication.services;
 
-import com.ThesisApplication.DAO_Classes.ExtraInfoDAO;
-import com.ThesisApplication.DAO_Classes.LayerDAO;
-import com.ThesisApplication.DAO_Classes.PdfDAO;
-import com.ThesisApplication.DAO_Classes.ZoomPointDAO;
+import com.ThesisApplication.DTOClasses.LayerDTO;
 import com.ThesisApplication.repository.ArtworkRepository;
 import com.ThesisApplication.repository.LayerRepository;
-import com.ThesisApplication.repository.PdfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -32,7 +24,7 @@ public class LayerService {
     @Autowired
     private UserService userService;
 
-    public ResponseEntity postLayer(MultipartFile file, LayerDAO layer){
+    public ResponseEntity postLayer(MultipartFile file, LayerDTO layer){
         if (file == null || file.isEmpty())
             return ResponseEntity.badRequest().body("File cannot be null.");
         if (layer.getLayerName() == null || layer.getLayerName().equals(""))
@@ -43,14 +35,16 @@ public class LayerService {
         if (response.getStatusCodeValue() == 400)
             return response;
         try {
-            layerRepository.save(new LayerDAO(layer.getId(), layer.getLayerName(), file.getBytes(), layer.getDepth(), layer.getArtworkId()));
+            //layerRepository.save(new LayerDTO(layer.getId(), layer.getLayerName(), file.getBytes(), layer.getDepth(), layer.getArtworkId()));
+            layer.setImage(file.getBytes());
+            layerRepository.save(layer);
             return ResponseEntity.status(201).body("Layer added to artwork id : " + layer.getArtworkId());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    public ResponseEntity deleteLayer(LayerDAO layer){
+    public ResponseEntity deleteLayer(LayerDTO layer){
         if(!layerRepository.existsById(layer.getId()))
             return ResponseEntity.badRequest().body("Layer does not exist with such id.");
         ResponseEntity response = userService.checkRole(layer.getUser());
@@ -65,7 +59,7 @@ public class LayerService {
     }
 
     public ResponseEntity getByArtworkId(int id) {
-        List<LayerDAO> layerList = layerRepository.findByArtworkIdOrderByDepthAsc(id);
+        List<LayerDTO> layerList = layerRepository.findByArtworkIdOrderByDepthAsc(id);
 
         if (layerList.isEmpty())
             return ResponseEntity.badRequest().body(null);
@@ -74,14 +68,14 @@ public class LayerService {
     }
 
     public ResponseEntity getById(int id) {
-        Optional<LayerDAO> layerData = layerRepository.findById(id);
+        Optional<LayerDTO> layerData = layerRepository.findById(id);
         if (layerData.isPresent())
             return ResponseEntity.ok().body(layerData.get());
         else
             return ResponseEntity.badRequest().body(null);
     }
 
-    public ResponseEntity editLayerNewFile(int id, MultipartFile file, LayerDAO layerNewData) {
+    public ResponseEntity editLayerNewFile(int id, MultipartFile file, LayerDTO layerNewData) {
         if (file == null || file.isEmpty())
             return ResponseEntity.badRequest().body("File can't be null");
         if (checkInfo(layerNewData))
@@ -95,7 +89,7 @@ public class LayerService {
         return updateLayerData(id, layerNewData, file);
     }
 
-    public ResponseEntity editLayerSameFile(int id, LayerDAO layerNewData) {
+    public ResponseEntity editLayerSameFile(int id, LayerDTO layerNewData) {
         if (checkInfo(layerNewData))
             return ResponseEntity.badRequest().body("Some required information is null or empty.");
         if(!artworkRepository.existsById(layerNewData.getArtworkId()))
@@ -107,9 +101,9 @@ public class LayerService {
         return updateLayerData(id, layerNewData, null);
     }
 
-    private ResponseEntity updateLayerData(int id, LayerDAO layerNewData, MultipartFile file) {
+    private ResponseEntity updateLayerData(int id, LayerDTO layerNewData, MultipartFile file) {
         try {
-            LayerDAO layer = getLayerIfExist(id);
+            LayerDTO layer = getLayerIfExist(id);
 
             if (layer == null)
                 return ResponseEntity.badRequest().body("Layer does not exist.");
@@ -121,7 +115,7 @@ public class LayerService {
             else
                 layerNewData.setImage(file.getBytes());
 
-            final LayerDAO updatedLayer = layerRepository.save(layerNewData);
+            final LayerDTO updatedLayer = layerRepository.save(layerNewData);
             return ResponseEntity.ok(updatedLayer);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -130,11 +124,11 @@ public class LayerService {
         }
     }
 
-    private boolean checkInfo(LayerDAO layer){
+    private boolean checkInfo(LayerDTO layer){
         return layer == null ||  layer.getLayerName() == null || layer.getLayerName().equals("");
     }
 
-    private LayerDAO getLayerIfExist(int id) {
+    private LayerDTO getLayerIfExist(int id) {
         return layerRepository.findById(id).orElse(null);
     }
 }

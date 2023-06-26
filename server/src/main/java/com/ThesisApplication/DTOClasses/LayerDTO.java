@@ -1,4 +1,4 @@
-package com.ThesisApplication.DAO_Classes;
+package com.ThesisApplication.DTOClasses;
 
 import io.hypersistence.utils.hibernate.type.array.ListArrayType;
 import org.hibernate.annotations.Type;
@@ -8,9 +8,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 @Entity
 @Table(name = "layers")
-@EntityListeners(AuditingEntityListener.class)
 @TypeDef(name = "list-array", typeClass = ListArrayType.class)
-public class LayerDAO {
+public class LayerDTO {
 
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ab")
@@ -35,9 +34,9 @@ public class LayerDAO {
         @Transient
         private String user;
 
-        public LayerDAO() {}
+        public LayerDTO() {}
 
-        public LayerDAO(int id, String layerName, byte[] image, int depth, int artworkId) {
+        public LayerDTO(int id, String layerName, byte[] image, int depth, int artworkId) {
                 this.id = id;
                 this.layerName = layerName;
                 this.image = image;
@@ -45,7 +44,7 @@ public class LayerDAO {
                 this.artworkId = artworkId;
         }
 
-        public LayerDAO(int id, String layerName, byte[] image, int depth, int artworkId, String user) {
+        public LayerDTO(int id, String layerName, byte[] image, int depth, int artworkId, String user) {
                 this.id = id;
                 this.layerName = layerName;
                 this.image = image;
@@ -54,12 +53,12 @@ public class LayerDAO {
                 this.user = user;
         }
 
-        public LayerDAO(int id, String user) {
+        public LayerDTO(int id, String user) {
                 this.id = id;
                 this.user = user;
         }
 
-        public LayerDAO(String layerName, int depth, int artworkId, String user) {
+        public LayerDTO(String layerName, int depth, int artworkId, String user) {
                 this.layerName = layerName;
                 this.depth = depth;
                 this.artworkId = artworkId;

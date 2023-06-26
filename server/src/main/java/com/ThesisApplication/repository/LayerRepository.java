@@ -1,12 +1,12 @@
 package com.ThesisApplication.repository;
 
-import com.ThesisApplication.DAO_Classes.LayerDAO;
+import com.ThesisApplication.DTOClasses.LayerDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface LayerRepository extends JpaRepository<LayerDAO, Integer> {
+public interface LayerRepository extends JpaRepository<LayerDTO, Integer> {
 
-    List<LayerDAO> findByArtworkIdOrderByDepthAsc(int artworkId);
+    List<LayerDTO> findByArtworkIdOrderByDepthAsc(int artworkId);
 
 }

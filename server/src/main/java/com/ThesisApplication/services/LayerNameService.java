@@ -1,6 +1,6 @@
 package com.ThesisApplication.services;
 
-import com.ThesisApplication.DAO_Classes.LayerNameDAO;
+import com.ThesisApplication.DTOClasses.LayerNameDTO;
 import com.ThesisApplication.repository.LayerNameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +19,7 @@ public class LayerNameService {
     @Autowired
     private ZoomPointService zoomPointService;
 
-    public ResponseEntity<String> postLayerName(LayerNameDAO layerName){
+    public ResponseEntity<String> postLayerName(LayerNameDTO layerName){
         if(layerName == null || layerName.getLayerName() == null || layerName.getLayerName().equals(""))
             return ResponseEntity.badRequest().body("Layer name cannot be null or empty.");
         if (layerNameRepository.existsById(layerName.getLayerName()))
@@ -28,14 +28,15 @@ public class LayerNameService {
         if (response.getStatusCodeValue() == 400)
             return response;
         try {
-            layerNameRepository.save(new LayerNameDAO(layerName.getLayerName(), layerName.getMultiplePoints()));
+            //layerNameRepository.save(new LayerNameDTO(layerName.getLayerName(), layerName.getMultiplePoints()));
+            layerNameRepository.save(layerName);
             return ResponseEntity.status(201).body(layerName.getLayerName() + " has been added.");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    public ResponseEntity deleteLayerName(LayerNameDAO layer){
+    public ResponseEntity deleteLayerName(LayerNameDTO layer){
         ResponseEntity response = userService.checkRole(layer.getUser());
         if (response.getStatusCodeValue() == 400)
             return response;

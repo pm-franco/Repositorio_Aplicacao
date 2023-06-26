@@ -1,6 +1,6 @@
 package com.ThesisApplication.controller;
 
-import com.ThesisApplication.DAO_Classes.*;
+import com.ThesisApplication.DTOClasses.*;
 import com.ThesisApplication.services.EquipmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ public class EquipmentController {
     private EquipmentService equipmentService;
 
     @PostMapping(path = "/")
-    public ResponseEntity<String> postEquipment(@RequestBody EquipmentDAO equipment) {
+    public ResponseEntity<String> postEquipment(@RequestBody EquipmentDTO equipment) {
         return equipmentService.postEquipment(equipment);
     }
 
@@ -30,12 +30,12 @@ public class EquipmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editEquipment(@PathVariable int id, @RequestBody EquipmentDAO equipmentNewData) {
+    public ResponseEntity editEquipment(@PathVariable int id, @RequestBody EquipmentDTO equipmentNewData) {
         return equipmentService.editEquipment(id, equipmentNewData);
     }
 
     @DeleteMapping(path = "/")
-    public ResponseEntity deleteEquipment(@RequestBody EquipmentDAO equipment){
+    public ResponseEntity deleteEquipment(@RequestBody EquipmentDTO equipment){
         return equipmentService.deleteEquipment(equipment);
     }
 }

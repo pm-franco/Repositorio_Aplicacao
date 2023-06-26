@@ -1,7 +1,7 @@
 package com.ThesisApplication.controller;
 
 
-import com.ThesisApplication.DAO_Classes.ZoomPointDAO;
+import com.ThesisApplication.DTOClasses.ZoomPointDTO;
 import com.ThesisApplication.services.ZoomPointService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +22,17 @@ public class ZoomPointController {
 
     @PostMapping(path = "/")
     public ResponseEntity postZoomPoint(@RequestParam("file") MultipartFile file, @RequestParam("json") String jsonObject) {
-        ZoomPointDAO zoomPoint = g.fromJson(jsonObject, ZoomPointDAO.class);
+        ZoomPointDTO zoomPoint = g.fromJson(jsonObject, ZoomPointDTO.class);
         return zoomPointService.postZoomPoint(file, zoomPoint);
     }
 
     @GetMapping(path = "/artwork_id/{id}")
-    public ResponseEntity<List<ZoomPointDAO>> getByArtworkId(@PathVariable int id) {
+    public ResponseEntity<List<ZoomPointDTO>> getByArtworkId(@PathVariable int id) {
         return zoomPointService.getByArtworkId(id);
     }
 
     @GetMapping(path = "/zoom_point_id/{id}")
-    public ResponseEntity<List<ZoomPointDAO>> getByZoomPointId(@PathVariable int id) {
+    public ResponseEntity<List<ZoomPointDTO>> getByZoomPointId(@PathVariable int id) {
         return zoomPointService.getByZoomPointId(id);
     }
 
@@ -43,17 +43,17 @@ public class ZoomPointController {
 
     @PutMapping("/file/{id}")
     public ResponseEntity editZoomPointNewFile(@PathVariable int id, @RequestParam("file") MultipartFile file, @RequestParam("json") String jsonObject) {
-        ZoomPointDAO zoomPointNewData = g.fromJson(jsonObject, ZoomPointDAO.class);
+        ZoomPointDTO zoomPointNewData = g.fromJson(jsonObject, ZoomPointDTO.class);
         return zoomPointService.editZoomPointNewFile(id,file, zoomPointNewData);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editZoomPointSameFile(@PathVariable int id, @RequestBody ZoomPointDAO zoomPointNewData) {
+    public ResponseEntity editZoomPointSameFile(@PathVariable int id, @RequestBody ZoomPointDTO zoomPointNewData) {
         return zoomPointService.editZoomPointSameFile(id, zoomPointNewData);
     }
 
     @DeleteMapping("/")
-    public ResponseEntity deletePoint(@RequestBody ZoomPointDAO zoomPoint){
+    public ResponseEntity deletePoint(@RequestBody ZoomPointDTO zoomPoint){
         return zoomPointService.deletePoint(zoomPoint);
     }
 }

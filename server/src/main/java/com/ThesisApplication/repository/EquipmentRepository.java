@@ -1,11 +1,11 @@
 package com.ThesisApplication.repository;
 
-import com.ThesisApplication.DAO_Classes.EquipmentDAO;
+import com.ThesisApplication.DTOClasses.EquipmentDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface EquipmentRepository extends JpaRepository<EquipmentDAO, Integer> {
+public interface EquipmentRepository extends JpaRepository<EquipmentDTO, Integer> {
 
-    List<EquipmentDAO> findByZoomPointId(int zoomId);
+    List<EquipmentDTO> findByZoomPointId(int zoomId);
 }

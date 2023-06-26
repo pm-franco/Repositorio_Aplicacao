@@ -1,4 +1,4 @@
-package com.ThesisApplication.DAO_Classes;
+package com.ThesisApplication.DTOClasses;
 
 import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -7,8 +7,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "pdf")
-@EntityListeners(AuditingEntityListener.class)
-public class PdfDAO {
+public class PdfDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "e")
@@ -33,10 +32,10 @@ public class PdfDAO {
     @Transient
     private String user;
 
-    public PdfDAO() {
+    public PdfDTO() {
     }
 
-    public PdfDAO(int id, int artworkId, String name, byte[] file, String link) {
+    public PdfDTO(int id, int artworkId, String name, byte[] file, String link) {
         this.id = id;
         this.artworkId = artworkId;
         this.name = name;
@@ -44,20 +43,20 @@ public class PdfDAO {
         this.link = link;
     }
 
-    public PdfDAO(int artworkId, String name, String link) {
+    public PdfDTO(int artworkId, String name, String link) {
         this.artworkId = artworkId;
         this.name = name;
         this.link = link;
     }
 
-    public PdfDAO(int artworkId, String name, String link, String user) {
+    public PdfDTO(int artworkId, String name, String link, String user) {
         this.artworkId = artworkId;
         this.name = name;
         this.link = link;
         this.user = user;
     }
 
-    public PdfDAO(int id, String user) {
+    public PdfDTO(int id, String user) {
         this.id = id;
         this.user = user;
     }

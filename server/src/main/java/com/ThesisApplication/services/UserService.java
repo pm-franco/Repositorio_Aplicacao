@@ -1,7 +1,7 @@
 package com.ThesisApplication.services;
 
-import com.ThesisApplication.DAO_Classes.SecretsDAO;
-import com.ThesisApplication.DAO_Classes.UserDAO;
+import com.ThesisApplication.DTOClasses.SecretsDTO;
+import com.ThesisApplication.DTOClasses.UserDTO;
 import com.ThesisApplication.controller.Enums;
 import com.ThesisApplication.controller.Enums.Role;
 import com.ThesisApplication.repository.SecretsRepository;
@@ -26,76 +26,78 @@ public class UserService {
     @Autowired
     private SecretsRepository secretsRepository;
 
-    public ResponseEntity<String> postUser(UserDAO userDAO){
-        if(userDAO == null || userDAO.getEmail() == null || userDAO.getEmail().equals("") || userDAO.getPassword() == null || userDAO.getPassword().equals("") ||
-                userDAO.getRole() == null || userDAO.getRole().equals("") || userDAO.getName() == null || userDAO.getName().equals("") || userDAO.getUniversity() == null || userDAO.getUniversity().equals(""))
+    public ResponseEntity<String> postUser(UserDTO userDTO){
+        if(userDTO == null || userDTO.getEmail() == null || userDTO.getEmail().equals("") || userDTO.getPassword() == null || userDTO.getPassword().equals("") ||
+                userDTO.getRole() == null || userDTO.getRole().equals("") || userDTO.getName() == null || userDTO.getName().equals("") || userDTO.getUniversity() == null || userDTO.getUniversity().equals(""))
             return ResponseEntity.badRequest().body("Some required information is null or empty.");
 
-        if(userRepository.existsById(userDAO.getEmail()))
-            return ResponseEntity.badRequest().body(userDAO.getEmail() +" already exists in our system.");
+        if(userRepository.existsById(userDTO.getEmail()))
+            return ResponseEntity.badRequest().body(userDTO.getEmail() +" already exists in our system.");
 
-        if(!secretApproving(userDAO))
+        if(!secretApproving(userDTO))
             return ResponseEntity.badRequest().body("Wrong password for secrets.");
 
         try {
-            userRepository.save(new UserDAO(userDAO.getEmail(), userDAO.getName(), encoder.encode(userDAO.getPassword()), userDAO.getUniversity(), userDAO.getRole()));
-            return ResponseEntity.status(201).body("User created with email: " + userDAO.getEmail());
+            //userRepository.save(new UserDTO(userDTO.getEmail(), userDTO.getName(), encoder.encode(userDTO.getPassword()), userDTO.getUniversity(), userDTO.getRole()));
+            userDTO.setPassword(encoder.encode(userDTO.getPassword()));
+            userRepository.save(userDTO);
+            return ResponseEntity.status(201).body("User created with email: " + userDTO.getEmail());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    public ResponseEntity updateUser(UserDAO userDAO){
-        UserDAO user = getUserIfExist(userDAO.getEmail());
+    public ResponseEntity updateUser(UserDTO userDTO){
+        UserDTO user = getUserIfExist(userDTO.getEmail());
 
         if(user == null)
             return ResponseEntity.badRequest().body("This email does not exist.");
-        if(userDAO == null || userDAO.getEmail() == null || userDAO.getEmail().equals("") || userDAO.getPassword() == null || userDAO.getPassword().equals("") ||
-                userDAO.getRole() == null || userDAO.getRole().equals("") || userDAO.getName() == null || userDAO.getName().equals("") || userDAO.getUniversity() == null || userDAO.getUniversity().equals(""))
+        if(userDTO == null || userDTO.getEmail() == null || userDTO.getEmail().equals("") || userDTO.getPassword() == null || userDTO.getPassword().equals("") ||
+                userDTO.getRole() == null || userDTO.getRole().equals("") || userDTO.getName() == null || userDTO.getName().equals("") || userDTO.getUniversity() == null || userDTO.getUniversity().equals(""))
             return ResponseEntity.badRequest().body("Some required information is null or empty.");
 
         try {
-            user.setName(userDAO.getName());
-            user.setRole(userDAO.getRole());
-            user.setUniversity(userDAO.getUniversity());
+            user.setName(userDTO.getName());
+            user.setRole(userDTO.getRole());
+            user.setUniversity(userDTO.getUniversity());
 
-            final UserDAO updatedUser = userRepository.save(user);
+            final UserDTO updatedUser = userRepository.save(user);
             return ResponseEntity.ok(updatedUser);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    public ResponseEntity updatePassword(UserDAO userDAO){
-        if (userDAO.getNewPw() == null || userDAO.getNewPw().equals(""))
+    public ResponseEntity updatePassword(UserDTO userDTO){
+        if (userDTO.getNewPw() == null || userDTO.getNewPw().equals(""))
             return ResponseEntity.badRequest().body("New password cannot be empty");
-        UserDAO user = getUserIfExist(userDAO.getEmail());
+        UserDTO user = getUserIfExist(userDTO.getEmail());
 
         if(user == null)
             return ResponseEntity.badRequest().body("This email does not exist.");
 
-        if(!encoder.matches(userDAO.getPassword(), user.getPassword()))
+        if(!encoder.matches(userDTO.getPassword(), user.getPassword()))
             return ResponseEntity.badRequest().body("Wrong password.");
 
         try {
-            user.setPassword(encoder.encode(userDAO.getNewPw()));
+            user.setPassword(encoder.encode(userDTO.getNewPw()));
 
-            final UserDAO updatedUser = userRepository.save(user);
+            final UserDTO updatedUser = userRepository.save(user);
             return ResponseEntity.ok(updatedUser);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    public ResponseEntity<List<UserDAO>> getAllUsers() {
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
         return ResponseEntity.ok().body(userRepository.findAll());
     }
 
-    public ResponseEntity Login(UserDAO user) {
+    public ResponseEntity Login(UserDTO user) {
         if(user == null || user.getEmail() == null || user.getEmail().equals("") || user.getPassword() == null || user.getPassword().equals(""))
             return ResponseEntity.badRequest().body("Wrong data.");
 
-        UserDAO u = getUserIfExist(user.getEmail());
+        UserDTO u = getUserIfExist(user.getEmail());
         if(u == null)
             return ResponseEntity.badRequest().body("This email does not exist.");
         if(!encoder.matches(user.getPassword(), u.getPassword()))
@@ -107,7 +109,7 @@ public class UserService {
         if(email == null || email.equals(""))
             return ResponseEntity.badRequest().body("Email can't be null or empty.");
 
-        Optional<UserDAO> userData = userRepository.findById(email);
+        Optional<UserDTO> userData = userRepository.findById(email);
 
         if (userData.isPresent()) {
             return ResponseEntity.ok().body(userData.get());
@@ -116,27 +118,27 @@ public class UserService {
         }
     }
 
-    public ResponseEntity adminEditRole(String email, UserDAO user){
+    public ResponseEntity adminEditRole(String email, UserDTO user){
         if(email == null || email.equals("") || user == null || user.getEmail() == null || user.getEmail().equals("") || user.getPassword() == null || user.getPassword().equals("") || user.getRole() == null || user.getRole().equals(""))
             return ResponseEntity.badRequest().body("Wrong or invalid data.");
-        UserDAO admin = getUserIfExist(user.getEmail());
+        UserDTO admin = getUserIfExist(user.getEmail());
         if (admin == null)
             return ResponseEntity.badRequest().body("Admin does not exist.");
         if (!admin.getRole().equals(Role.admin.name()))
             return ResponseEntity.badRequest().body("Insufficient permissions.");
-        UserDAO userToEdit = getUserIfExist(email);
+        UserDTO userToEdit = getUserIfExist(email);
         if (userToEdit == null)
             return ResponseEntity.badRequest().body("User does not exist with email:" + email + ".");
         if (userToEdit.getRole().equals(Role.admin.name()))
             return ResponseEntity.badRequest().body("Both users have same permissions.");
-        SecretsDAO secret = getSecretIfExist("updateRole");
+        SecretsDTO secret = getSecretIfExist("updateRole");
         if((user.getRole().equals(Role.admin.name()) || user.getRole().equals(Role.researcher.name())) && !encoder.matches(user.getPassword(), secret.getValue()))
             return ResponseEntity.badRequest().body("Wrong secret to update user.");
 
         try {
             userToEdit.setRole(user.getRole());
 
-            final UserDAO updatedUser = userRepository.save(userToEdit);
+            final UserDTO updatedUser = userRepository.save(userToEdit);
             return ResponseEntity.ok(updatedUser);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -144,7 +146,7 @@ public class UserService {
     }
 
     public ResponseEntity checkRole(String email) {
-        UserDAO user = getUserIfExist(email);
+        UserDTO user = getUserIfExist(email);
         if (user == null)
             return ResponseEntity.badRequest().body("User does not exist.");
         String role = user.getRole();
@@ -153,18 +155,18 @@ public class UserService {
         return ResponseEntity.badRequest().body("Insufficient permissions.");
     }
 
-    private UserDAO getUserIfExist(String email) {
+    private UserDTO getUserIfExist(String email) {
         return userRepository.findById(email).orElse(null);
     }
 
-    private SecretsDAO getSecretIfExist(String type) {
+    private SecretsDTO getSecretIfExist(String type) {
         return secretsRepository.findById(type).orElse(null);
     }
 
-    private boolean secretApproving(UserDAO user){
+    private boolean secretApproving(UserDTO user){
         String role = user.getRole();
         if(role.equals(Enums.Role.researcher.name())) {
-            Optional<SecretsDAO> secret = secretsRepository.findById(Enums.Secrets.researcherPassword.name());
+            Optional<SecretsDTO> secret = secretsRepository.findById(Enums.Secrets.researcherPassword.name());
             if(secret.isPresent()){
                 String pw = secret.get().getValue();
                 if (encoder.matches(user.getNewPw(), pw))
@@ -174,7 +176,7 @@ public class UserService {
             }
         }
         if(role.equals(Enums.Role.admin.name())) {
-            Optional<SecretsDAO> secret = secretsRepository.findById(Enums.Secrets.adminPassword.name());
+            Optional<SecretsDTO> secret = secretsRepository.findById(Enums.Secrets.adminPassword.name());
             if(secret.isPresent()){
                 String pw = secret.get().getValue();
                 if (encoder.matches(user.getNewPw(), pw))

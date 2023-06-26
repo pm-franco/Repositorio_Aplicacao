@@ -1,6 +1,6 @@
 package com.ThesisApplication.controller;
 
-import com.ThesisApplication.DAO_Classes.PdfDAO;
+import com.ThesisApplication.DTOClasses.PdfDTO;
 import com.ThesisApplication.services.PdfService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +20,12 @@ public class PdfController {
 
     @PostMapping(path = "/")
     public ResponseEntity<String> postPdf(@RequestParam("file") MultipartFile file, @RequestParam("json") String jsonObject) {
-        PdfDAO pdf = g.fromJson(jsonObject, PdfDAO.class);
+        PdfDTO pdf = g.fromJson(jsonObject, PdfDTO.class);
         return pdfService.postPdf(file, pdf);
     }
 
     @PostMapping(path = "/1")
-    public ResponseEntity postPdf(@RequestBody PdfDAO pdf) {
+    public ResponseEntity postPdf(@RequestBody PdfDTO pdf) {
         return pdfService.postPdf(pdf);
     }
 
@@ -40,7 +40,7 @@ public class PdfController {
     }
 
     @DeleteMapping("/")
-    public ResponseEntity deletePdf(@RequestBody PdfDAO pdf) {
+    public ResponseEntity deletePdf(@RequestBody PdfDTO pdf) {
         return pdfService.deletePdf(pdf);
     }
 }

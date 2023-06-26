@@ -1,6 +1,6 @@
 package com.ThesisApplication.services;
 
-import com.ThesisApplication.DAO_Classes.ArtworkDAO;
+import com.ThesisApplication.DTOClasses.ArtworkDTO;
 import com.ThesisApplication.repository.ArtworkRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +30,7 @@ public class ArtworkService {
     @Autowired
     private ExtraInfoService extraInfoService;
 
-    public ResponseEntity<String> postArtwork(MultipartFile file, ArtworkDAO artwork) {
+    public ResponseEntity<String> postArtwork(MultipartFile file, ArtworkDTO artwork) {
         if (file == null || file.isEmpty())
             return ResponseEntity.badRequest().body("File can't be null.");
 
@@ -42,7 +42,8 @@ public class ArtworkService {
             return response;
 
         try {
-            artworkRepository.save(new ArtworkDAO(artwork.getId(), artwork.getName(), artwork.getAuthor(), artwork.getArtType(), artwork.getSource(), artwork.getInvNumber(), artwork.getSuperCategory(), artwork.getCategory(), artwork.getMatter(), artwork.getInsertedBy(), file.getBytes(), artwork.getDate(), artwork.getWidth(), artwork.getHeight(), artwork.getPixelWidth(), artwork.getPixelHeight()));
+            artwork.setImage(file.getBytes());
+            artworkRepository.save(artwork);
             return ResponseEntity.status(201).body("Artwork created with name: " + artwork.getName());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -53,7 +54,7 @@ public class ArtworkService {
         if (name == null || name.equals(""))
             return ResponseEntity.badRequest().body("Name cannot be null or empty.");
 
-        List<ArtworkDAO> artworkList = artworkRepository.findByName(name);
+        List<ArtworkDTO> artworkList = artworkRepository.findByName(name);
         if (artworkList.isEmpty())
             return ResponseEntity.badRequest().body(null);
         return ResponseEntity.ok().body(artworkList);
@@ -64,7 +65,7 @@ public class ArtworkService {
         if (email == null || email.equals(""))
             return ResponseEntity.badRequest().body("User cannot be null or empty.");
 
-        List<ArtworkDAO> artworkList = artworkRepository.findByInsertedBy(email);
+        List<ArtworkDTO> artworkList = artworkRepository.findByInsertedBy(email);
         if (artworkList.isEmpty())
             return ResponseEntity.badRequest().body(null);
         else
@@ -73,7 +74,7 @@ public class ArtworkService {
 
     public ResponseEntity getById(int id) {
 
-        Optional<ArtworkDAO> artworkData = artworkRepository.findById(id);
+        Optional<ArtworkDTO> artworkData = artworkRepository.findById(id);
 
         if (artworkData.isPresent()) {
             return ResponseEntity.ok().body(artworkData.get());
@@ -82,19 +83,19 @@ public class ArtworkService {
         }
     }
 
-    public ResponseEntity<List<ArtworkDAO>> getAllArtworks() {
-        List<ArtworkDAO> listArtwork = artworkRepository.findAllByOrderByIdAsc();
+    public ResponseEntity<List<ArtworkDTO>> getAllArtworks() {
+        List<ArtworkDTO> listArtwork = artworkRepository.findAllByOrderByIdAsc();
         return ResponseEntity.ok().body(listArtwork);
     }
 
-    public ResponseEntity editArtworkSameFile(int id, ArtworkDAO artworkNewData) {
+    public ResponseEntity editArtworkSameFile(int id, ArtworkDTO artworkNewData) {
         if (checkInfo(artworkNewData))
             return ResponseEntity.badRequest().body("Some required information is null or empty.");
 
         return updateArtworkData(id, artworkNewData, null);
     }
 
-    public ResponseEntity editArtworkNewFile(MultipartFile file, ArtworkDAO artworkNewData, int id) {
+    public ResponseEntity editArtworkNewFile(MultipartFile file, ArtworkDTO artworkNewData, int id) {
         if (file == null || file.isEmpty())
             return ResponseEntity.badRequest().body("File can't be null.");
 
@@ -104,7 +105,7 @@ public class ArtworkService {
         return updateArtworkData(id, artworkNewData, file);
     }
 
-    public ResponseEntity deleteArtwork(@RequestBody ArtworkDAO artwork){
+    public ResponseEntity deleteArtwork(@RequestBody ArtworkDTO artwork){
         int id = artwork.getId();
         if(!artworkRepository.existsById(id))
             return ResponseEntity.badRequest().body("Artwork does not exist with such id.");
@@ -122,10 +123,10 @@ public class ArtworkService {
         }
     }
 
-    private ResponseEntity updateArtworkData(int id, ArtworkDAO artworkNewData, MultipartFile file) {
+    private ResponseEntity updateArtworkData(int id, ArtworkDTO artworkNewData, MultipartFile file) {
         try {
 
-            ArtworkDAO artwork = getArtworkIfExist(id);
+            ArtworkDTO artwork = getArtworkIfExist(id);
             if (artwork == null)
                 return ResponseEntity.badRequest().body("Artwork does not exist.");
 
@@ -142,7 +143,7 @@ public class ArtworkService {
                 artworkNewData.setPixelHeight(artwork.getPixelHeight());
             }
 
-            final ArtworkDAO updatedArtwork = artworkRepository.save(artworkNewData);
+            final ArtworkDTO updatedArtwork = artworkRepository.save(artworkNewData);
             return ResponseEntity.ok(updatedArtwork);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -151,10 +152,10 @@ public class ArtworkService {
         }
     }
 
-    private ArtworkDAO getArtworkIfExist(int id) {
+    private ArtworkDTO getArtworkIfExist(int id) {
         return artworkRepository.findById(id).orElse(null);
     }
-    private boolean checkInfo(ArtworkDAO art) {
+    private boolean checkInfo(ArtworkDTO art) {
         return art == null || art.getName() == null || art.getName().equals("") || art.getArtType() == null || art.getArtType().equals("") || art.getSource() == null || art.getSource().equals("") ||
                 art.getInvNumber() == null || art.getInvNumber().equals("") || art.getSuperCategory() == null || art.getSuperCategory().equals("")
                 || art.getCategory() == null || art.getCategory().equals("") || art.getMatter() == null || art.getMatter().equals("") ||

@@ -1,10 +1,8 @@
 package com.ThesisApplication.repository;
 
-import com.ThesisApplication.DAO_Classes.LayerNameDAO;
+import com.ThesisApplication.DTOClasses.LayerNameDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface LayerNameRepository extends JpaRepository<LayerNameDAO, String> {
+public interface LayerNameRepository extends JpaRepository<LayerNameDTO, String> {
 
 }

@@ -1,15 +1,11 @@
 package com.ThesisApplication.services;
 
-import com.ThesisApplication.DAO_Classes.ExtraInfoDAO;
-import com.ThesisApplication.DAO_Classes.UserDAO;
-import com.ThesisApplication.controller.Enums;
+import com.ThesisApplication.DTOClasses.ExtraInfoDTO;
 import com.ThesisApplication.repository.ArtworkRepository;
 import com.ThesisApplication.repository.ExtraInfoRepository;
-import com.ThesisApplication.repository.PdfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +22,7 @@ public class ExtraInfoService {
     @Autowired
     private UserService userService;
 
-    public ResponseEntity<String> postExtraInfo(ExtraInfoDAO extraInfo) {
+    public ResponseEntity<String> postExtraInfo(ExtraInfoDTO extraInfo) {
         if (extraInfo == null)
             return ResponseEntity.badRequest().body("Extra Info can't be null");
 
@@ -40,7 +36,8 @@ public class ExtraInfoService {
         if (response.getStatusCodeValue() == 400)
             return response;
         try {
-            extraInfoRepository.save(new ExtraInfoDAO(extraInfo.getId(), extraInfo.getArtworkId(), extraInfo.getLinks(), extraInfo.getInfo()));
+            //extraInfoRepository.save(new ExtraInfoDTO(extraInfo.getId(), extraInfo.getArtworkId(), extraInfo.getLinks(), extraInfo.getInfo()));
+            extraInfoRepository.save(extraInfo);
             return ResponseEntity.status(201).body("Extra Info created for artwork with id:" + extraInfo.getArtworkId());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -48,14 +45,14 @@ public class ExtraInfoService {
     }
 
     public ResponseEntity getAllExtraInfoForArtworkId(int id) {
-        List<ExtraInfoDAO> extraInfoList = extraInfoRepository.findByArtworkId(id);
+        List<ExtraInfoDTO> extraInfoList = extraInfoRepository.findByArtworkId(id);
         if (extraInfoList.isEmpty())
             return ResponseEntity.badRequest().body(null);
         else
             return ResponseEntity.ok().body(extraInfoList.get(0));
     }
 
-    public ResponseEntity deleteExtraInfo(ExtraInfoDAO extraInfo){
+    public ResponseEntity deleteExtraInfo(ExtraInfoDTO extraInfo){
         if(!extraInfoRepository.existsById(extraInfo.getId()))
             return ResponseEntity.badRequest().body("Extra info does not exist with such id.");
         ResponseEntity response = userService.checkRole(extraInfo.getUser());
@@ -70,14 +67,14 @@ public class ExtraInfoService {
     }
 
     public ResponseEntity getAllExtraInfoForId(int id) {
-        Optional<ExtraInfoDAO> extraInfoData = extraInfoRepository.findById(id);
+        Optional<ExtraInfoDTO> extraInfoData = extraInfoRepository.findById(id);
         if (extraInfoData.isPresent())
             return ResponseEntity.ok().body(extraInfoData.get());
         else
             return ResponseEntity.badRequest().body(null);
     }
 
-    public ResponseEntity editEquipment(int id, ExtraInfoDAO extraInfoNewData) {
+    public ResponseEntity editEquipment(int id, ExtraInfoDTO extraInfoNewData) {
         if (extraInfoNewData == null)
             return ResponseEntity.badRequest().body("Extra Info can't be null");
 
@@ -91,15 +88,15 @@ public class ExtraInfoService {
         if (response.getStatusCodeValue() == 400)
             return response;
 
-        ExtraInfoDAO extraInfoDAO = getExtraInfoIfExist(id);
-        if (extraInfoDAO == null)
+        ExtraInfoDTO extraInfoDTO = getExtraInfoIfExist(id);
+        if (extraInfoDTO == null)
             return ResponseEntity.badRequest().body("ExtraInfo does not exist.");
 
         try {
-            extraInfoDAO.setLinks(extraInfoNewData.getLinks());
-            extraInfoDAO.setInfo(extraInfoNewData.getInfo());
+            extraInfoDTO.setLinks(extraInfoNewData.getLinks());
+            extraInfoDTO.setInfo(extraInfoNewData.getInfo());
 
-            final ExtraInfoDAO updatedExtraInfo = extraInfoRepository.save(extraInfoDAO);
+            final ExtraInfoDTO updatedExtraInfo = extraInfoRepository.save(extraInfoDTO);
             return ResponseEntity.ok(updatedExtraInfo);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -107,13 +104,13 @@ public class ExtraInfoService {
     }
 
     public void deleteExtraInfoByArtworkId(int id){
-        List<ExtraInfoDAO> extraInfoList = extraInfoRepository.findByArtworkId(id);
+        List<ExtraInfoDTO> extraInfoList = extraInfoRepository.findByArtworkId(id);
         if (!extraInfoList.isEmpty()){
             extraInfoRepository.deleteAll(extraInfoList);
         }
     }
 
-    private ExtraInfoDAO getExtraInfoIfExist(int id) {
+    private ExtraInfoDTO getExtraInfoIfExist(int id) {
         return extraInfoRepository.findById(id).orElse(null);
     }
 }

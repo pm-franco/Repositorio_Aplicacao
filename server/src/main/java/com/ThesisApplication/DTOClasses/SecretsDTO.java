@@ -1,4 +1,4 @@
-package com.ThesisApplication.DAO_Classes;
+package com.ThesisApplication.DTOClasses;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -6,8 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "secrets")
-@EntityListeners(AuditingEntityListener.class)
-public class SecretsDAO {
+public class SecretsDTO {
 
     @Id
     @Column(name = "type", nullable = false)
@@ -20,20 +19,20 @@ public class SecretsDAO {
     @Transient
     private String user;
 
-    public SecretsDAO(){}
+    public SecretsDTO(){}
 
-    public SecretsDAO(String type, String value) {
+    public SecretsDTO(String type, String value) {
         this.type = type;
         this.value = value;
     }
 
-    public SecretsDAO(String type, String value, String user) {
+    public SecretsDTO(String type, String value, String user) {
         this.type = type;
         this.value = value;
         this.user = user;
     }
 
-    public SecretsDAO(String type, String value, String newValue, String user) {
+    public SecretsDTO(String type, String value, String newValue, String user) {
         this.type = type;
         this.value = value;
         this.newValue = newValue;

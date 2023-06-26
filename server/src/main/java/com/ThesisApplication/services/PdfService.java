@@ -1,6 +1,6 @@
 package com.ThesisApplication.services;
 
-import com.ThesisApplication.DAO_Classes.PdfDAO;
+import com.ThesisApplication.DTOClasses.PdfDTO;
 import com.ThesisApplication.repository.ArtworkRepository;
 import com.ThesisApplication.repository.PdfRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PdfService {
     private UserService userService;
 
 
-    public ResponseEntity<String> postPdf(MultipartFile file, PdfDAO pdf) {
+    public ResponseEntity<String> postPdf(MultipartFile file, PdfDTO pdf) {
         if (pdf.getName() == null || pdf.getName().equals(""))
             return ResponseEntity.badRequest().body("Some required information is null or empty.");
 
@@ -41,7 +41,9 @@ public class PdfService {
         if (response.getStatusCodeValue() == 400)
             return response;
         try {
-            pdfRepository.save(new PdfDAO(pdf.getId(), pdf.getArtworkId(), pdf.getName(), getBytes(file), pdf.getLink()));
+            //pdfRepository.save(new PdfDTO(pdf.getId(), pdf.getArtworkId(), pdf.getName(), getBytes(file), pdf.getLink()));
+            pdf.setFile(getBytes(file));
+            pdfRepository.save(pdf);
             return ResponseEntity.status(201).body("Pdf added with name: " + pdf.getName());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -49,7 +51,7 @@ public class PdfService {
     }
 
 
-    public ResponseEntity postPdf(PdfDAO pdf) {
+    public ResponseEntity postPdf(PdfDTO pdf) {
         if (pdf.getName() == null || pdf.getName().equals(""))
             return ResponseEntity.badRequest().body("Some required information is null or empty.");
 
@@ -64,7 +66,7 @@ public class PdfService {
             return response;
 
         try {
-            pdfRepository.save(new PdfDAO(pdf.getId(), pdf.getArtworkId(), pdf.getName(), null, pdf.getLink()));
+            pdfRepository.save(new PdfDTO(pdf.getId(), pdf.getArtworkId(), pdf.getName(), null, pdf.getLink()));
             return ResponseEntity.status(201).body("Pdf added with name: " + pdf.getName());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -72,7 +74,7 @@ public class PdfService {
     }
 
     public ResponseEntity getAllPdfForArtworkId(@PathVariable int id) {
-        List<PdfDAO> pdfList = pdfRepository.findByArtworkId(id);
+        List<PdfDTO> pdfList = pdfRepository.findByArtworkId(id);
         if (pdfList.isEmpty())
             return ResponseEntity.badRequest().body(null);
         else
@@ -80,14 +82,14 @@ public class PdfService {
     }
 
     public ResponseEntity getPdfForId(@PathVariable int id) {
-        Optional<PdfDAO> pdfData = pdfRepository.findById(id);
+        Optional<PdfDTO> pdfData = pdfRepository.findById(id);
         if (pdfData.isPresent())
             return ResponseEntity.ok().body(pdfData.get());
         else
             return ResponseEntity.badRequest().body(null);
     }
 
-    public ResponseEntity deletePdf(@RequestBody PdfDAO pdf){
+    public ResponseEntity deletePdf(@RequestBody PdfDTO pdf){
         if(!pdfRepository.existsById(pdf.getId()))
             return ResponseEntity.badRequest().body("Pdf does not exist with such id.");
         ResponseEntity response = userService.checkRole(pdf.getUser());
@@ -102,7 +104,7 @@ public class PdfService {
     }
 
     public void deletePdfByArtworkId(int id){
-        List<PdfDAO> pdfList = pdfRepository.findByArtworkId(id);
+        List<PdfDTO> pdfList = pdfRepository.findByArtworkId(id);
         if (!pdfList.isEmpty()){
             pdfRepository.deleteAll(pdfList);
         }

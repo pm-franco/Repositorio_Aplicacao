@@ -1,14 +1,13 @@
 package com.ThesisApplication.repository;
 
-import com.ThesisApplication.DAO_Classes.UserDAO;
+import com.ThesisApplication.DTOClasses.UserDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<UserDAO, String> {
+public interface UserRepository extends JpaRepository<UserDTO, String> {
 
-    List<UserDAO> findByEmailAndPassword(String email, String password);
+    List<UserDTO> findByEmailAndPassword(String email, String password);
 
-    List<UserDAO> findByEmailAndRole(String email, String role);
+    List<UserDTO> findByEmailAndRole(String email, String role);
 }

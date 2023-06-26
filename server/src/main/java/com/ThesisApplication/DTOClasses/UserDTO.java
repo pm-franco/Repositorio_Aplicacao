@@ -1,4 +1,4 @@
-package com.ThesisApplication.DAO_Classes;
+package com.ThesisApplication.DTOClasses;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -6,8 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_table")
-@EntityListeners(AuditingEntityListener.class)
-public class UserDAO {
+public class UserDTO {
 
     @Id
     @Column(name = "email", nullable = false)
@@ -20,42 +19,38 @@ public class UserDAO {
     private String university;
     @Column(name = "role", nullable = false)
     private String role;
-
     @Transient
     private String newPw;
-
     @Transient
     private String newRole;
 
-    public UserDAO(){}
+    public UserDTO(String email, String name, String password, String university, String role) {
+        this.email = email;        this.name = name;        this.password = password;
+        this.university = university;        this.role = role;
+    }
 
-    public UserDAO(String email, String password){
+    public UserDTO(){}
+
+    public UserDTO(String email, String password){
         this.email = email;
         this.password = password;
     }
 
-    public UserDAO(String password, String role, String name) {
+    public UserDTO(String password, String role, String name) {
         this.password = password;
         this.role = role;
         this.name = name;
     }
 
-    public UserDAO(String email, String name, String password, String university, String role) {
-        this.email = email;
-        this.name = name;
-        this.password = password;
-        this.university = university;
-        this.role = role;
-    }
-
-    public UserDAO(String email, String name, String university, String role) {
+    public UserDTO(String email, String name, String university, String role) {
         this.email = email;
         this.name = name;
         this.university = university;
         this.role = role;
     }
 
-    public UserDAO(String email, String name, String password, String university, String role, String newPw) {
+    public UserDTO(String email, String name, String password,
+                   String university, String role, String newPw) {
         this.email = email;
         this.name = name;
         this.password = password;

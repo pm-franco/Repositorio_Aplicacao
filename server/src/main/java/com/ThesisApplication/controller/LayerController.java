@@ -1,10 +1,6 @@
 package com.ThesisApplication.controller;
 
-import com.ThesisApplication.DAO_Classes.ArtworkDAO;
-import com.ThesisApplication.DAO_Classes.LayerDAO;
-import com.ThesisApplication.DAO_Classes.LayerNameDAO;
-import com.ThesisApplication.DAO_Classes.ZoomPointDAO;
-import com.ThesisApplication.services.LayerNameService;
+import com.ThesisApplication.DTOClasses.LayerDTO;
 import com.ThesisApplication.services.LayerService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +20,12 @@ public class LayerController {
 
     @PostMapping(path= "/")
     public ResponseEntity<String> postLayer(@RequestParam("file") MultipartFile file, @RequestParam("json") String jsonObject){
-        LayerDAO layer = g.fromJson(jsonObject, LayerDAO.class);
+        LayerDTO layer = g.fromJson(jsonObject, LayerDTO.class);
         return layerService.postLayer(file, layer);
     }
 
     @DeleteMapping(path= "/")
-    public ResponseEntity deleteLayer(@RequestBody LayerDAO layer){
+    public ResponseEntity deleteLayer(@RequestBody LayerDTO layer){
         return layerService.deleteLayer(layer);
     }
 
@@ -45,12 +41,12 @@ public class LayerController {
 
     @PutMapping("/file/{id}")
     public ResponseEntity editLayerNewFile(@PathVariable int id, @RequestParam("file") MultipartFile file, @RequestParam("json") String jsonObject) {
-        LayerDAO layerNewData = g.fromJson(jsonObject, LayerDAO.class);
+        LayerDTO layerNewData = g.fromJson(jsonObject, LayerDTO.class);
         return layerService.editLayerNewFile(id,file, layerNewData);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editLayerSameFile(@PathVariable int id, @RequestBody LayerDAO layerNewData) {
+    public ResponseEntity editLayerSameFile(@PathVariable int id, @RequestBody LayerDTO layerNewData) {
         return layerService.editLayerSameFile(id, layerNewData);
     }
 }

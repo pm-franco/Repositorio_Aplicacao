@@ -1,14 +1,15 @@
 package com.ThesisApplication.repository;
 
-import com.ThesisApplication.DAO_Classes.ArtworkDAO;
+import com.ThesisApplication.DTOClasses.ArtworkDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface ArtworkRepository extends JpaRepository<ArtworkDAO, Integer> {
+public interface ArtworkRepository extends JpaRepository<ArtworkDTO, Integer> {
 
-    List<ArtworkDAO> findAllByOrderByIdAsc();
-    List<ArtworkDAO> findByName(String name);
+    List<ArtworkDTO> findAllByOrderByIdAsc();
+    List<ArtworkDTO> findByName(String name);
 
-    List<ArtworkDAO> findByInsertedBy(String email);
+    List<ArtworkDTO> findByInsertedBy(String email);
 }

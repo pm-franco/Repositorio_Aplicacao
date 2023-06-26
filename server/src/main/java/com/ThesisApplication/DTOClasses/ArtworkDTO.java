@@ -1,4 +1,4 @@
-package com.ThesisApplication.DAO_Classes;
+package com.ThesisApplication.DTOClasses;
 
 import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -9,8 +9,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "artwork")
-@EntityListeners(AuditingEntityListener.class)
-public class ArtworkDAO {
+public class ArtworkDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "a")
@@ -67,9 +66,9 @@ public class ArtworkDAO {
     @Transient
     private String user;
 
-    public ArtworkDAO() {}
+    public ArtworkDTO() {}
 
-    public ArtworkDAO(int id, String name, String author, String artType, String source, String invNumber, String superCategory, String category, String matter, String insertedBy, byte[] image, Date date, double width, double height, double pixelWidth, double pixelHeight) {
+    public ArtworkDTO(int id, String name, String author, String artType, String source, String invNumber, String superCategory, String category, String matter, String insertedBy, byte[] image, Date date, double width, double height, double pixelWidth, double pixelHeight) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -88,7 +87,7 @@ public class ArtworkDAO {
         this.pixelHeight = pixelHeight;
     }
 
-    public ArtworkDAO(String name, String author, String artType, String source, String invNumber, String superCategory, String category, String matter, String insertedBy, Date date, double width, double height, double pixelWidth, double pixelHeight) {
+    public ArtworkDTO(String name, String author, String artType, String source, String invNumber, String superCategory, String category, String matter, String insertedBy, Date date, double width, double height, double pixelWidth, double pixelHeight) {
         this.name = name;
         this.author = author;
         this.artType = artType;
@@ -105,7 +104,7 @@ public class ArtworkDAO {
         this.pixelHeight = pixelHeight;
     }
 
-    public ArtworkDAO(String name, String author, String artType, String source, String invNumber, String superCategory, String category, String matter, Date date, String insertedBy) {
+    public ArtworkDTO(String name, String author, String artType, String source, String invNumber, String superCategory, String category, String matter, Date date, String insertedBy) {
         this.name = name;
         this.author = author;
         this.artType = artType;
@@ -118,7 +117,7 @@ public class ArtworkDAO {
         this.insertedBy = insertedBy;
     }
 
-    public ArtworkDAO(int id, String name, String author, String artType, byte[] image, double pixelWidth, double pixelHeight) {
+    public ArtworkDTO(int id, String name, String author, String artType, byte[] image, double pixelWidth, double pixelHeight) {
         this.id = id;
         this.name = name;
         this.author = author;
@@ -128,13 +127,13 @@ public class ArtworkDAO {
         this.pixelHeight = pixelHeight;
     }
 
-    public ArtworkDAO(int id, String name, byte[] image) {
+    public ArtworkDTO(int id, String name, byte[] image) {
         this.id = id;
         this.name = name;
         this.image = image;
     }
 
-    public ArtworkDAO(String name, String author, String artType, String source, String invNumber, String superCategory, String category, String matter, String insertedBy, byte[] image, Date date, double width, double height, double pixelWidth, double pixelHeight) {
+    public ArtworkDTO(String name, String author, String artType, String source, String invNumber, String superCategory, String category, String matter, String insertedBy, byte[] image, Date date, double width, double height, double pixelWidth, double pixelHeight) {
         this.name = name;
         this.author = author;
         this.artType = artType;
@@ -152,7 +151,7 @@ public class ArtworkDAO {
         this.pixelHeight = pixelHeight;
     }
 
-    public ArtworkDAO(String name, String author, String artType, Date date, String source, String invNumber, String superCategory, String category, String matter, double width, double height) {
+    public ArtworkDTO(String name, String author, String artType, Date date, String source, String invNumber, String superCategory, String category, String matter, double width, double height) {
         this.name = name;
         this.author = author;
         this.artType = artType;
@@ -166,7 +165,7 @@ public class ArtworkDAO {
         this.height = height;
     }
 
-    public ArtworkDAO(int id, String user) {
+    public ArtworkDTO(int id, String user) {
         this.id = id;
         this.user = user;
     }
