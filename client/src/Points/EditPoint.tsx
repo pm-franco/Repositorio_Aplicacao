@@ -10,6 +10,7 @@ function EditPoint(props: any) {
 
     const navigate = useNavigate();
     const [idArtwork, setIdArtwork] = useState(-1);
+    const [idPoint, setIdPoint] = useState(-1);
     const {id} = useParams();
     const [point, setPoint] = useState()
     const [artwork, setArtwork] = useState()
@@ -87,6 +88,7 @@ function EditPoint(props: any) {
                 })
                 .then(data => {
                     setPoint(data);
+                    setIdPoint(data["zoomPointId"]);
                     setIdArtwork(data["artworkId"]);
                 })
                 .catch(r => r)
@@ -98,8 +100,6 @@ function EditPoint(props: any) {
                     .then(response => {
                         if (response.status === 200) {
                             return response.json()
-                        } else {
-                            //navigate("/artworks")
                         }
                     })
                     .then(data => {
@@ -160,6 +160,7 @@ function EditPoint(props: any) {
                 "user": emailLogged,
                 "pixelWidth": size?.width,
                 "pixelHeight": size?.height,
+                "zoomPointId": idPoint
             }))
         fetch('http://localhost:8080/zoom_point/file/'+id, {
             method: 'PUT',
@@ -168,7 +169,6 @@ function EditPoint(props: any) {
         })
             .then(response => {
                 if (response.status === 200) {
-                    alert("Zoom Point Edited.");
                     navigate(-1)
                 } else {
                     return response.text()
@@ -198,7 +198,7 @@ function EditPoint(props: any) {
                     "copyrights": copyrights,
                     "materials": materials,
                     "user": emailLogged,
-                    "zoomPointId": id
+                    "zoomPointId": idPoint
                 })
             })
                 .then(response => {
@@ -211,7 +211,7 @@ function EditPoint(props: any) {
                 }).then(r => r && setError(r))
                 .catch(r => console.log(r))
         }
-    }, [id, idArtwork, emailLogged, selectedImageFile, position, fileSize, metricWidth, metricHeight, size, pointName, layerName, researcher, technique, date, copyrights, materials, navigate])
+    }, [id, idArtwork, idPoint, emailLogged, selectedImageFile, position, fileSize, metricWidth, metricHeight, size, pointName, layerName, researcher, technique, date, copyrights, materials, navigate])
 
 
     function checkParameters() {

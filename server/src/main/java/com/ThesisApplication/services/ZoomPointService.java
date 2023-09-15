@@ -88,12 +88,12 @@ public class ZoomPointService {
             return ResponseEntity.badRequest().body("File can't be null");
         if (checkInfo(zoomPointNewData))
             return ResponseEntity.badRequest().body("Some required information is null or empty.");
-        int zoomPointId = zoomPointNewData.getZoomPointId();
-        if (zoomPointId == 0) {
+        Integer zoomPointIdInteger = zoomPointNewData.getZoomPointId();
+        if (zoomPointIdInteger == null) {
             if(!artworkRepository.existsById(zoomPointNewData.getArtworkId()))
                 return ResponseEntity.badRequest().body("Artwork does not exist.");
         }else {
-            if(!zoomPointRepository.existsById(zoomPointId))
+            if(!zoomPointRepository.existsById(zoomPointIdInteger.intValue()))
                 return ResponseEntity.badRequest().body("Zoom Point does not exist.");
         }
         ResponseEntity response = userService.checkRole(zoomPointNewData.getUser());
@@ -105,12 +105,12 @@ public class ZoomPointService {
     public ResponseEntity editZoomPointSameFile(int id, ZoomPointDTO zoomPointNewData) {
         if (checkInfo(zoomPointNewData))
             return ResponseEntity.badRequest().body("Some required information is null or empty.");
-        int zoomPointId = zoomPointNewData.getZoomPointId();
-        if (zoomPointId == 0) {
+        Integer zoomPointIdInteger = zoomPointNewData.getZoomPointId();
+        if (zoomPointIdInteger == null) {
             if(!artworkRepository.existsById(zoomPointNewData.getArtworkId()))
                 return ResponseEntity.badRequest().body("Artwork does not exist.");
         }else {
-            if(!zoomPointRepository.existsById(zoomPointId))
+            if(!zoomPointRepository.existsById(zoomPointIdInteger.intValue()))
                 return ResponseEntity.badRequest().body("Zoom Point does not exist.");
         }
         ResponseEntity response = userService.checkRole(zoomPointNewData.getUser());

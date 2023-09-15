@@ -82,7 +82,7 @@ function SecretsPage() {
                 <section>
                     <div className={"horizontal-form"}>
                         <div className={"form-section"}>
-                            <h1>Secrets</h1>
+                            <h3 className={"titles"}>Secrets</h3>
                             <p>
                                 <label className={"required"}>Secret to Update</label>
                             </p>
@@ -102,7 +102,7 @@ function SecretsPage() {
                             </p>
                            <p><input type={"password"} placeholder={"write new password"} value={newPassword}
                                    onChange={e => setNewPassword(e.target.value)}/></p>
-                            <button disabled={checkParameters()} onClick={() => updateSecret()}>Update Secret</button>
+                            <button className={"btn"} disabled={checkParameters()} onClick={() => updateSecret()}>Update Secret</button>
                         </div>
                     </div>
                     <p className="error">

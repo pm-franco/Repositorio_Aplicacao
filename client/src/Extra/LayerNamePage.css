@@ -45,7 +45,6 @@
 .LayerName section input,select {
     padding: 10px;
     border: 1px solid black;
-    -webkit-appearance: none;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -59,15 +58,36 @@
     text-align: center;
 }
 
+.LayerName h3.title {
+    font-size:20px;
+    display: flex;
+    flex-flow: column;
+    align-content: center;
+    text-align: center;
+}
+
+.LayerName h3.titles {
+    font-size:20px;
+    margin-left: 20%;
+}
+
 .LayerName h1{
     vertical-align: middle;
     text-align: center;
 }
 
-.LayerName section button {
+.LayerName .btns button {
     width: auto;
     padding: 10px 20px;
     margin: 10px;
+    border: 2px solid black;
+    border-radius: 200px;
+}
+
+.LayerName button.btn {
+    width: 190px;
+    padding: 10px 20px;
+    margin-top: 10px;
     border: 2px solid black;
     border-radius: 200px;
 }

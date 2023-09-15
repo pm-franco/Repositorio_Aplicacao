@@ -6,7 +6,7 @@ function UpdateUserRole() {
 
     const [email, setEmail] = useState("")
     const [newRole, setNewRole] = useState("student")
-    const [pwRole, setPwRole] = useState("user")
+    const [pwRole, setPwRole] = useState("")
 
     const [error, setError] = useState("")
     const navigate = useNavigate();
@@ -46,18 +46,25 @@ function UpdateUserRole() {
             .catch(r => console.log(r))
     }, [email, emailLogged, pwRole, newRole, navigate])
 
+    function checkParameters(){
+        if(email.length === 0 || !email.includes("@") || !email.includes(".")
+            || (newRole !== "student" && pwRole === "" ))
+            return true
+        return false
+    }
+
     return (
         <div className="LayerName">
             <main>
                 <section>
                     <div className={"horizontal-form"}>
                         <div className={"form-section"}>
-                            <h1>Update User Role</h1>
+                            <h3>Update User Role</h3>
                             <p>
                                 <label className={"required"}>User Email</label>
                             </p>
                             <p>
-                                <input type={"text"} placeholder={"user email"} value={email}
+                                <input type={"email"} placeholder={"user email"} value={email}
                                        onChange={e => setEmail(e.target.value)}/>
                             </p>
                             <p>
@@ -73,13 +80,13 @@ function UpdateUserRole() {
                             </p>
                             <p>
                                 {(newRole === "researcher" || newRole === "admin") ?
-                                    <label>Secret Password</label> : null}
+                                    <label className={"required"}>Secret Password</label> : null}
                                 {(newRole === "researcher" || newRole === "admin") ?
                                     <input type={"password"} placeholder={"secret password"}
                                            onChange={e => setPwRole(e.target.value)}/> : null}
                             </p>
                             <div className={"prevs"}>
-                                <button disabled={email === ""} onClick={() => {
+                                <button className={"btn"} disabled={checkParameters()} onClick={() => {
                                     updateUserRole()
                                 }}>Update User Role
                                 </button>

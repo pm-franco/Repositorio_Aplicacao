@@ -122,7 +122,7 @@ function LayerName() {
                                     <option value={"true"}>True</option>
                                 </select>
                             </p>
-                            <button disabled={name === ""} onClick={handleClick}>Insert</button>
+                            <button className={"btn"} disabled={name === ""} onClick={handleClick}>Insert</button>
                             <p/>
                         </div>
                     </div>
@@ -130,31 +130,35 @@ function LayerName() {
                 <section>
                     <div className={"horizontal-form"}>
                         <div className={"form-section"}>
-                            <h3>Available Layer Names</h3>
-                            <table border={2} cellPadding={15}>
-                                <thead>
-                                <tr>
-                                    <th>Layer Name</th>
-                                    <th>Allow Points</th>
-                                    <th>Remove</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {layerNames.map((value: any) => {
-                                    return (
-                                        <tr key={value["layerName"]}>
-                                            <td>{value["layerName"]}</td>
-                                            <td>{value["multiplePoints"] === true ? "Yes" : "No"}</td>
-                                            <td>
-                                                <button onClick={() => handleDelete(value["layerName"])}>Delete</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })}
-                                </tbody>
-                            </table>
-                            <p className="error">
-                                {error.length > 0 && setTimeout(() => setError(""), 2000) && error}</p>
+                            <div className={"btns"}>
+
+                                <h3 className={"title"}>Available Layer Names</h3>
+                                <table border={2} cellPadding={15}>
+                                    <thead>
+                                    <tr>
+                                        <th>Layer Name</th>
+                                        <th>Allow Points</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {layerNames.map((value: any) => {
+                                        return (
+                                            <tr key={value["layerName"]}>
+                                                <td>{value["layerName"]}</td>
+                                                <td>{value["multiplePoints"] === true ? "Yes" : "No"}</td>
+                                                <td>
+                                                    <button onClick={() => handleDelete(value["layerName"])}>Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })}
+                                    </tbody>
+                                </table>
+                                <p className="error">
+                                    {error.length > 0 && setTimeout(() => setError(""), 2000) && error}</p>
+                            </div>
                         </div>
                     </div>
                 </section>

@@ -76,7 +76,7 @@ function PointWithPoints(){
                     <div className={"row"}>
                         <div className={"column"}>
                             <Link to={"/artwork_points/" + (point && point["artworkId"])}>Go Back</Link>
-                            <h3>Available points for zoom point {point && point["name"]}</h3>
+                            <h3>Select a layer</h3>
                             <select onChange={e => setFilter(e.target.value)}>
                                 {layerNames && layerNames.map((k) => <option key={k["layerName"]}>{k["layerName"]}</option>)}
                             </select>

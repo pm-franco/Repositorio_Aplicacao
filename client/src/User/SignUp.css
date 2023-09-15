@@ -62,7 +62,6 @@
 .SignUp section input,select, option {
     padding: 10px;
     border: 1px solid black;
-    -webkit-appearance: none;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

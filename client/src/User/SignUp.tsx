@@ -13,7 +13,6 @@ function SignUp() {
     const [pw, setPw] = useState("")
     const [pwConf, setPwConf] = useState("")
     const [error, setError] = useState("")
-    const [role, setRole] = useState("student")
 
     const CreateUser = useCallback( () => {
         fetch('http://localhost:8080/user/', {
@@ -26,13 +25,12 @@ function SignUp() {
                 "name": name,
                 "password": pw,
                 "university": inst,
-                "role" : role
+                "role" : "student"
             })
         })
             .then(response =>
             {
                 if(response.status === 201){
-                    alert("User Created")
                     navigate("/login")
                 }
                 else{
@@ -40,7 +38,7 @@ function SignUp() {
                 }
             }).then(r=> r && setError(r))
             .catch(r=> console.log(r))
-    }, [inst, name, email, role, pw, navigate])
+    }, [inst, name, email, pw, navigate])
 
     function checkParameters(){
         if(name.length === 0 || email.length === 0 || !email.includes("@") || !email.includes(".")
@@ -72,19 +70,16 @@ function SignUp() {
                                    onChange={onInputChange} required={true}/>
                             <label className={"required"}> Email </label>
                             <input type="email" onChange={e=>setEmail(e.target.value)} required={true}/>
-                            <label className={"required"}> Password </label>
-                            <input type="password" onChange={e=> setPw(e.target.value)}required={true}/>
-                            <label className={"required"}> Password Confirmation </label>
-                            <input type="password" onChange={e=> setPwConf(e.target.value)}required={true}/>
+
                             <label className={"required"}> Institution </label>
                             <select onChange={e=> setInst(e.target.value)}>{insts.length> 0? insts.map((s) => <option key={s}>{s}</option>) : <option key={0}>{"No Institutions Registed"}</option>}</select>
                         </div>
                         <div className="form-break"></div>
                         <div className="form-section">
-                            <label className={"required"}>User Type </label>
-                            <select name="select" id="selectedUser" value = {role} onChange={e=> setRole(e.target.value)} >
-                                <option value="student"> Student</option>
-                            </select>
+                            <label className={"required"}> Password </label>
+                            <input type="password" onChange={e=> setPw(e.target.value)}required={true}/>
+                            <label className={"required"}> Password Confirmation </label>
+                            <input type="password" onChange={e=> setPwConf(e.target.value)}required={true}/>
                         </div>
                     </form>
                 </>

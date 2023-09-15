@@ -111,7 +111,7 @@ function ArtworkPagePoints() {
                 <section>
                     <div className={"row"}>
                         <div className={"column"}>
-                            <h3>Points in {artwork && artwork["name"]}</h3>
+                            <h3>Select a layer</h3>
                             <select onChange={e => handleSearch(e.target.value)}>
                                 {layerNames && layerNames.map((k) =>
                                     <option key={k["layerName"]} value={JSON.stringify(k)}>{k["layerName"]}</option>)}
@@ -127,7 +127,7 @@ function ArtworkPagePoints() {
                                         pointId: null
                                     }}>Insert New Point</Link>
                                     <p><Link  to={"/insert_image_layer/" + id}>Insert Image Layer</Link></p>
-                                    <p><Link  to={"/images_layer/" + id}>Check All layers</Link></p></>}
+                                    <p><Link  to={"/images_layer/" + id}>Available Image Layers</Link></p></>}
                                 {artwork &&
                                     <LeafLet markers={filteredRows} img={'data:image/png;base64,'+img} x={artwork["pixelWidth"]}
                                              y={artwork["pixelHeight"]} id={id}/>}
