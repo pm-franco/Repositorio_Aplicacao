@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/secrets")
-@CrossOrigin(origins = "http://localhost:3000")
+
 public class SecretsController {
 
     @Autowired
@@ -38,4 +38,6 @@ public class SecretsController {
     public ResponseEntity updateSecret(@RequestBody SecretsDTO secret) {
         return secretsService.updateSecret(secret);
     }
+
+
 }

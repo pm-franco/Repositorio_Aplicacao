@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertEquipment.css";
 import Overlay from "../Extra/Overlay";
-import {checkText} from "../Extra/Helper";
+import {API_BASE_URL, checkText} from "../Extra/Helper";
 
 function EditEquipment(props: any) {
 
@@ -48,9 +48,8 @@ function EditEquipment(props: any) {
     }, [emailLogged, navigate])
 
     useEffect(() => {
-        fetch('http://localhost:8080/equipment/id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'equipment/id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 if (response.status === 200) {
@@ -75,9 +74,8 @@ function EditEquipment(props: any) {
     };
 
     const UpdateEquipment = useCallback(() => {
-        fetch('http://localhost:8080/equipment/' + id, {
+        fetch(API_BASE_URL+'equipment/' + id, {
             method: 'put',
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
@@ -91,7 +89,6 @@ function EditEquipment(props: any) {
         })
             .then(response => {
                 if (response.status === 200) {
-                    alert("Equipment Updated")
                     navigate(-1)
                 } else {
                     return response.text()

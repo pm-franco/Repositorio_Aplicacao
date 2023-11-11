@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertArtwork.css";
-import {handleFloats} from "../Extra/Helper";
+import {API_BASE_URL, handleFloats} from "../Extra/Helper";
 import ImageUpload from "../Images/ImageUpload";
 
 function InsertImageLayer() {
@@ -26,9 +26,8 @@ function InsertImageLayer() {
                 "artworkId": id,
                 "user": emailLogged
             }))
-            fetch('http://localhost:8080/image_layer/', {
+            fetch(API_BASE_URL+'image_layer/', {
                 method: 'POST',
-                mode: "cors",
                 body: formData
             })
                 .then(response => {

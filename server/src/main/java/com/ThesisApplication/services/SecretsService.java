@@ -30,7 +30,6 @@ public class SecretsService {
         if (response.getStatusCodeValue() == 400)
             return response;
         try {
-            //secretsRepository.save(new SecretsDTO(secretsDTO.getType(), encoder.encode(secretsDTO.getValue())));
             secretsDTO.setValue(encoder.encode(secretsDTO.getValue()));
             secretsRepository.save(secretsDTO);
             return ResponseEntity.status(201).body("Secret added.");

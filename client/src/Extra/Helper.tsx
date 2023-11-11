@@ -4,9 +4,11 @@ export const ARTWORK = "artwork";
 export const POINT = "point";
 export const RESEARCHER = "researcher";
 export const ADMIN = "admin";
-export const insts = ["FCT", "Teste", "ABC"]
+export const UNIVERSITIES = ["NOVA FCT"]
 export const GREETING = "Digital Twin Collection";
 export const ArtTypes = ['Painting', 'Sculpture', 'Enamel', 'Glazed Painted Ceramic'];
+export const API_BASE_URL = 'http://193.136.122.84/api/';
+export const re = /^[A-Za-z ]+$/;
 
 export interface ImageSize {
     width: number,

@@ -1,12 +1,11 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate, useLocation} from 'react-router-dom';
 import "./SignUp.css";
-import {ADMIN, RESEARCHER} from "../Extra/Helper";
+import {ADMIN, API_BASE_URL, re, RESEARCHER, UNIVERSITIES} from "../Extra/Helper";
 
 function EditProfile(){
 
     const navigate = useNavigate();
-    const insts = ["FCT", "Teste", "ABC"]
     const [person, setPerson] = useState()
     const location = useLocation();
 
@@ -21,9 +20,8 @@ function EditProfile(){
     useEffect(() => {
         if(emailLogged === null || emailLogged === "" )
             navigate("/")
-        fetch('http://localhost:8080/user/email/'+emailLogged, {
-            method: 'get',
-            mode: "cors"
+        fetch(API_BASE_URL+'user/email/'+emailLogged, {
+            method: 'GET'
         })
             .then(response => response.json())
             .then(data =>  setPerson(data))
@@ -44,16 +42,14 @@ function EditProfile(){
     const onInputChange = (e:any) => {
         const { value } = e.target;
 
-        const re = /^[A-Za-z]+$/;
         if (value === "" || re.test(value)) {
             setName(value);
         }
     }
 
     const EditUser = useCallback( () => {
-        fetch('http://localhost:8080/user/', {
+        fetch(API_BASE_URL+'user/', {
             method: 'put',
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
@@ -67,7 +63,6 @@ function EditProfile(){
             .then(response =>
             {
                 if(response.status === 200){
-                    alert("User Data Changed")
                     navigate("/person/" + emailLogged)
                 }
                 else{
@@ -79,9 +74,8 @@ function EditProfile(){
     }, [inst, name, emailLogged, role, navigate, pwL])
 
     const ChangePassword = useCallback( () => {
-        fetch('http://localhost:8080/user/password', {
+        fetch(API_BASE_URL+'user/password', {
             method: 'put',
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
@@ -93,7 +87,6 @@ function EditProfile(){
             .then(response =>
             {
                 if(response.status === 200){
-                    alert("Password Changed")
                     navigate("/person/" + emailLogged)
                 }
                 else{
@@ -105,15 +98,12 @@ function EditProfile(){
     }, [emailLogged, navigate, pwR, newPw])
 
     function checkParameters(){
-        if(name.length === 0 || pwL.length === 0)
-            return true
-        return false
+        return name.length === 0 || pwL.length === 0;
+
     }
 
     function checkPwParameters(){
-        if(pwR.length === 0 || newPw.length === 0 || newPwConf.length === 0 || newPw !== newPwConf)
-            return true
-        return false
+        return pwR.length === 0 || newPw.length === 0 || newPwConf.length === 0 || newPw !== newPwConf;
     }
 
     return(
@@ -128,7 +118,7 @@ function EditProfile(){
                                        defaultValue={name}
                                        onChange={onInputChange}/>
                                 <label> Institution</label>
-                                <select defaultValue={inst} onChange={e=> setInst(e.target.value)}>{insts.map((s) => <option key={s}>{s}</option>)}</select>
+                                <select defaultValue={inst} onChange={e=> setInst(e.target.value)}>{UNIVERSITIES.map((s) => <option key={s}>{s}</option>)}</select>
                                 <label>User type </label>
                                 <select defaultValue={role} onChange={e=> setRole(e.target.value)}>
                                     <option value="student"> Student</option>

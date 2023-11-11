@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import "./LayerNamePage.css";
 import {useNavigate} from "react-router-dom";
-import {ADMIN} from "./Helper";
+import {ADMIN, API_BASE_URL} from "./Helper";
 import OverlayPassword from "./OverlayPassword";
 
 function LayerName() {
@@ -29,9 +29,8 @@ function LayerName() {
     }, [roleLogged, navigate])
 
     useEffect(() => {
-        fetch('http://localhost:8080/layer/all/', {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'layer/all/', {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -41,9 +40,8 @@ function LayerName() {
     }, [layerNames])
 
     const deleteLayer = useCallback(() => {
-        fetch('http://localhost:8080/layer/', {
+        fetch(API_BASE_URL+'layer/', {
             method: "delete",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
@@ -63,9 +61,8 @@ function LayerName() {
     }, [emailLogged, id])
 
     const addLayer = useCallback(() => {
-        fetch('http://localhost:8080/layer/', {
+        fetch(API_BASE_URL+'layer/', {
             method: "post",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),

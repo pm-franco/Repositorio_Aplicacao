@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertArtwork.css";
-import {ArtTypes, ImageSize} from "../Extra/Helper";
+import {ArtTypes,API_BASE_URL, ImageSize} from "../Extra/Helper";
 import ImageUpload from "../Images/ImageUpload";
 
 function EditArtwork(props: any) {
@@ -61,9 +61,8 @@ function EditArtwork(props: any) {
 
     useEffect(() => {
 
-        fetch('http://localhost:8080/artwork/id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'artwork/id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 if (response.status === 200) {
@@ -98,14 +97,12 @@ function EditArtwork(props: any) {
                 "pixelHeight": size?.height,
                 "insertedBy": emailLogged
             }))
-            fetch('http://localhost:8080/artwork/file/' + id, {
+            fetch(API_BASE_URL+'artwork/file/' + id, {
                 method: 'PUT',
-                mode: "cors",
                 body: formData
             })
                 .then(response => {
                     if (response.status === 200) {
-                        alert("Artwork Edited");
                         navigate(-1)
                     } else {
                         return response.text()
@@ -113,9 +110,8 @@ function EditArtwork(props: any) {
                 }).then(r => r && setError(r))
                 .catch(r => console.log(r))
         } else {
-            fetch('http://localhost:8080/artwork/' + id, {
+            fetch(API_BASE_URL+'artwork/' + id, {
                 method: 'PUT',
-                mode: "cors",
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
@@ -138,7 +134,6 @@ function EditArtwork(props: any) {
             })
                 .then(response => {
                     if (response.status === 200) {
-                        alert("Artwork Edited");
                         navigate(-1)
                     } else {
                         return response.text()

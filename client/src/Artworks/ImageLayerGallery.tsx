@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import "./ArtworkPage.css";
 import {Pagination} from "../Extra/Pagination";
-import {ADMIN, RESEARCHER} from "../Extra/Helper";
+import {ADMIN, RESEARCHER,API_BASE_URL} from "../Extra/Helper";
 import OverlayPassword from "../Extra/OverlayPassword";
 
 function ImageLayerGallery() {
@@ -15,9 +15,8 @@ function ImageLayerGallery() {
     const [idLayer, setIdLayer] = useState()
 
     useEffect(() => {
-            fetch('http://localhost:8080/image_layer/artwork_id/' + artId, {
+            fetch(API_BASE_URL+'image_layer/artwork_id/' + artId, {
                 method: 'GET',
-                mode: 'cors',
                 headers: {'Content-Type': 'application/json'},
             })
                 .then(response => {
@@ -49,9 +48,8 @@ function ImageLayerGallery() {
     };
 
     const deleteLayer = useCallback(() => {
-        fetch('http://localhost:8080/image_layer/', {
+        fetch(API_BASE_URL+'image_layer/', {
             method: "delete",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),

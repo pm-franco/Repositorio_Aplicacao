@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import "../Artworks/ArtworkPagePoints.css";
 import LeafLet from "../LeafLet/LeafLet";
-import {ADMIN, RESEARCHER} from "../Extra/Helper";
+import {ADMIN, API_BASE_URL, RESEARCHER} from "../Extra/Helper";
 
 function PointWithPoints(){
 
@@ -21,9 +21,8 @@ function PointWithPoints(){
     },[roleLogged, emailLogged])
 
     useEffect(() => {
-        fetch('http://localhost:8080/zoom_point/id/'+id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'zoom_point/id/'+id, {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -31,9 +30,8 @@ function PointWithPoints(){
             .then(data =>setPoint(data))
             .catch(r => r)
 
-        fetch('http://localhost:8080/layer/all/', {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'layer/all/', {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -45,9 +43,8 @@ function PointWithPoints(){
     },[point, id, filter])
 
     useEffect(() => {
-        fetch('http://localhost:8080/zoom_point/zoom_point_id/'+id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'zoom_point/zoom_point_id/'+id, {
+            method: 'GET'
         })
             .then(response => {
                 if(response.ok)

@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/image_layer")
-@CrossOrigin(origins = "http://localhost:3000")
 public class LayerController {
 
     @Autowired

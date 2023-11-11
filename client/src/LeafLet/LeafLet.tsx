@@ -9,6 +9,7 @@ import 'leaflet/dist/leaflet.css';
 import "./LeafLet.css"
 import React, {useEffect, useRef, useState} from "react";
 import L, {CRS, LatLngBounds} from 'leaflet';
+import {API_BASE_URL} from "../Extra/Helper";
 
 function LeafLet(props: any) {
 
@@ -20,9 +21,8 @@ function LeafLet(props: any) {
 
     useEffect(() => {
         if(artId) {
-            fetch('http://localhost:8080/image_layer/artwork_id/' + artId, {
+            fetch(API_BASE_URL+'image_layer/artwork_id/' + artId, {
                 method: 'GET',
-                mode: 'cors',
                 headers: {'Content-Type': 'application/json'},
             })
                 .then(response => {

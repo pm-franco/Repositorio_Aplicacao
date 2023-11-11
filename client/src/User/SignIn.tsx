@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import "./SignIn.css";
+import {API_BASE_URL} from "../Extra/Helper";
 
 function SignIn({handleData}:any) {
 
@@ -17,9 +18,8 @@ function SignIn({handleData}:any) {
     },[emailStorage, navigate])
 
     const Login = useCallback( () => {
-        fetch('http://localhost:8080/user/login', {
-            method: 'post',
-            mode: "cors",
+        fetch(API_BASE_URL+'user/login', {
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({  "email": email,
                 "password": pw

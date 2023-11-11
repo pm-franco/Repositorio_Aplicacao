@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import "./InsertArtwork.css";
 import ImageUpload from "../Images/ImageUpload";
-import {ArtTypes, ImageSize} from "../Extra/Helper";
+import {API_BASE_URL, ArtTypes, ImageSize} from "../Extra/Helper";
 
 function InsertArtwork(){
 
@@ -56,15 +56,13 @@ function InsertArtwork(){
                 "insertedBy": emailLogged
             }))
         }
-       fetch('http://localhost:8080/artwork/', {
+       fetch(API_BASE_URL+'artwork/', {
             method: 'POST',
-           mode: "cors",
             body: formData
         })
             .then(response =>
             {
                 if(response.status === 201){
-                    alert("Artwork Created");
                     navigate("/artworks")
                 }
                 else{

@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import "./PointPage.css";
-import {ADMIN, RESEARCHER, setDate} from "../Extra/Helper";
+import {ADMIN, API_BASE_URL, RESEARCHER, setDate} from "../Extra/Helper";
 import OverlayPassword from "../Extra/OverlayPassword";
 import Buttons from "../Extra/Buttons";
 
@@ -21,9 +21,8 @@ function PointPage() {
     }, [emailLogged, roleLogged])
 
     useEffect(() => {
-        fetch('http://localhost:8080/zoom_point/id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'zoom_point/id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -33,9 +32,8 @@ function PointPage() {
     }, [point, id])
 
     const deletePoint = useCallback(() => {
-        fetch('http://localhost:8080/zoom_point/', {
+        fetch(API_BASE_URL+'zoom_point/', {
             method: "delete",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),

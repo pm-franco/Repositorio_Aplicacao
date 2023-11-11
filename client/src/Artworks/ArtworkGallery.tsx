@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import "./ArtworkGallery.css";
 import {Pagination} from "../Extra/Pagination";
-import {ADMIN, ArtTypes, RESEARCHER, setHeight, setWidth} from "../Extra/Helper";
+import {ADMIN, ArtTypes, RESEARCHER,API_BASE_URL, setHeight, setWidth} from "../Extra/Helper";
 
 function ArtworkGallery() {
 
@@ -11,9 +11,8 @@ function ArtworkGallery() {
     const roleLogged = localStorage.getItem("role")
 
     useEffect(() => {
-        fetch('http://localhost:8080/artwork/all', {
+        fetch(API_BASE_URL+'artwork/all', {
             method: 'GET',
-            mode: 'cors',
             headers: {'Content-Type':'application/json'},
         })
             .then(response => {
@@ -23,19 +22,21 @@ function ArtworkGallery() {
             .catch(r => console.log(r))
     }, [artworks])
 
-    const [activePage, setActivePage] = useState(1)
     const [filter, setFilter] = useState()
     const [filterSelect, setFilterSelect] = useState()
+
+    const [activePage, setActivePage] = useState(1)
     const rowsPerPage = 8
 
     const filteredRows = filterRows(artworks, filter, filterSelect)
+
+    const count = filteredRows.length
+    const totalPages = Math.ceil(count / rowsPerPage)
 
     const calculatedRows = filteredRows.slice(
         (activePage - 1) * rowsPerPage,
         activePage * rowsPerPage
     )
-    const count = filteredRows.length
-    const totalPages = Math.ceil(count / rowsPerPage)
 
     const handleSearch = (value: any, type: any) => {
         setActivePage(1)
@@ -59,20 +60,15 @@ function ArtworkGallery() {
     function filterRows(rows: any, filter: any, filterSelect: any) {
         if ((!filter || filter.length === 0) && (!filterSelect || filterSelect.length === 0)) return rows
 
-        if (filter && !filterSelect) {
-            return rows.filter((row: any) => {
-                return (row.name.toLowerCase()).includes(filter.toLowerCase())
-            })
+        if (filter && !filterSelect) { return rows.filter((row: any) => {
+                return (row.name.toLowerCase()).includes(filter.toLowerCase()) })
         }
-        if (filterSelect && !filter) {
-            return rows.filter((row: any) => {
+        if (filterSelect && !filter) { return rows.filter((row: any) => {
+                return (row.artType.toLowerCase()).includes(filterSelect.toLowerCase()) })
+        }
+        if (filterSelect && filter) { return rows.filter((row: any) => {
                 return (row.artType.toLowerCase()).includes(filterSelect.toLowerCase())
-            })
-        }
-        if (filterSelect && filter) {
-            return rows.filter((row: any) => {
-                return (row.artType.toLowerCase()).includes(filterSelect.toLowerCase()) && (row.name.toLowerCase()).includes(filter.toLowerCase())
-            })
+                    && (row.name.toLowerCase()).includes(filter.toLowerCase()) })
         }
     }
 

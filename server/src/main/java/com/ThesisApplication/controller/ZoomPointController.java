@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/zoom_point")
-@CrossOrigin(origins = "http://localhost:3000")
 public class ZoomPointController {
 
     @Autowired

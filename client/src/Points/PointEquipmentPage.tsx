@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link,  useParams} from 'react-router-dom';
 import "./PointPage.css";
-import {ADMIN, RESEARCHER} from "../Extra/Helper";
+import {ADMIN, API_BASE_URL, RESEARCHER} from "../Extra/Helper";
 import OverlayPassword from "../Extra/OverlayPassword";
 import Buttons from "../Extra/Buttons";
 
@@ -22,9 +22,8 @@ function PointEquipmentPage() {
     }, [emailLogged, roleLogged])
 
     useEffect( () => {
-        fetch('http://localhost:8080/equipment/point_id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'equipment/point_id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 if (response.status === 200) {
@@ -37,9 +36,8 @@ function PointEquipmentPage() {
     },[id, equipment])
 
     useEffect(() => {
-        fetch('http://localhost:8080/zoom_point/id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'zoom_point/id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -49,9 +47,8 @@ function PointEquipmentPage() {
     }, [point, id])
 
     const deleteEquipment = useCallback(() => {
-        fetch('http://localhost:8080/equipment/', {
+        fetch(API_BASE_URL+'equipment/', {
             method: "delete",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),

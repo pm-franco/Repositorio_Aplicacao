@@ -10,15 +10,12 @@ import React, {useEffect, useRef, useState} from "react";
 import L, {CRS, LatLngBounds} from 'leaflet';
 
 // @ts-ignore
-function T({handlePos}){
-
-    //const [position, setPosition] = useState({ latitude: 0, longitude: 0 });
+function SavePosition({handlePos}){
 
     useMapEvents({
         click(event) {
             const { lat, lng } = event.latlng;
             handlePos(lat, lng);
-            //setPosition({latitude: lat, longitude:lng});
         },
     });
     return (
@@ -69,7 +66,8 @@ function AddPointLeafLet(props:any){
         <div className={"Teste"}>
             <main>
                 <section>
-                    <MapContainer ref={map} center={center} zoom={y>1700?-3:y>900?-2:-1} minZoom={-5} maxZoom={0} dragging={false} doubleClickZoom={false} scrollWheelZoom={false} crs={CRS.Simple}>
+                    <MapContainer ref={map} center={center} zoom={y>1700?-3:y>900?-2:-1} minZoom={-5} maxZoom={0}
+                                  dragging={false} doubleClickZoom={false} scrollWheelZoom={false} crs={CRS.Simple}>
                         <ImageOverlay
                             url={props.img}
                             bounds={bounds}
@@ -81,7 +79,7 @@ function AddPointLeafLet(props:any){
                                 icon={icon}
                             />
                         ) : null}
-                        <T handlePos={handlePos}/>
+                        <SavePosition handlePos={handlePos}/>
                     </MapContainer>
                     <div className={"Coordenadas"}>
                         <>Coordenadas: <p/>

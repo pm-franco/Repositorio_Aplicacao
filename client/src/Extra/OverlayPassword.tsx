@@ -1,5 +1,6 @@
 import React, {Fragment, useCallback, useState} from "react";
 import "./Overlay.css";
+import {API_BASE_URL} from "./Helper";
 
 function Overlay({ isOpen, onClose, deleteFunction, email}:any) {
 
@@ -7,9 +8,8 @@ function Overlay({ isOpen, onClose, deleteFunction, email}:any) {
     const [error, setError] = useState("")
 
     const handleDelete = useCallback(() => {
-        fetch('http://localhost:8080/secrets/match', {
+        fetch(API_BASE_URL+'secrets/match', {
             method: "post",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),

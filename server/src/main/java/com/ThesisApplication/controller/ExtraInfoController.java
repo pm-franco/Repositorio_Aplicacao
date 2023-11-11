@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/extra_info")
-@CrossOrigin(origins = "http://localhost:3000")
 public class ExtraInfoController {
 
     @Autowired

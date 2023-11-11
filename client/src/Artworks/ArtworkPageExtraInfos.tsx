@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import "./ArtworkPage.css";
-import {ADMIN, RESEARCHER} from "../Extra/Helper";
+import {ADMIN, RESEARCHER,API_BASE_URL} from "../Extra/Helper";
 import OverlayPassword from "../Extra/OverlayPassword";
 import Buttons from "../Extra/Buttons";
 
@@ -22,9 +22,8 @@ function ArtworkPageExtraInfos() {
     },[emailLogged, roleLogged])
 
     useEffect(() => {
-        fetch('http://localhost:8080/pdf/artwork_id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'pdf/artwork_id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 if (response.status === 200) {
@@ -37,9 +36,8 @@ function ArtworkPageExtraInfos() {
     },[pdfs, id])
 
     useEffect(() => {
-        fetch('http://localhost:8080/extra_info/artwork_id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'extra_info/artwork_id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 if (response.status === 200) {
@@ -61,9 +59,8 @@ function ArtworkPageExtraInfos() {
     };
 
     const deletePdf = useCallback(() => {
-        fetch('http://localhost:8080/pdf/', {
+        fetch(API_BASE_URL+'pdf/', {
             method: "delete",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),

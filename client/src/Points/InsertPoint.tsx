@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import "./InsertPoint.css";
 import AddPointLeafLet from "../LeafLet/AddPointLeafLet";
 import ImageUpload from "../Images/ImageUpload";
-import {checkText, ImageSize} from "../Extra/Helper";
+import {API_BASE_URL, checkText, ImageSize} from "../Extra/Helper";
 import Overlay from "../Extra/Overlay";
 
 function InsertPoint(props: any) {
@@ -42,9 +42,8 @@ function InsertPoint(props: any) {
     },[emailLogged])
 
     useEffect(() => {
-        fetch('http://localhost:8080/layer/all/', {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'layer/all/', {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -96,14 +95,12 @@ function InsertPoint(props: any) {
                 "pixelHeight": size?.height,
             }))
         }
-        fetch('http://localhost:8080/zoom_point/', {
+        fetch(API_BASE_URL+'zoom_point/', {
             method: 'POST',
-            mode: "cors",
             body: formData
         })
             .then(response => {
                 if (response.status === 201) {
-                    alert("Zoom Point Created");
                     navigate(-1);
                 } else {
                     return response.text()

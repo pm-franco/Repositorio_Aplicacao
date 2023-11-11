@@ -1,13 +1,13 @@
 import React, {useCallback, useState} from 'react';
 import './SignUp.css'
 import {useNavigate} from 'react-router-dom';
-import {insts} from "../Extra/Helper";
+import {API_BASE_URL, re, UNIVERSITIES} from "../Extra/Helper";
 
 function SignUp() {
 
     const navigate = useNavigate();
 
-    const [inst, setInst] = useState("FCT")
+    const [inst, setInst] = useState(UNIVERSITIES[0])
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [pw, setPw] = useState("")
@@ -15,9 +15,8 @@ function SignUp() {
     const [error, setError] = useState("")
 
     const CreateUser = useCallback( () => {
-        fetch('http://localhost:8080/user/', {
+        fetch(API_BASE_URL+'user/', {
             method: 'post',
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
@@ -50,7 +49,6 @@ function SignUp() {
     const onInputChange = (e:any) => {
         const { value } = e.target;
 
-        const re = /[a-z, ]/i;
         if (value === "" || re.test(value)) {
             setName(value);
         }
@@ -72,7 +70,7 @@ function SignUp() {
                             <input type="email" onChange={e=>setEmail(e.target.value)} required={true}/>
 
                             <label className={"required"}> Institution </label>
-                            <select onChange={e=> setInst(e.target.value)}>{insts.length> 0? insts.map((s) => <option key={s}>{s}</option>) : <option key={0}>{"No Institutions Registed"}</option>}</select>
+                            <select onChange={e=> setInst(e.target.value)}>{UNIVERSITIES.length> 0? UNIVERSITIES.map((s) => <option key={s}>{s}</option>) : <option key={0}>{"No Institutions Registed."}</option>}</select>
                         </div>
                         <div className="form-break"></div>
                         <div className="form-section">

@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import "./LayerNamePage.css";
 import {useNavigate} from "react-router-dom";
-import {ADMIN} from "./Helper";
+import {ADMIN, API_BASE_URL} from "./Helper";
 
 function SecretsPage() {
 
@@ -27,9 +27,8 @@ function SecretsPage() {
     }, [navigate, roleLogged])
 
     useEffect(() => {
-        fetch('http://localhost:8080/secrets/all/', {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'secrets/all/', {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -41,9 +40,8 @@ function SecretsPage() {
     }, [secrets, type])
 
     const updateSecret = useCallback(() => {
-        fetch('http://localhost:8080/secrets/', {
+        fetch(API_BASE_URL+'secrets/', {
             method: "put",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
@@ -56,9 +54,7 @@ function SecretsPage() {
         })
             .then(response => {
                 if (response.status === 200) {
-                    alert("Secret updated.")
                     refreshPage()
-                    console.log("added")
                 } else {
                     return response.text()
                 }

@@ -3,7 +3,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertPoint.css";
 import AddPointLeafLet from "../LeafLet/AddPointLeafLet";
 import ImageUpload from "../Images/ImageUpload";
-import {checkText, ImageSize} from "../Extra/Helper";
+import {API_BASE_URL, checkText, ImageSize} from "../Extra/Helper";
 import Overlay from "../Extra/Overlay";
 
 function EditPoint(props: any) {
@@ -75,9 +75,8 @@ function EditPoint(props: any) {
     useEffect(() => {
             if (emailLogged === null || emailLogged === "")
                 navigate("/")
-            fetch('http://localhost:8080/zoom_point/id/' + id, {
-                method: 'GET',
-                mode: "cors"
+            fetch(API_BASE_URL+'zoom_point/id/' + id, {
+                method: 'GET'
             })
                 .then(response => {
                     if (response.status === 200) {
@@ -93,9 +92,8 @@ function EditPoint(props: any) {
                 })
                 .catch(r => r)
             if (idArtwork > 0) {
-                fetch('http://localhost:8080/artwork/id/' + idArtwork, {
-                    method: 'GET',
-                    mode: "cors"
+                fetch(API_BASE_URL+'artwork/id/' + idArtwork, {
+                    method: 'GET'
                 })
                     .then(response => {
                         if (response.status === 200) {
@@ -110,9 +108,8 @@ function EditPoint(props: any) {
     }, [id, idArtwork, emailLogged, navigate])
 
     useEffect(() => {
-        fetch('http://localhost:8080/layer/all/', {
-            method: 'GET',
-            mode: "cors",
+        fetch(API_BASE_URL+'layer/all/', {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -162,9 +159,8 @@ function EditPoint(props: any) {
                 "pixelHeight": size?.height,
                 "zoomPointId": idPoint
             }))
-        fetch('http://localhost:8080/zoom_point/file/'+id, {
+        fetch(API_BASE_URL+'zoom_point/file/'+id, {
             method: 'PUT',
-            mode: "cors",
             body: formData
         })
             .then(response => {
@@ -177,9 +173,8 @@ function EditPoint(props: any) {
             .catch(r => console.log(r))
         }
         else {
-            fetch('http://localhost:8080/zoom_point/'+id, {
+            fetch(API_BASE_URL+'zoom_point/'+id, {
                 method: 'PUT',
-                mode: "cors",
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
@@ -203,7 +198,6 @@ function EditPoint(props: any) {
             })
                 .then(response => {
                     if (response.status === 200) {
-                        alert("Zoom Point Edited.");
                         navigate(-1)
                     } else {
                         return response.text()

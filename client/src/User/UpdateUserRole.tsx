@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import "../Extra/LayerNamePage.css";
 import {useNavigate} from "react-router-dom";
+import {API_BASE_URL} from "../Extra/Helper";
 
 function UpdateUserRole() {
 
@@ -23,9 +24,8 @@ function UpdateUserRole() {
     }, [emailLogged, roleLogged, navigate])
 
     const updateUserRole = useCallback(() => {
-        fetch('http://localhost:8080/user/edit/' + email, {
+        fetch(API_BASE_URL+'user/edit/' + email, {
             method: "put",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
@@ -37,7 +37,6 @@ function UpdateUserRole() {
         })
             .then(response => {
                 if (response.status === 200) {
-                    alert("Role changed.")
                     navigate("/")
                 } else {
                     return response.text()

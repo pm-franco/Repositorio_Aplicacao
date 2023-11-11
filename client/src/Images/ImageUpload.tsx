@@ -43,7 +43,8 @@ function ImageUpload(props:any){
             {selectedImage && (
                 <div className={"preview"}>
                     <div>
-                        {imgProp?<img src={'data:image/png;base64,' + selectedImage} alt={""}></img>:<img src={URL.createObjectURL(selectedImage)} alt={""}></img>}
+                        {imgProp?<img src={'data:image/png;base64,' + selectedImage}></img>:
+                            <img src={URL.createObjectURL(selectedImage)} alt={""}></img>}
                     </div>
                     <button onClick={removeSelectedImage}>
                         Remove This Image

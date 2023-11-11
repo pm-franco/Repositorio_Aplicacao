@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/pdf")
-@CrossOrigin(origins = "http://localhost:3000")
+
 public class PdfController {
 
     @Autowired

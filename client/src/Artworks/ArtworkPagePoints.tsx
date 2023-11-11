@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Link, useParams} from 'react-router-dom';
 import "./ArtworkPagePoints.css";
 import LeafLet from "../LeafLet/LeafLet";
-import {ADMIN, RESEARCHER} from "../Extra/Helper";
+import {ADMIN, RESEARCHER,API_BASE_URL} from "../Extra/Helper";
 import Buttons from "../Extra/Buttons";
 
 function ArtworkPagePoints() {
@@ -24,9 +24,8 @@ function ArtworkPagePoints() {
     },[emailLogged, roleLogged])
 
     useEffect(() => {
-        fetch('http://localhost:8080/artwork/id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'artwork/id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -36,9 +35,8 @@ function ArtworkPagePoints() {
             })
             .catch(r => r)
 
-        fetch('http://localhost:8080/layer/all/', {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'layer/all/', {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -52,9 +50,8 @@ function ArtworkPagePoints() {
     }, [artwork, id, filter.layerName])
 
     useEffect(() => {
-        fetch('http://localhost:8080/zoom_point/artwork_id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'zoom_point/artwork_id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 if (response.ok)

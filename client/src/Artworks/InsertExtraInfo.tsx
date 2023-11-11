@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertExtraInfo.css";
 import Overlay from "../Extra/Overlay";
-import {checkText} from "../Extra/Helper";
+import {API_BASE_URL, checkText} from "../Extra/Helper";
 
 function InsertExtraInfo() {
 
@@ -44,9 +44,8 @@ function InsertExtraInfo() {
     }, [extraInfo, aux])
 
     useEffect(() => {
-        fetch('http://localhost:8080/extra_info/artwork_id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'extra_info/artwork_id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 if (response.status === 200) {
@@ -69,9 +68,8 @@ function InsertExtraInfo() {
 
     const InsertExtraInfo = useCallback(() => {
         if (extraInfo) {
-            fetch('http://localhost:8080/extra_info/' + extraInfo["id"], {
+            fetch(API_BASE_URL+'extra_info/' + extraInfo["id"], {
                 method: 'put',
-                mode: "cors",
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
@@ -84,7 +82,6 @@ function InsertExtraInfo() {
             })
                 .then(response => {
                     if (response.status === 200) {
-                        alert("Extra Info Updated")
                         refreshPage()
                     } else {
                         return response.text();
@@ -92,9 +89,8 @@ function InsertExtraInfo() {
                 }).then(r => r && setErrorExtra(r))
                 .catch(r => console.log(r))
         } else {
-            fetch('http://localhost:8080/extra_info/', {
+            fetch(API_BASE_URL+'extra_info/', {
                 method: 'post',
-                mode: "cors",
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
@@ -107,7 +103,6 @@ function InsertExtraInfo() {
             })
                 .then(response => {
                     if (response.status === 201) {
-                        alert("Extra Info Added")
                         refreshPage()
                     } else {
                         return response.text();
@@ -120,9 +115,8 @@ function InsertExtraInfo() {
 
     const InsertPdf = useCallback(() => {
         if (uploadedFile == null) {
-            fetch('http://localhost:8080/pdf/1', {
+            fetch(API_BASE_URL+'pdf/1', {
                 method: 'POST',
-                mode: "cors",
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),
@@ -135,7 +129,6 @@ function InsertExtraInfo() {
             })
                 .then(response => {
                     if (response.status === 201) {
-                        alert("Pdf Added.")
                         refreshPage()
                     } else {
                         return response.text();
@@ -151,14 +144,12 @@ function InsertExtraInfo() {
                 "link": pdfLink,
                 "user": emailLogged
             }))
-            fetch('http://localhost:8080/pdf/', {
+            fetch(API_BASE_URL+'pdf/', {
                 method: 'POST',
-                mode: "cors",
                 body: formData
             })
                 .then(response => {
                     if (response.status === 201) {
-                        alert("Pdf Added")
                         refreshPage()
                     } else {
                         return response.text();

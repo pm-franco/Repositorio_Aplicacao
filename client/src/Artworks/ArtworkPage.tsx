@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import "./ArtworkPage.css";
-import {ADMIN, RESEARCHER, setDate} from "../Extra/Helper";
+import {ADMIN, RESEARCHER,API_BASE_URL, setDate} from "../Extra/Helper";
 import OverlayPassword from "../Extra/OverlayPassword";
 import Buttons from "../Extra/Buttons";
 
@@ -21,9 +21,8 @@ function ArtworkPage() {
     }, [emailLogged, roleLogged])
 
     useEffect(() => {
-        fetch('http://localhost:8080/artwork/id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'artwork/id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 return response.json()
@@ -37,9 +36,8 @@ function ArtworkPage() {
     };
 
     const deleteArtwork = useCallback(() => {
-        fetch('http://localhost:8080/artwork/', {
+        fetch(API_BASE_URL+'artwork/', {
             method: "delete",
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),

@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertArtwork.css";
-import {handleFloats} from "../Extra/Helper";
+import {API_BASE_URL,handleFloats} from "../Extra/Helper";
 import ImageUpload from "../Images/ImageUpload";
 
 function EditImageLayer() {
@@ -38,9 +38,8 @@ function EditImageLayer() {
 
     useEffect(() => {
 
-        fetch('http://localhost:8080/image_layer/id/' + id, {
-            method: 'GET',
-            mode: "cors"
+        fetch(API_BASE_URL+'image_layer/id/' + id, {
+            method: 'GET'
         })
             .then(response => {
                 if (response.status === 200) {
@@ -65,9 +64,8 @@ function EditImageLayer() {
                 "artworkId": artId,
                 "user": emailLogged
             }))
-            fetch('http://localhost:8080/image_layer/file/' + id, {
+            fetch(API_BASE_URL+'image_layer/file/' + id, {
                 method: 'PUT',
-                mode: "cors",
                 body: formData
             })
                 .then(response => {
@@ -79,9 +77,8 @@ function EditImageLayer() {
                 }).then(r => r && setError(r))
                 .catch(r => console.log(r))
         } else {
-            fetch('http://localhost:8080/image_layer/' + id, {
+            fetch(API_BASE_URL+'image_layer/' + id, {
                 method: 'PUT',
-                mode: "cors",
                 headers: new Headers({
                     'Content-Type': 'application/json'
                 }),

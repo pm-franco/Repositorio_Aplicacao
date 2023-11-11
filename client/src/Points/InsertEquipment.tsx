@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import "./InsertEquipment.css";
 import Overlay from "../Extra/Overlay";
-import {checkText} from "../Extra/Helper";
+import {API_BASE_URL, checkText} from "../Extra/Helper";
 
 function InsertEquipment(props: any) {
 
@@ -34,9 +34,8 @@ function InsertEquipment(props: any) {
     };
 
     const InsertEquipment = useCallback(() => {
-        fetch('http://localhost:8080/equipment/', {
+        fetch(API_BASE_URL+'equipment/', {
             method: 'post',
-            mode: "cors",
             headers: new Headers({
                 'Content-Type': 'application/json'
             }),
@@ -50,7 +49,6 @@ function InsertEquipment(props: any) {
         })
             .then(response => {
                 if (response.status === 201) {
-                    alert("Equipment Added")
                     navigate(-1)
                 } else {
                     return response.text()

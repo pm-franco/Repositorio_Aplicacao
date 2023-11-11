@@ -2,21 +2,18 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import "./Home.css";
 import {GREETING} from "../Extra/Helper";
+import Buttons from "../Extra/Buttons";
 
 function Home(){
     const navigate = useNavigate();
 
     return (
-        <div className="Home">
+        <div className={"Home"}>
             <main>
-                <div>
-                    <h1 className="greeting">{GREETING}</h1>
-                    <h1 className="greetingRot">{GREETING}</h1>
-                </div>
-                <button onClick={() => {
-                    navigate("/artworks")
-                }}>Explore</button>
-
+                <section>
+                    <div className={"image-background"}>
+                    </div>
+                </section>
             </main>
         </div>
     );
